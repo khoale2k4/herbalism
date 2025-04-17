@@ -1,4 +1,4 @@
-import { AddToCartDto } from "./interface";
+import { AddToCartDto, CreateCommentDto } from "./interface";
 
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZGE2NTk0Yy0xMDU3LTQyZTAtYjdiNi1jYzJjMjI0ZjFhYmYiLCJlbWFpbCI6Imtob2FjdXNAZ21haWwuY29tIiwiaWF0IjoxNzQ0ODcwMjQzLCJleHAiOjE3NDQ5NTY2NDN9.JwXtyWwEJGoy1WIxpIffbSKrDJ26sU1EoI5152NeTRI';
 
@@ -273,6 +273,69 @@ export class CartOperation {
                 success: true,
                 message: result.message,
                 data: result.data ?? []
+            };
+        } catch (error) {
+            return {
+                success: false,
+                message: error,
+                data: null
+            };
+        }
+    }
+}
+
+export class CommentOperation {
+    private baseUrl: string;
+
+    constructor() {
+        this.baseUrl = (process.env.API_HOST || "http://localhost:3000") + '/comment';
+    }
+
+    async checkComment(productId: string) {
+        try {
+            const response = await fetch(this.baseUrl + '/isCommented/' + productId, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': "Bearer " + token
+                },
+            });
+            const result = await response.json();
+            return {
+                success: true,
+                message: result.message,
+                data: result.data
+            };
+        } catch (error) {
+            return {
+                success: false,
+                message: error,
+                data: null
+            };
+        }
+    }
+
+    async createComment(dto: CreateCommentDto) {
+        try {
+            const response = await fetch(this.baseUrl + '/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': "Bearer " + token
+                },
+                body: JSON.stringify(
+                    { 
+                        content: dto.content,
+                        rate: dto.rate,
+                        productId: dto.productId
+                    }
+                )
+            });
+            const result = await response.json();
+            return {
+                success: true,
+                message: result.message,
+                data: result.data
             };
         } catch (error) {
             return {

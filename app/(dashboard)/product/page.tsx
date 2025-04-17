@@ -4,15 +4,16 @@ import { useEffect, useState, useMemo } from "react";
 import { Star, Heart, ShoppingCart, Truck, Shield, RotateCcw, ChevronDown, ChevronUp, Minus, Plus } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useLanguage } from "@/hooks/useLanguage";
-import NotFound from "./not-found";
-import Loading from "./loading";
-import { CartOperation, ProductOperation } from "@/lib/main";
+import { CartOperation, CommentOperation, ProductOperation } from "@/lib/main";
 import { Product } from "@/types/product";
+import { comment } from "postcss";
+import { useNotification } from "@/hooks/useNotification";
+import NotFoundPage from "@/app/not-found";
+import CustomLoadingElement from "@/app/loading";
 
 interface Review {
     id: string;
     name: string;
-    email: string;
     rating: number;
     comment: string;
     date: string;
@@ -40,32 +41,46 @@ export default function ProductDetail() {
     const [reviews, setReviews] = useState<Review[]>([]);
     const [newReview, setNewReview] = useState({
         name: "",
-        email: "",
         rating: 5,
         comment: ""
     });
     const productOp = new ProductOperation();
+    const commentOp = new CommentOperation();
     const cartOp = new CartOperation();
+    const [isCommented, setIsCommented] = useState(false);
+    const { 
+        showSuccess, 
+        showError, 
+        showCartNotification, 
+        NotificationComponent 
+      } = useNotification();
 
     const handleAddToCart = async () => {
-        const response = await cartOp.addToCart({
-            productId: productId || "",
-            num: quantity,
-            size: selectedSize
-        });
-    }
+        try {
+            const response = await cartOp.addToCart({
+                productId: productId || "",
+                num: quantity,
+                size: selectedSize
+            });
 
-    // Tính toán selectedSizeStock
+            if (response.success) {
+                showSuccess(t.product.addedToCartSuccess);
+            } else {
+                showError(t.product.addToCartError);
+            }
+        } catch (error) {
+            showError(t.product.addToCartError);
+        }
+    };
+
     const selectedSizeStock = useMemo(() => {
         return product?.size_stock.find(s => s.size === selectedSize);
     }, [product, selectedSize]);
 
-    // Format giá tiền
     const formatPrice = (price: number) => {
         return new Intl.NumberFormat('vi-VN').format(price) + "₫";
     };
 
-    // Toggle mở/đóng tab
     const toggleTab = (tabId: string) => {
         setExpandedTabs(prev =>
             prev.includes(tabId)
@@ -74,15 +89,13 @@ export default function ProductDetail() {
         );
     };
 
-    // Thay đổi số lượng
     const handleQuantityChange = (value: number) => {
         if (!selectedSizeStock) return;
         const newValue = Math.max(1, Math.min(value, selectedSizeStock.stock));
         setQuantity(newValue);
     };
 
-    // Gửi đánh giá
-    const handleReviewSubmit = (e: React.FormEvent) => {
+    const handleReviewSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const review: Review = {
             id: Date.now().toString(),
@@ -92,14 +105,20 @@ export default function ProductDetail() {
         setReviews([review, ...reviews]);
         setNewReview({
             name: "",
-            email: "",
             rating: 5,
             comment: ""
         });
         setShowReviewForm(false);
+        const resposne = await commentOp.createComment({
+            productId: productId || "",
+            content: newReview.comment,
+            rate: newReview.rating
+        });
+        if(resposne.success) {
+            setIsCommented(true);
+        }
     };
 
-    // Fetch product data
     const fetchProduct = async () => {
         if (!productId) return;
 
@@ -109,19 +128,27 @@ export default function ProductDetail() {
             if (response.success) {
                 setProduct(response.data);
 
-                // Set default selected size
                 if (response.data.size_stock.length > 0) {
                     setSelectedSize(response.data.size_stock[0].size);
                 }
 
-                // Transform tabs data
                 const transformedTabs = response.data.tabs.map((tab: any, index: any) => ({
                     id: `tab-${index}`,
                     label: tab.name,
                     content: tab.description
                 }));
                 setTabs(transformedTabs);
+                const transformedReviews = response.data.comments.map((review: any) => ({
+                    id: review.id,
+                    name: review.customer.name,
+                    rating: review.rate,
+                    comment: review.content,
+                    date: new Date(review.createdAt).toLocaleDateString('vi-VN')
+                }));
+                setReviews(transformedReviews);
             }
+            const commentResponse = await commentOp.checkComment(productId);
+            setIsCommented(commentResponse.data !== null);
         } catch (error) {
             console.error('Error fetching product:', error);
         } finally {
@@ -133,12 +160,12 @@ export default function ProductDetail() {
         fetchProduct();
     }, [productId]);
 
-    if (loading) return <Loading />;
-    if (!product) return <NotFound />;
+    if (loading) return <CustomLoadingElement />;
+    if (!product) return <NotFoundPage />;
 
     return (
         <div className="max-w-7xl mx-auto px-4 py-10">
-            {/* Breadcrumb */}
+            <NotificationComponent />
             <nav className="text-sm text-gray-500 mb-6">
                 <ol className="flex space-x-2">
                     <li><a href="/" className="hover:text-green-600">{t.common.home}</a></li>
@@ -149,9 +176,7 @@ export default function ProductDetail() {
                 </ol>
             </nav>
 
-            {/* Product Main Info */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                {/* Product Images */}
                 <div className="space-y-6">
                     <div className="bg-gray-50 rounded-xl overflow-hidden">
                         <img
@@ -198,7 +223,6 @@ export default function ProductDetail() {
                         </div>
                     </div>
 
-                    {/* Price */}
                     <div className="text-2xl font-bold text-green-700">
                         {formatPrice(selectedSizeStock?.price || product.price)}
                     </div>
@@ -209,12 +233,9 @@ export default function ProductDetail() {
 
                     <hr className="my-6" />
 
-                    {/* Product Options */}
                     <div className="space-y-6">
-                        {/* Size Selection */}
                         <div>
                             <div className="flex justify-between items-center mb-2">
-                                {/* <label className="block text-sm font-medium text-gray-700">{t.product.sizeTable}</label> */}
                                 <button
                                     className="text-sm text-green-600 hover:underline"
                                     onClick={() => setShowSizeGuide(!showSizeGuide)}
@@ -239,7 +260,6 @@ export default function ProductDetail() {
                             </div>
                         </div>
 
-                        {/* Quantity */}
                         <div>
                             <div className="flex items-center">
                                 <button
@@ -270,7 +290,6 @@ export default function ProductDetail() {
                             </div>
                         </div>
 
-                        {/* Action Buttons */}
                         <div className="flex items-center space-x-4">
                             <button
                                 className="flex-1 bg-green-600 text-white py-3 rounded-md hover:bg-green-700 font-medium flex items-center justify-center"
@@ -284,7 +303,6 @@ export default function ProductDetail() {
                             </button> */}
                         </div>
 
-                        {/* Benefits */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
                             <div className="flex items-center space-x-2 text-sm text-gray-600">
                                 <Truck size={18} className="text-green-600" />
@@ -303,7 +321,6 @@ export default function ProductDetail() {
                 </div>
             </div>
 
-            {/* Product Tabs */}
             <div className="mt-16 border-t pt-8">
                 <h2 className="text-2xl font-bold mb-6">{t.product.productDetail}</h2>
                 <div className="space-y-4">
@@ -331,16 +348,15 @@ export default function ProductDetail() {
                 </div>
             </div>
 
-            {/* Reviews Section */}
             <div className="mt-16 border-t pt-8">
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="text-2xl font-bold">{t.product.customerReiviews}</h2>
-                    <button
+                    {!isCommented && <button
                         className="px-4 py-2 border border-green-600 text-green-600 rounded-md hover:bg-green-50"
                         onClick={() => setShowReviewForm(true)}
                     >
                         {t.product.writeAReview}
-                    </button>
+                    </button>}
                 </div>
 
                 {showReviewForm && (

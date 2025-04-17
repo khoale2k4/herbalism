@@ -41,7 +41,6 @@ const Sidebar = () => {
             const newRange = [...prev.priceRange] as [number, number];
             newRange[index] = value;
 
-            // Ensure min doesn't exceed max and vice versa
             if (index === 0 && value > prev.priceRange[1]) {
                 newRange[1] = value;
             } else if (index === 1 && value < prev.priceRange[0]) {

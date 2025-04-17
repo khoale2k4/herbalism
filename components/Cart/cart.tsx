@@ -95,7 +95,7 @@ export default function CartSidebar({
                     {cartItems.length > 0 ? (
                         <ul className="space-y-6">
                             {cartItems.map((item) => (
-                                <li key={item.id} className="flex gap-4 relative">
+                                <li key={item.id + item.size} className="flex gap-4 relative">
                                     <div className="w-20 h-20 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0" onClick={() => handleClickProduct(item.id)}>
                                         <img
                                             src={item.image}

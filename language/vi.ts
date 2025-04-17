@@ -328,7 +328,9 @@ export default {
         seeAllReviews: "Xem tất cả * đánh giá",
         comment: "Bình luận",
         cancel: "Huỷ",
-        submit: "Gửi"
+        submit: "Gửi",
+        addedToCartSuccess: "Đã thêm vào giỏ hàng thành công",
+        addToCartError: "Có lỗi xảy ra khi thêm vào giỏ hàng",
     },
     footer: {
         company: {

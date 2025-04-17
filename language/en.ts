@@ -327,7 +327,9 @@ export default {
         seeAllReviews: "See all * reviews",
         comment: "Comment",
         cancel: "Cancel",
-        submit: "Submit"
+        submit: "Submit",
+        addedToCartSuccess: "Added to cart successfully",
+        addToCartError: "Error adding to cart"
     },
     footer: {
         company: {
