@@ -2,7 +2,6 @@
 import "./globals.css";
 import Image from "next/image";
 import { Suspense } from "react";
-import UserProvider from "@/providers/PassedData";
 import { usePathname, useSearchParams } from 'next/navigation';
 import { FormattedMessage, IntlProvider } from 'react-intl';
 type LanguageMessages = {
@@ -14,8 +13,6 @@ export default function layoutStructure({
   childrenProps: React.ReactNode;
 }) {
   return (
-    <UserProvider>
-      <Suspense >{childrenProps}</Suspense>
-    </UserProvider>
+    <Suspense >{childrenProps}</Suspense>
   );
 }

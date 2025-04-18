@@ -2,6 +2,43 @@ import { AddToCartDto, CreateCommentDto } from "./interface";
 
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZGE2NTk0Yy0xMDU3LTQyZTAtYjdiNi1jYzJjMjI0ZjFhYmYiLCJlbWFpbCI6Imtob2FjdXNAZ21haWwuY29tIiwiaWF0IjoxNzQ0ODcwMjQzLCJleHAiOjE3NDQ5NTY2NDN9.JwXtyWwEJGoy1WIxpIffbSKrDJ26sU1EoI5152NeTRI';
 
+export class AuthOperation {
+    private baseUrl: string;
+
+    constructor() {
+        this.baseUrl = (process.env.API_HOST || "http://localhost:3000") + '/auth';
+    }
+
+    async login(mail: string, password: string) {
+        try {
+            const response = await fetch(this.baseUrl + '/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ mail, password })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Login failed with status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            return {
+                success: true,
+                message: result.message,
+                data: result.data
+            };
+        } catch (error) {
+            return {
+                success: false,
+                message: error,
+                data: null
+            };
+        }
+    }
+}
+
 export class ArticleOperation {
     private baseUrl: string;
 

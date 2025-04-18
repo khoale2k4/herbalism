@@ -87,7 +87,7 @@ export const NotificationPopup = ({
 
     return (
         <div
-            className={`fixed bottom-4 right-4 md:bottom-10 md:right-10 flex items-center max-w-xs sm:max-w-sm shadow-lg rounded-lg border-l-4 ${borderColor} overflow-hidden transform transition-all duration-300 ease-in-out ${isLeaving ? "translate-x-full opacity-0" : "translate-x-0 opacity-100"
+            className={`fixed bottom-4 right-4 md:bottom-10 z-[100] md:right-10 flex items-center max-w-xs sm:max-w-sm shadow-lg rounded-lg border-l-4 ${borderColor} overflow-hidden transform transition-all duration-300 ease-in-out ${isLeaving ? "translate-x-full opacity-0" : "translate-x-0 opacity-100"
                 }`}
             role="alert"
         >

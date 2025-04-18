@@ -1,6 +1,5 @@
 import { type Metadata } from 'next'
 import './globals.css'
-import ThemeProvider from '@/providers/ThemeProvider';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
 import { useLanguage } from '@/hooks/useLanguage';
@@ -28,16 +27,10 @@ export default function RootLayout({
   return (
     <html lang="vi">
       <body className="min-h-screen flex flex-col">
-        <ThemeProvider>
-          <ClientOnly>
-            <Navbar />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </ClientOnly>
-
-        </ThemeProvider>
+        <ClientOnly>
+          <main className="flex-1">{children}</main>
+        </ClientOnly>
       </body>
     </html>
-
   )
 }

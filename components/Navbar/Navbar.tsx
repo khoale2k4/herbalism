@@ -205,7 +205,7 @@ const Navbar = () => {
                 <UserCircle size={24} className="text-gray-700 dark:text-gray-300 group-hover:text-green-600 dark:group-hover:text-green-500 transition-colors" />
                 <span className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-gray-900"></span>
               </div>
-              <span className="hidden sm:inline text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-green-600 dark:group-hover:text-green-500 transition-colors">Tài khoản</span>
+              <span className="hidden sm:inline text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-green-600 dark:group-hover:text-green-500 transition-colors">{t.common.account}</span>
               <ChevronDown size={16} className={`hidden sm:block text-gray-500 transition-transform duration-300 ${activeMenu === "user" ? "rotate-180" : ""}`} />
             </button>
 
@@ -226,7 +226,7 @@ const Navbar = () => {
                   className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 group"
                 >
                   <Package size={18} className="text-gray-500 group-hover:text-green-600 dark:group-hover:text-green-500" />
-                  <span>Đơn hàng của tôi</span>
+                  <span>{t.common.orders}</span>
                 </a>
 
                 <a
@@ -234,7 +234,7 @@ const Navbar = () => {
                   className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 group"
                 >
                   <UserCircle size={18} className="text-gray-500 group-hover:text-green-600 dark:group-hover:text-green-500" />
-                  <span>Thông tin cá nhân</span>
+                  <span>{t.common.info}</span>
                 </a>
 
                 <a
@@ -242,7 +242,7 @@ const Navbar = () => {
                   className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 group"
                 >
                   <Settings size={18} className="text-gray-500 group-hover:text-green-600 dark:group-hover:text-green-500" />
-                  <span>Cài đặt</span>
+                  <span>{t.common.setting}</span>
                 </a>
               </div>
 
@@ -252,7 +252,7 @@ const Navbar = () => {
                   className="flex items-center gap-3 px-4 py-2 text-sm text-red-600 dark:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 group"
                 >
                   <LogOut size={18} className="text-red-500" />
-                  <span>Đăng xuất</span>
+                  <span>{t.common.logout}</span>
                 </a>
               </div>
             </div>
@@ -274,7 +274,7 @@ const Navbar = () => {
                   </span>
                 )}
               </div>
-              <span className="hidden sm:inline text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-green-600 dark:group-hover:text-green-500 transition-colors">Giỏ hàng</span>
+              <span className="hidden sm:inline text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-green-600 dark:group-hover:text-green-500 transition-colors">{t.common.cart}</span>
             </button>
             <CartSidebar
               activeMenu={activeMenu}

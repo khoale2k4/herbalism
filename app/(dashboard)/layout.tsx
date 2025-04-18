@@ -2,6 +2,7 @@ import "@/app/globals.css";
 import PassDataProvider from "@/providers/PassedData";
 import Navbar from "@/components/Navbar/Navbar";
 import { Metadata } from "next";
+import Footer from "@/components/Footer/Footer";
 
 export const metadata: Metadata = {
   title: 'Herbalism - Shop',
@@ -19,11 +20,11 @@ export const metadata: Metadata = {
 const RootStructure = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <PassDataProvider>
-        <section className="flex h-full w-full">
-          {children}
-        </section>
-      </PassDataProvider >
+      <Navbar />
+      <section className="flex h-full w-full">
+        {children}
+      </section>
+      <Footer />
     </>
   );
 };
