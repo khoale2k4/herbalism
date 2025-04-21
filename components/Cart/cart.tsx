@@ -1,3 +1,4 @@
+import { getTokenFromCookie } from "@/app/utils/token";
 import { CartOperation, OrderOperation } from "@/lib/main";
 import { X, Plus, Minus, ShoppingBag, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -43,12 +44,20 @@ export default function CartSidebar({
         router.push(`/product?productId=${id}`);
     }
 
+    const checkout = () => {
+        router.push(`/checkout`);
+    }
+
     const addItemQuantity = async (id: string, size: string, quantity: number) => {
+        const token = getTokenFromCookie();
+        if (!token) {
+            return;
+        }
         const response = await cartOp.addToCart({
             productId: id,
             num: quantity,
             size,
-        });
+        }, token);
     }
 
     const handleQuantityChange = async (productid: string, size: string, num: number) => {
@@ -189,7 +198,9 @@ export default function CartSidebar({
                             </div>
                         </div>
                         <div className="space-y-2">
-                            <button className="w-full bg-green-600 text-white py-3 rounded-md hover:bg-green-700 transition-colors font-medium">
+                            <button 
+                                onClick={() => checkout()}
+                                className="w-full bg-green-600 text-white py-3 rounded-md hover:bg-green-700 transition-colors font-medium">
                                 Thanh toán ngay
                             </button>
                             <button

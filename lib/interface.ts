@@ -10,3 +10,14 @@ export interface CreateCommentDto{
     content: string;
     rate: number;
 }
+
+export interface AddAddressDto {
+    firstName: string;
+    lastName: string;
+    address: string;
+    country: string;
+    apartment?: string;
+    city: string;
+    province: string;
+    zipCode: string;
+}

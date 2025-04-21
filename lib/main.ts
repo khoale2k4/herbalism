@@ -1,6 +1,4 @@
-import { AddToCartDto, CreateCommentDto } from "./interface";
-
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZGE2NTk0Yy0xMDU3LTQyZTAtYjdiNi1jYzJjMjI0ZjFhYmYiLCJlbWFpbCI6Imtob2FjdXNAZ21haWwuY29tIiwiaWF0IjoxNzQ0ODcwMjQzLCJleHAiOjE3NDQ5NTY2NDN9.JwXtyWwEJGoy1WIxpIffbSKrDJ26sU1EoI5152NeTRI';
+import { AddAddressDto, AddToCartDto, CreateCommentDto } from "./interface";
 
 export class AuthOperation {
     private baseUrl: string;
@@ -37,6 +35,74 @@ export class AuthOperation {
             };
         }
     }
+}
+
+export class CustomerOperation {
+    private baseUrl: string;
+
+    constructor() {
+        this.baseUrl = (process.env.API_HOST || "http://localhost:3000") + '/customer';
+    }
+
+    async getAddress(token: string) {
+        try {
+            const response = await fetch(this.baseUrl + '/address', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Get address with status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            return {
+                success: true,
+                message: result.message,
+                data: result.data
+            };
+        } catch (error) {
+            return {
+                success: false,
+                message: error,
+                data: null
+            };
+        }
+    }
+
+    async addAddress(token: string, dto: AddAddressDto) {
+        try {
+            const response = await fetch(this.baseUrl + '/address', {
+                method: 'POST',
+                body: JSON.stringify(dto),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Post address failed with status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            return {
+                success: true,
+                message: result.message,
+                data: result.data
+            };
+        } catch (error) {
+            return {
+                success: false,
+                message: error,
+                data: null
+            };
+        }
+    }
+    
 }
 
 export class ArticleOperation {
@@ -262,6 +328,64 @@ export class OrderOperation {
             };
         }
     }
+
+    async getUnpaid(token: string){
+        try {
+            const response = await fetch(this.baseUrl + '/unpaid', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Get unpaid orders failed with status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            return {
+                success: true,
+                message: result.message,
+                data: result.data
+            };
+        } catch (error) {
+            return {
+                success: false,
+                message: error,
+                data: null
+            };
+        }
+    }
+
+    async createFromCart(token: string) {
+        try {
+            const response = await fetch(this.baseUrl + '/createFromCart', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Get unpaid orders failed with status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            return {
+                success: true,
+                message: result.message,
+                data: result.data
+            };
+        } catch (error) {
+            return {
+                success: false,
+                message: error,
+                data: null
+            };
+        }
+    }
 }
 
 export class CartOperation {
@@ -271,7 +395,7 @@ export class CartOperation {
         this.baseUrl = (process.env.API_HOST || "http://localhost:3000") + '/cart';
     }
 
-    async getMyCartItems() {
+    async getMyCartItems(token: string) {
         try {
             const response = await fetch(this.baseUrl, {
                 method: 'GET',
@@ -295,7 +419,7 @@ export class CartOperation {
         }
     }
 
-    async addToCart(addToCartDto: AddToCartDto) {
+    async addToCart(addToCartDto: AddToCartDto, token: string) {
         try {
             const response = await fetch(this.baseUrl + '/add', {
                 method: 'POST',
@@ -328,7 +452,7 @@ export class CommentOperation {
         this.baseUrl = (process.env.API_HOST || "http://localhost:3000") + '/comment';
     }
 
-    async checkComment(productId: string) {
+    async checkComment(productId: string, token: string) {
         try {
             const response = await fetch(this.baseUrl + '/isCommented/' + productId, {
                 method: 'GET',
@@ -352,7 +476,7 @@ export class CommentOperation {
         }
     }
 
-    async createComment(dto: CreateCommentDto) {
+    async createComment(dto: CreateCommentDto, token: string) {
         try {
             const response = await fetch(this.baseUrl + '/create', {
                 method: 'POST',

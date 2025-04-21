@@ -1,5 +1,4 @@
 import "@/app/globals.css";
-import PassDataProvider from "@/providers/PassedData";
 import Navbar from "@/components/Navbar/Navbar";
 import { Metadata } from "next";
 import Footer from "@/components/Footer/Footer";
@@ -21,7 +20,7 @@ const RootStructure = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Navbar />
-      <section className="flex h-full w-full">
+      <section className="flex h-full w-screen">
         {children}
       </section>
       <Footer />

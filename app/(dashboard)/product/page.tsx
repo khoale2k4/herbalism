@@ -10,6 +10,7 @@ import { comment } from "postcss";
 import { useNotification } from "@/hooks/useNotification";
 import NotFoundPage from "@/app/not-found";
 import CustomLoadingElement from "@/app/loading";
+import { getTokenFromCookie } from "@/app/utils/token";
 
 interface Review {
     id: string;
@@ -57,11 +58,13 @@ export default function ProductDetail() {
 
     const handleAddToCart = async () => {
         try {
+            const token = getTokenFromCookie();
+            if(!token) return;
             const response = await cartOp.addToCart({
                 productId: productId || "",
                 num: quantity,
                 size: selectedSize
-            });
+            }, token);
 
             if (response.success) {
                 showSuccess(t.product.addedToCartSuccess);
@@ -109,11 +112,13 @@ export default function ProductDetail() {
             comment: ""
         });
         setShowReviewForm(false);
+        const token = getTokenFromCookie();
+        if(!token) return;
         const resposne = await commentOp.createComment({
             productId: productId || "",
             content: newReview.comment,
             rate: newReview.rating
-        });
+        }, token);
         if(resposne.success) {
             setIsCommented(true);
         }
@@ -147,7 +152,9 @@ export default function ProductDetail() {
                 }));
                 setReviews(transformedReviews);
             }
-            const commentResponse = await commentOp.checkComment(productId);
+            const token = getTokenFromCookie();
+            if(!token) return;
+            const commentResponse = await commentOp.checkComment(productId, token);
             setIsCommented(commentResponse.data !== null);
         } catch (error) {
             console.error('Error fetching product:', error);

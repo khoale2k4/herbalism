@@ -24,8 +24,8 @@ const BusinessForGood = ({ icons }: Props) => {
                 }`}
         >
             {isVisible && (
-                <section className="py-16 bg-[#fdf8f7]">
-                    <div className="container mx-auto px-4">
+                <section className="py-16 bg-[#fdf8f7] w-full">
+                    <div className="container mx-auto">
                         <div className="max-w-4xl mx-auto text-center mb-12">
                             <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-800 mb-6">
                                 {t.businessForGood.title}

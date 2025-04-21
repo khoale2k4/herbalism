@@ -3,6 +3,7 @@ import { FC, useEffect, useRef, useState } from "react";
 import "react-multi-carousel/lib/styles.css";
 import Sidebar from "./components/SideBar";
 import TopBar from "./components/TopBar";
+import Image from 'next/image';
 import ProductsList from "./components/Products";
 import { useLanguage } from "@/hooks/useLanguage";
 import { ProductOperation } from "@/lib/main";
@@ -114,9 +115,18 @@ const ShopPage: FC<Props> = () => {
   }, [searchQuery])
 
   return (
-    <div className="flex flex-col w-full ">
-      <TopBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} setSortOption={setSortOption} viewMode={viewMode} showSidebar={showSidebar} sortOption={sortOption} sortOptions={sortOptions} toggleSidebar={toggleSidebar} setViewMode={setViewMode} />
-      <ProductsList filteredProducts={filteredProducts} setSearchQuery={setSearchQuery} showSidebar={showSidebar} viewMode={viewMode} />
+    <div className="flex flex-col w-full">
+      <div className="flex flex-col w-full bg-[#fdf8f7]">
+        <TopBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} setSortOption={setSortOption} viewMode={viewMode} showSidebar={showSidebar} sortOption={sortOption} sortOptions={sortOptions} toggleSidebar={toggleSidebar} setViewMode={setViewMode} />
+        <ProductsList filteredProducts={filteredProducts} setSearchQuery={setSearchQuery} showSidebar={showSidebar} viewMode={viewMode} />
+      </div>
+      <Image
+        src="/img/footer-image.png"
+        alt="Footer Image"
+        width={1920}
+        height={400}
+        className="w-full h-auto object-cover"
+      />
     </div>
   );
 };

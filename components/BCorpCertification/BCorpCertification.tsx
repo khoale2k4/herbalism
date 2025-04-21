@@ -19,7 +19,7 @@ const BCorpCertification = ({
 }: Props) => {
     return (
         <div 
-            className="flex flex-col md:flex-row rounded-2xl shadow-lg overflow-hidden"
+            className="flex flex-col md:flex-row rounded-2xl shadow-lg"
             style={{ backgroundColor: bg_color }}
         >
             <div className="flex-1 flex items-center justify-center relative p-6 md:p-10">

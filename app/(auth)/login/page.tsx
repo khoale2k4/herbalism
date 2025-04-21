@@ -13,14 +13,8 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const authOp = new AuthOperation();
+    const [notify, setNotify] = useState<string | null>();
     const duration = 3000;
-
-    const {
-        showSuccess,
-        showError,
-        showCartNotification,
-        NotificationComponent
-    } = useNotification(duration);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -29,12 +23,13 @@ const Login = () => {
         try {
             const response = await authOp.login(email, password);
             if (response.success) {
-                showSuccess('Đăng nhập thành công!');
                 await delay(duration);
                 setTokenInCookie(response.data.token);
+                localStorage.setItem('user', JSON.stringify(response.data.info));
                 window.location.href = '/';
             } else {
-                showError('Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.');
+                console.log(response.message);
+                setNotify("Sai tài khoản hoặc mật khẩu");
             }
             console.log('Đăng nhập với:', email, password);
         } catch (error) {
@@ -51,7 +46,6 @@ const Login = () => {
 
     return (
         <div className="max-w-screen mx-auto">
-            <NotificationComponent />
             <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
                 <div className="absolute inset-0 z-0 overflow-hidden">
                     <div className="absolute top-20 left-10 w-64 h-64 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
@@ -119,7 +113,10 @@ const Login = () => {
                                 type="email"
                                 id="email"
                                 value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                onChange={(e) => {
+                                    setEmail(e.target.value);
+                                    setNotify(null);
+                                }}
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300"
                                 placeholder="email@example.com"
                                 required
@@ -139,11 +136,15 @@ const Login = () => {
                                 type="password"
                                 id="password"
                                 value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                onChange={(e) => {
+                                    setPassword(e.target.value);
+                                    setNotify(null);
+                                }}
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300"
                                 placeholder="••••••••"
                                 required
                             />
+                            {notify && <p className="text-red-500 text-sm mt-2">{notify}</p>}
                         </div>
 
                         <div className="flex items-center">
