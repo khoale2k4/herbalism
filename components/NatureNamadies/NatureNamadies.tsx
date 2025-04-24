@@ -47,30 +47,38 @@ const NatureRemedies = () => {
                 }`}
         >
             {isVisible && (
-                <div className="bg-green-100 py-12 px-8"> {/* Tăng padding ở trên và dưới cùng hai bên */}
-                    <h2 className="text-left text-3xl font-serif text-gray-800 mb-2">YOUR REVIEWS AND CREATIONS:</h2>
-                    <h3 className="text-left text-2xl font-semibold text-gray-700 mb-6">Nature's Remedies</h3>
+                <div className="bg-[#5c652c] py-16 px-8">
+                    <h2 className="text-left text-3xl font-serif text-white mb-2">
+                        YOUR REVIEWS AND CREATIONS:
+                    </h2>
+                    <h3 className="text-left text-2xl font-semibold text-green-100 mb-6">
+                        Nature's Remedies
+                    </h3>
                     <div className="overflow-x-auto">
-                        <div className="flex space-x-4">
+                        <div className="flex space-x-6">
                             {videos.map(video => (
                                 <div key={video.id} className="min-w-[320px] flex-shrink-0">
                                     <iframe
                                         width="320"
-                                        height="480" // Đặt chiều cao lớn hơn để có hình chữ nhật đứng
+                                        height="480"
                                         src={video.src}
                                         title={video.title}
                                         frameBorder="0"
                                         allow="autoplay; encrypted-media"
                                         allowFullScreen
-                                        className="rounded-lg shadow-lg"
+                                        className="rounded-xl shadow-xl"
                                     ></iframe>
-                                    <h4 className="mt-2 text-left text-gray-800 font-semibold">{video.title}</h4> {/* Canh trái tiêu đề */}
+                                    <h4 className="mt-3 text-left text-white font-medium">
+                                        {video.title}
+                                    </h4>
                                 </div>
                             ))}
                         </div>
                     </div>
-                </div>)}
+                </div>
+            )}
         </div>
+
     );
 };
 

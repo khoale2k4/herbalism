@@ -5,6 +5,11 @@ import Image from 'next/image';
 import VideoHeroSection from "./components/VideoHero";
 type Props = {};
 
+export const metadata = {
+  title: 'About | Herbalism',
+  description: 'Bạn có câu hỏi hoặc cần hỗ trợ? Liên hệ với Herbalism ngay để được tư vấn nhanh chóng và tận tâm.',
+};
+
 const AboutPage: FC<Props> = () => {
   return (
     <div>

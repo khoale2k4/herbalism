@@ -15,8 +15,6 @@ import { BlogPost } from "@/types/blog";
 export default function BlogPage() {
     const searchParams = useSearchParams()
     const blogId = searchParams.get('blogId')
-    // const blog = blogPosts['2'];
-    // const blog = blogPosts[blogId as string];
     const articleOp = new ArticleOperation();
     const [loading, setLoading] = useState(false);
     const [blog, setBlog] = useState<BlogPost | null>(null);
@@ -24,11 +22,16 @@ export default function BlogPage() {
     const fetchArticle = async () => {
         if (!blogId) return;
         setLoading(true);
-        console.log("blogId", blogId as string);
-        const response = await articleOp.getById(blogId as string);
-        console.log(response.data);
-        setBlog(response.data);
-        setLoading(false);
+        try {
+            console.log("blogId", blogId as string);
+            const response = await articleOp.getById(blogId as string);
+            console.log(response.data);
+            setBlog(response.data);
+        } catch (err) {
+            console.error("Error", err);
+        } finally {
+            setLoading(false);
+        }
     }
 
     useEffect(() => {

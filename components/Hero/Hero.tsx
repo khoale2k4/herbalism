@@ -29,7 +29,7 @@ const Hero = ({ img_url, h1_content, p_content, button_text, onClick, loadOnScro
                         <h1 className="text-6xl font-bold mb-4">{h1_content}</h1>
                         <p className="text-xl mb-6">{p_content}</p>
                         <button
-                            className="px-6 py-3 bg-green-600 text-white rounded-md shadow-lg hover:bg-green-700 transition"
+                            className="px-6 py-3 bg-[#5c652c] hover:bg-[#747c61] text-white rounded-md shadow-lg transition"
                             onClick={onClick}
                         >
                             {button_text}

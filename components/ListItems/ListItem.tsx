@@ -11,7 +11,7 @@ const ListItems = () => {
     return (
         <div
             ref={ref}
-            className={`relative overflow-hidden transition-opacity duration-700 min-h-[700px] ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10 bg-[#fdf8f7]"
+            className={`bg-[#fdf8f7] relative overflow-hidden transition-opacity duration-700 min-h-[700px] ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10 bg-[#fdf8f7]"
                 }`}
         >
             {isVisible && (

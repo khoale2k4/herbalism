@@ -194,7 +194,7 @@ const Dropdown: React.FC<DropdownProps> = ({
             {/* Dropdown trigger button */}
             <button
                 type="button"
-                className={`flex items-center justify-between w-full ${sizeClasses.button[size]} bg-green-800 transition-all duration-200
+                className={`flex items-center justify-between w-full ${sizeClasses.button[size]} bg-[#5c652c] transition-all duration-200
           ${variantClasses[variant]}
           ${isOpen ? 'ring-2 ring-green-500 border-green-500' : ''}
           ${disabled ? 'bg-gray-50 cursor-not-allowed opacity-70' : 'cursor-pointer'}

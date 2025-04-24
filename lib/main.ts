@@ -27,10 +27,10 @@ export class AuthOperation {
                 message: result.message,
                 data: result.data
             };
-        } catch (error) {
+        } catch (error: any) {
             return {
                 success: false,
-                message: error,
+                message: error?.message || 'Unknown error',
                 data: null
             };
         }
@@ -64,10 +64,10 @@ export class CustomerOperation {
                 message: result.message,
                 data: result.data
             };
-        } catch (error) {
+        } catch (error: any) {
             return {
                 success: false,
-                message: error,
+                message: error?.message || 'Unknown error',
                 data: null
             };
         }
@@ -94,10 +94,10 @@ export class CustomerOperation {
                 message: result.message,
                 data: result.data
             };
-        } catch (error) {
+        } catch (error: any) {
             return {
                 success: false,
-                message: error,
+                message: error?.message || 'Unknown error',
                 data: null
             };
         }
@@ -131,10 +131,10 @@ export class ArticleOperation {
                 message: result.message,
                 data: result.data
             };
-        } catch (error) {
+        } catch (error: any) {
             return {
                 success: false,
-                message: error,
+                message: error?.message || 'Unknown error',
                 data: null
             };
         }
@@ -159,10 +159,10 @@ export class ArticleOperation {
                 message: result.message,
                 data: result.data
             };
-        } catch (error) {
+        } catch (error: any) {
             return {
                 success: false,
-                message: error,
+                message: error?.message || 'Unknown error',
                 data: null
             };
         }
@@ -195,10 +195,10 @@ export class ProductOperation {
                 message: result.message,
                 data: result.data
             };
-        } catch (error) {
+        } catch (error: any) {
             return {
                 success: false,
-                message: error,
+                message: error?.message || 'Unknown error',
                 data: null
             };
         }
@@ -223,10 +223,10 @@ export class ProductOperation {
                 message: result.message,
                 data: result.data
             };
-        } catch (error) {
+        } catch (error: any) {
             return {
                 success: false,
-                message: error,
+                message: error?.message || 'Unknown error',
                 data: null
             };
         }
@@ -255,7 +255,7 @@ export class ProductOperation {
                 message: "Success",
                 data: result.url
             };
-        } catch (error) {
+        } catch (error: any) {
             console.error('Image upload error:', error);
             return {
                 success: false,
@@ -284,10 +284,10 @@ export class ProductOperation {
                 message: result.message,
                 data: result.data
             };
-        } catch (error) {
+        } catch (error: any) {
             return {
                 success: false,
-                message: error,
+                message: error?.message || 'Unknown error',
                 data: null
             };
         }
@@ -320,10 +320,10 @@ export class OrderOperation {
                 message: result.message,
                 data: result.data
             };
-        } catch (error) {
+        } catch (error: any) {
             return {
                 success: false,
-                message: error,
+                message: error?.message || 'Unknown error',
                 data: null
             };
         }
@@ -349,10 +349,10 @@ export class OrderOperation {
                 message: result.message,
                 data: result.data
             };
-        } catch (error) {
+        } catch (error: any) {
             return {
                 success: false,
-                message: error,
+                message: error?.message || 'Unknown error',
                 data: null
             };
         }
@@ -378,10 +378,10 @@ export class OrderOperation {
                 message: result.message,
                 data: result.data
             };
-        } catch (error) {
+        } catch (error: any) {
             return {
                 success: false,
-                message: error,
+                message: error?.message || 'Unknown error',
                 data: null
             };
         }
@@ -410,10 +410,10 @@ export class CartOperation {
                 message: result.message,
                 data: result.data ?? []
             };
-        } catch (error) {
+        } catch (error: any) {
             return {
                 success: false,
-                message: error,
+                message: error?.message || 'Unknown error',
                 data: null
             };
         }
@@ -435,10 +435,10 @@ export class CartOperation {
                 message: result.message,
                 data: result.data ?? []
             };
-        } catch (error) {
+        } catch (error: any) {
             return {
                 success: false,
-                message: error,
+                message: error?.message || 'Unknown error',
                 data: null
             };
         }
@@ -467,10 +467,10 @@ export class CommentOperation {
                 message: result.message,
                 data: result.data
             };
-        } catch (error) {
+        } catch (error: any) {
             return {
                 success: false,
-                message: error,
+                message: error?.message || 'Unknown error',
                 data: null
             };
         }
@@ -498,10 +498,10 @@ export class CommentOperation {
                 message: result.message,
                 data: result.data
             };
-        } catch (error) {
+        } catch (error: any) {
             return {
                 success: false,
-                message: error,
+                message: error?.message || 'Unknown error',
                 data: null
             };
         }

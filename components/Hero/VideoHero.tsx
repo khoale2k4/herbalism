@@ -31,7 +31,7 @@ const VideoHeroSection = () => {
                         <p className="mt-4 max-w-2xl">
                             {t.featured.subtitle}
                         </p>
-                        <button className="mt-6 bg-green-700 text-white px-6 py-2 rounded-full hover:bg-green-800 transition duration-300">
+                        <button className="mt-6 bg-[#5c652c] hover:bg-[#747c61] text-white px-6 py-2 rounded-full transition duration-300">
                             {t.featured.learnMore}
                         </button>
                     </div>

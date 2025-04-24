@@ -109,7 +109,7 @@ const Navbar = () => {
   return (
     <>
       {/* Top Bar */}
-      <div className="bg-green-800 text-sm py-2 px-6 flex justify-between z-60 relative">
+      <div className="bg-[#5c652c] text-sm py-2 px-6 flex justify-between z-60 relative">
         <div className="relative w-[400px] text-white h-5 overflow-hidden">
           <AnimatePresence mode="wait">
             <motion.div

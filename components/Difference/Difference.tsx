@@ -23,7 +23,7 @@ const DifferenceSection = () => {
         <RotatingText text={t.features.spinningWords} radius={38} />
       </div>
       {isVisible && (
-        <div className="bg-[#808c1c] text-white py-12 px-6">
+        <div className="bg-[#5c652c] text-white py-12 px-6">
           <div className="max-w-6xl mx-auto text-center mb-8">
             <h2 className="text-4xl font-bold">{t.features.heading}</h2>
             <p className="mt-4">

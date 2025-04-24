@@ -78,7 +78,7 @@ const WellnessCollections = () => {
             <p className="text-gray-600 max-w-2xl mx-auto mt-4">
               {t.collections.description}
             </p>
-            <button className="mt-6 bg-green-700 text-white px-6 py-2 rounded-full">
+            <button className="mt-6 bg-[#5c652c] hover:bg-[#747c61] text-white px-6 py-2 rounded-full transition duration-300">
               {t.collections.button}
             </button>
           </div>
