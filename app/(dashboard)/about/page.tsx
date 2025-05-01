@@ -13,7 +13,7 @@ export const metadata = {
 const AboutPage: FC<Props> = () => {
   return (
     <div>
-      <VideoHeroSection />
+      {/* <VideoHeroSection /> */}
       <OurPeople />
       <OurPeople description="Nestled in beautiful Cumberland, BC, Harmonic Arts is a family-owned plant medicine company devoted to supporting the health of people and the planet. In 2009, clinical herbalists Yarrow and Angela Willard identified a gap in the availability of high-quality, herbalist-formulated plant medicines. Guided by their belief in accessible herbalism, they began crafting potent, effective, and easy-to-use herbal products.
 Inspired by the natural abundance of Vancouver Island, the Willards' passion for plant medicine leads us in developing innovative herbal formulas to nurture you on your path to wellness." title="Our Story" imagePosition="left" />
