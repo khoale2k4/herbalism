@@ -358,7 +358,7 @@ export default function ProductDetail({ productId }: { productId: string }) {
                                         <ChevronDown size={18} />
                                     )}
                                 </button>
-                                <div className={`duration-300 ease-in-out overflow-hidden ${expandedTabs.includes(tab.id) ? 'max-h-40' : 'max-h-0'}`}>
+                                <div className={`duration-300 ease-in-out overflow-hidden ${expandedTabs.includes(tab.id) ? 'max-h-400' : 'max-h-0'}`}>
                                     <div
                                         className={`p-4 text-gray-700 border-t bg-gray-50 transition-max-height`}>
                                         <p className="leading-relaxed whitespace-pre-line">{tab.content}</p>
