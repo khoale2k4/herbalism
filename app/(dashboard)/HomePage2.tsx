@@ -3,7 +3,7 @@
 import Collection from "@/components/Collection/Collection";
 import DifferenceSection from "@/components/Difference/Difference";
 import Hero from "@/components/Hero/Hero";
-import VideoHeroSection from "@/components/Hero/VideoHero";
+// import VideoHeroSection from "@/components/Hero/VideoHero";
 import ImpactReport from "@/components/ImpactReport/ImpactReport";
 import ListItems from "@/components/ListItems/ListItem";
 import NatureRemedies from "@/components/NatureNamadies/NatureNamadies";
@@ -136,7 +136,7 @@ const HomePage: FC<Props> = () => {
 
   return (
     <div className="flex flex-col w-full">
-      <Hero {...headingHeroProps} />
+      {/* <Hero {...headingHeroProps} /> */}
       <WellnessCollections />
       {/* <VideoHeroSection /> */}
       <ListItems />
@@ -144,7 +144,7 @@ const HomePage: FC<Props> = () => {
       <Collection />
       <ImpactReport />
       <NatureRemedies />
-      <Hero {...customerRewardProps} />
+      {/* <Hero {...customerRewardProps} /> */}
       <TextWithImage {...blogProps_1} />
       <TextWithImage {...BCorp} />
       <ArticleCarousel articles={articles} />
