@@ -1,5 +1,5 @@
 "use client";
-import Hero from "@/components/Hero/Hero";
+import HeroImage from "@/components/Hero/Hero";
 import ProductFeatures from "@/components/ProductFeatures/ProductFeatures";
 import { FC, useEffect, useState } from "react";
 import "react-multi-carousel/lib/styles.css";
@@ -7,6 +7,7 @@ import ArticleRowList from "./components/ArticleRowList";
 import Image from 'next/image';
 import { useLanguage } from "@/hooks/useLanguage";
 import { ArticleOperation } from "@/lib/main";
+import Loading from "./read/loading";
 
 type Title = {
   title: string;
@@ -19,9 +20,14 @@ const BlogPage: FC = () => {
   const [titles, setTitles] = useState<Title[]>([]);
 
   const headingHeroProps = {
-    img_url: '/img/blogs.png',
+    images: [
+      "/img/artisan-teas.png",
+      "/img/blogs.png",
+      "/img/blog_1.png",
+    ],
+    // img_url: '/img/blogs.png',
     h1_content: t.blog.title,
-    p_content: t.blog.description,
+    p_content: [t.blog.description],
     button_text: t.blog.readMore,
     onClick: () => { }
   };
@@ -95,10 +101,10 @@ const BlogPage: FC = () => {
 
   return (
     <div className="flex flex-col w-full">
-      <Hero {...headingHeroProps} />
+      <HeroImage {...headingHeroProps} />
       <ProductFeatures {...blogProps_1} />
       {titles.length === 0 ? (
-        <p className="text-center text-gray-500 py-10">Chưa có bài viết nào.</p>
+        <div className="text-center text-gray-500 py-10 bg-[#fdf8f7]"><Loading/></div>
       ) : (
         titles.map((title, index) => (
           <ArticleRowList

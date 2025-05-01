@@ -20,7 +20,7 @@ const RotatingText = ({ text = "This is a rotating text effect!", radius = 30 })
                     fill="none"
                 />
                 <text fill="black" fontSize="14">
-                    <textPath href="#circlePath" startOffset="2%">
+                    <textPath href="#circlePath" startOffset="0%">
                         {textArray}
                     </textPath>
                 </text>

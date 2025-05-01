@@ -8,7 +8,7 @@ const useOnScreen = (threshold = 0.5, rootMargin = "100px 0px") => {
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
-                    setTimeout(() => setIsVisible(true), 700);
+                    setTimeout(() => setIsVisible(true), 500);
                 }
             },
             { threshold, rootMargin }

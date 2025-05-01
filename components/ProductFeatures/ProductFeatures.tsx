@@ -23,10 +23,10 @@ const ProductFeatures = ({
             style={{ backgroundColor: bg_color }}
         >
             <div className="flex-1 flex items-center justify-center p-6 md:p-8">
-                <img 
-                    src={img_url} 
-                    alt={title} 
-                    className="w-full h-auto max-w-md object-contain transition-transform hover:scale-105 duration-300" 
+                <img
+                    src={img_url}
+                    alt={title}
+                    className="w-full h-auto max-w-md object-contain transition-transform hover:scale-105 duration-300"
                 />
             </div>
             <div className="flex-1 flex flex-col justify-center p-6 md:p-10 space-y-4">
@@ -35,7 +35,7 @@ const ProductFeatures = ({
                 <p className="text-base md:text-lg text-gray-700 leading-relaxed">{description}</p>
                 <div className="pt-4">
                     <button
-                        className="bg-green-600 text-white rounded-lg py-2.5 px-6 text-sm md:text-base font-medium shadow-sm hover:bg-green-700 hover:shadow-md focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 focus:outline-none transition-all duration-200 transform hover:-translate-y-0.5"
+                        className="px-8 py-2.5 bg-[#3e4f3d] hover:bg-[#747c61] text-white rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl text-lg"
                         onClick={onClick}
                     >
                         {button_text}

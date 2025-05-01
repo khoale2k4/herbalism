@@ -1,7 +1,11 @@
 import { getTokenFromCookie } from "@/app/utils/token";
-import { CartOperation, OrderOperation } from "@/lib/main";
+import { CartOperation, OrderOperation, ProductOperation } from "@/lib/main";
 import { X, Plus, Minus, ShoppingBag, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
+import RelatedProducts from "../RelatedProducts";
+import { useEffect, useState } from "react";
+import { Product } from "@/types/product";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export type ItemInCart = {
     id: string;
@@ -29,11 +33,14 @@ export default function CartSidebar({
     fetchData = () => { },
     fee
 }: Props) {
+    const { t } = useLanguage();
     const formatter = new Intl.NumberFormat("vi-VN", {
         style: "currency",
         currency: "VND",
     });
     const cartOp = new CartOperation();
+    const productOp = new ProductOperation();
+    const [suggestProducts, setSuggestProducts] = useState<Product[]>([]);
 
     const subtotal = cartItems.reduce((total, item) => total + item.price * item.num, 0);
     const shippingFee = fee ?? 30000;
@@ -41,7 +48,7 @@ export default function CartSidebar({
     const router = useRouter();
 
     const handleClickProduct = (id: string) => {
-        router.push(`/product?productId=${id}`);
+        router.push(`/product/${id}`);
     }
 
     const checkout = () => {
@@ -76,6 +83,17 @@ export default function CartSidebar({
         fetchData();
     };
 
+    const fetchSuggested = async () => {
+        const response = await productOp.getSuggested();
+        if (response.success) {
+            setSuggestProducts(response.data);
+        }
+    }
+
+    useEffect(() => {
+        fetchSuggested();
+    }, [activeMenu]);
+
     return (
         <div
             className={`fixed top-0 right-0 w-full md:w-96 h-full bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${activeMenu === "cart" ? "translate-x-0" : "translate-x-full"
@@ -85,9 +103,9 @@ export default function CartSidebar({
                 {/* Header */}
                 <div className="flex justify-between items-center px-6 py-4 border-b">
                     <div className="flex items-center gap-2">
-                        <ShoppingBag size={20} className="text-green-600" />
+                        <ShoppingBag size={20} className="text-[#6e7a34]" />
                         <h3 className="text-lg font-semibold">Giỏ hàng của bạn</h3>
-                        <span className="bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded-full">
+                        <span className="bg-[#b3c27b] text-[#6e7a34] text-xs font-medium px-2 py-0.5 rounded-full">
                             {cartItems.length}
                         </span>
                     </div>
@@ -125,7 +143,7 @@ export default function CartSidebar({
                                         {item.size && (
                                             <p className="text-xs text-gray-500 mt-1">Size: {item.size}</p>
                                         )}
-                                        <p className="text-sm font-medium text-green-600 mt-1">
+                                        <p className="text-sm font-medium text-[#6e7a34] mt-1">
                                             {formatter.format(item.price)}
                                         </p>
 
@@ -133,14 +151,14 @@ export default function CartSidebar({
                                             <div className="flex items-center border rounded-md">
                                                 <button
                                                     onClick={() => handleQuantityChange(item.id, item.size, -1)}
-                                                    className="px-2 py-1 text-gray-500 hover:text-green-600 transition-colors"
+                                                    className="px-2 py-1 text-gray-500 hover:text-[#9da962] transition-colors"
                                                 >
                                                     <Minus size={14} />
                                                 </button>
                                                 <span className="px-2 text-sm">{item.num}</span>
                                                 <button
                                                     onClick={() => handleQuantityChange(item.id, item.size, 1)}
-                                                    className="px-2 py-1 text-gray-500 hover:text-green-600 transition-colors"
+                                                    className="px-2 py-1 text-gray-500 hover:text-[#9da962] transition-colors"
                                                 >
                                                     <Plus size={14} />
                                                 </button>
@@ -172,6 +190,11 @@ export default function CartSidebar({
                     )}
                 </div>
 
+                {/* <div className="px-4">
+                    <h2 className="text-2xl font-bold">{t.product.relatedProducts}</h2>
+                    <RelatedProducts products={suggestProducts} variant="cart"/>
+                </div> */}
+
                 {/* Summary */}
                 {cartItems.length > 0 && (
                     <div className="border-t px-6 py-4 bg-gray-50">
@@ -191,21 +214,21 @@ export default function CartSidebar({
                             <div className="pt-2 border-t mt-2">
                                 <div className="flex justify-between">
                                     <span className="font-medium">Tổng cộng</span>
-                                    <span className="font-medium text-green-600">
+                                    <span className="font-medium text-[#6e7a34]">
                                         {formatter.format(total)}
                                     </span>
                                 </div>
                             </div>
                         </div>
                         <div className="space-y-2">
-                            <button 
+                            <button
                                 onClick={() => checkout()}
-                                className="w-full bg-green-600 text-white py-3 rounded-md hover:bg-green-700 transition-colors font-medium">
+                                className="w-full bg-[#7d8b40] text-white py-3 rounded-md hover:bg-[#6e7a34] transition-colors font-medium">
                                 Thanh toán ngay
                             </button>
                             <button
                                 onClick={() => setActiveMenu(null)}
-                                className="w-full bg-white text-green-600 border border-green-600 py-2 rounded-md hover:bg-green-50 transition-colors text-sm"
+                                className="w-full bg-white text-[#6e7a34] border border-[#6e7a34] py-2 rounded-md hover:bg-[#6e7a34] hover:text-white transition-colors text-sm"
                             >
                                 Tiếp tục mua sắm
                             </button>

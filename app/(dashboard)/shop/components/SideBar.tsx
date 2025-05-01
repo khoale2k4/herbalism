@@ -235,7 +235,7 @@ const Sidebar = () => {
             </div>
 
             <button
-                className="w-full py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
+                className="w-full py-2 bg-[#3e4f3d] hover:bg-[#747c61] text-white rounded-md transition-colors"
                 onClick={() => console.log('Applied filters:', filters)}
             >
                 {t.shop.applyFilters}

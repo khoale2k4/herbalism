@@ -33,7 +33,7 @@ const ImageHoverComponent = () => {
                     <span>⭐⭐⭐⭐⭐</span>
                     <span className="ml-2 text-gray-600">(3)</span>
                 </div>
-                <p className="mt-2 text-[#5c652c]  font-semibold">From $22.49 CAD</p>
+                <p className="mt-2 text-[#3e4f3d]  font-semibold">From $22.49 CAD</p>
             </div>
         </div>
     );

@@ -11,7 +11,7 @@ interface MarqueeTextProps {
 const MarqueeText: React.FC<MarqueeTextProps> = ({
     words,
     speed = 10,
-    separatorImage = "/img/seperator.png", 
+    separatorImage = "/img/seperator.png",
     className = ""
 }) => {
     const marqueeRef = useRef<HTMLDivElement>(null);
@@ -57,7 +57,7 @@ const MarqueeText: React.FC<MarqueeTextProps> = ({
 
     return (
         <div
-            className={`relative overflow-hidden h-16 bg-gray-50 flex items-center px-4 ${className}`}
+            className={`relative overflow-hidden h-16 bg-gray-50 flex items-center px-4 ${className} bg-[#f2f2f2]`}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => {
                 setIsHovered(false);
@@ -71,11 +71,15 @@ const MarqueeText: React.FC<MarqueeTextProps> = ({
             >
                 {duplicatedWords.map((word, index) => (
                     <React.Fragment key={index}>
-                        <span className="text-black-100 text-2xl font-serif uppercase">
+                        <span className="text-black-100 text-2xl  uppercase">
                             {word}
                         </span>
                         {index < duplicatedWords.length - 1 && (
-                            <MadeInCanadaIcon />
+                            <img
+                                src={separatorImage}
+                                alt="separator"
+                                className="h-12 w-auto object-contain"
+                            />
                         )}
                     </React.Fragment>
                 ))}

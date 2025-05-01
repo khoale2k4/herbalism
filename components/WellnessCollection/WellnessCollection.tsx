@@ -4,6 +4,7 @@ import { useLanguage } from "@/hooks/useLanguage";
 import useOnScreen from "@/hooks/useOnScreen";
 import Image from "next/image";
 import { useRef } from "react";
+import ListItems from "../ListItems/ListItem";
 
 const WellnessCollections = () => {
   const { t } = useLanguage();
@@ -68,23 +69,23 @@ const WellnessCollections = () => {
   return (
     <div
       ref={ref}
-      className={`relative overflow-hidden transition-opacity duration-700 min-h-[600px] ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10 bg-[#fdf8f7]"
+      className={`relative overflow-hidden transition-opacity duration-700 min-h-[785px] bg-[#fdf8f7] ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
     >
       {isVisible && (
-        <div className="bg-[#fdf8f7] py-12">
+        <div className="bg-[#fdf8f7] pt-12 pb-8">
           <div className="text-center mb-12 px-6">
-            <h1 className="text-4xl font-serif text-gray-800">{t.collections.title}</h1>
+            <h1 className="text-4xl  text-gray-800">{t.collections.title}</h1>
             <p className="text-gray-600 max-w-2xl mx-auto mt-4">
               {t.collections.description}
             </p>
-            <button className="mt-6 bg-[#5c652c] hover:bg-[#747c61] text-white px-6 py-2 rounded-full transition duration-300">
+            <button className="mt-6 bg-[#3e4f3d] hover:bg-[#747c61] text-white px-6 py-2 rounded-full transition duration-300">
               {t.collections.button}
             </button>
           </div>
-
-          <div className="relative max-w-6xl mx-auto px-6">
-            <h2 className="text-2xl font-semibold font-serif text-gray-800 mb-6">{t.collections.subtitle}</h2>
+          <ListItems />
+          {/* <div className="relative max-w-6xl mx-auto px-6">
+            <h2 className="text-2xl font-semibold  text-gray-800 mb-6">{t.collections.subtitle}</h2>
 
             <div
               ref={scrollRef}
@@ -107,7 +108,7 @@ const WellnessCollections = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>)}
     </div>
   );

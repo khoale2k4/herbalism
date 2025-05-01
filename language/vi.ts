@@ -4,6 +4,7 @@ export default {
         home: "Trang chủ",
         about: "Giới thiệu",
         products: "Sản phẩm",
+        blogs: "Bài viết",
         contact: "Liên hệ",
         cart: "Giỏ hàng",
         checkout: "Thanh toán",
@@ -21,6 +22,7 @@ export default {
             vietnamese: "Tiếng Việt"
         },
         currency: {
+            vnd: "Việt Nam (VNĐ ₫)",
             cad: "Canada (CAD $)",
             usd: "Hoa Kỳ (USD $)",
             eur: "Châu Âu (EUR €)",
@@ -28,21 +30,41 @@ export default {
         }
     },
     navbar: {
-        message1: "🍁 Hỗ trợ nông dân địa phương & thu hoạch bền vững.",
-        message2: "🌎 Bao bì thân thiện với môi trường vì một hành tinh xanh.",
-        message3: "🌱 Công thức thầy thuốc thảo dược cho sức khỏe tối ưu.",
-        message4: "🌿 Đảm bảo chất lượng trong mỗi đơn hàng.",
+        message1: "Spagyric nơi tinh hoa thảo dược được tái sinh",
+        message2: "Tinh hoa dược liệu châu Á, tinh khiết trong từng giọt",
+        message3: "Công thức thầy thuốc thảo dược cho sức khỏe tối ưu.",
+        message4: "Đảm bảo chất lượng trong mỗi đơn hàng.",
         shop: "Cửa hàng",
         learn: "Tìm hiểu",
         blog: "Blog",
         about: "Về chúng tôi",
         search: "Tìm kiếm",
+        searchPlaceholders: ["Tìm kiếm...", "Sản phẩm...", "Bài viết...", "Khám phá..."],
         marquee: {
-            message1: "Chào mừng!",
-            message2: "Chúc bạn một ngày tuyệt vời!",
+            message1: "Spagyric nơi tinh hoa thảo dược được tái sinh",
+            message2: "Tinh hoa dược liệu châu Á, tinh khiết trong từng giọt",
             message3: "Khám phá các sản phẩm tuyệt vời của chúng tôi!",
             message4: "Cảm ơn bạn đã ghé thăm!"
         }
+    },
+    banner: {
+        welcome1: "Chào mừng bạn đến với Herbalism",
+        welcome2: "",
+        description1: "Nơi hội tụ những sản phẩm mang năng lượng vượt trội, hoàn toàn hữu cơ.",
+        descroption2: "Các sản phẩm của chúng tôi chứa đựng vẻ đẹp và sức mạnh kỳ diệu từ thực vật, nấm và khoáng chất, được chiết xuất theo phương pháp giả kim thuật cổ xưa, giữ trọn vẹn sự sống linh thiêng của thiên nhiên.",
+        descroption3: "Sự hồi sinh của dược liệu Tại Herbalism, chúng tôi kết hợp hài hòa giữa kỹ thuật hiện đại và phương pháp chiết xuất cổ xưa đã được truyền lại qua bao thế hệ, chúng tôi tạo ra những dòng chế phẩm Spagyric tinh khiết. Mỗi sản phẩm là kết quả của sự tận tâm, tinh tế và cam kết tuyệt đối về chất lượng.",
+        button: "Xem ngay"
+    },
+    homeVideoBanner1: {
+        title: "Alchemically Enhanced",
+        description1: "With attention and intention in every detail, Herbalism's extracts hold an incredible potency and are highly bioavailable.",
+        description2: "Through a propietary extraction method and perfectly sourced plants, Herbalism's Spagyric products contain unmatched bioactive compounds.",
+        button: "See more"
+    },
+    homeImageBanner1: {
+        title: "Spagyrics: The Old New Standard",
+        description1: "We use triple extraction methodology, ensuring that our products harness the full therapeutic potential of the plant. The synergy created by triple extraction results in a product that offers a potent representation of the plant's beneficial properties, making it a preferred choice for those seeking the utmost efficacy in herbal formulations.",
+        description2: "",
     },
     hero: {
         title: "Chào mừng đến với trang web của chúng tôi",
@@ -50,9 +72,9 @@ export default {
         button: "Mua ngay"
     },
     collections: {
-        title: "Thảo dược với mục đích",
+        title: "Từng giọt tinh chất kế thừa tinh hoa cổ xưa",
         description:
-            "Harmonic Arts cung cấp các sản phẩm thảo dược hiệu quả và dễ sử dụng, hỗ trợ bạn trên con đường chăm sóc sức khỏe.",
+            "Sự hồi sinh của dược liệu Tại Herbalism, chúng tôi kết hợp hài hòa giữa kỹ thuật hiện đại và phương pháp chiết xuất cổ xưa đã được truyền lại qua bao thế hệ, chúng tôi tạo ra những dòng chế phẩm Spagyric tinh khiết. Mỗi sản phẩm là kết quả của sự tận tâm, tinh tế và cam kết tuyệt đối về chất lượng.",
         learnMore: "Tìm hiểu thêm",
         collection: "Bộ sưu tập sức khỏe",
         button: "Tìm hiểu thêm",
@@ -80,34 +102,34 @@ export default {
         button: "MUA NGAY"
     },
     features: {
-        spinningWords: "Harmonic Arts - Thiên nhiên & Sức khỏe",
-        heading: "Harmonic Arts - Thiên nhiên & Sức khỏe",
-        subheading: "Điểm khác biệt của Harmonic Arts",
+        spinningWords: "Herbalism - Triết học và thiên nhiên",
+        heading: "Sản phẩm đến từ Herbalism",
+        subheading: "Điểm khác biệt của Herbalism",
         description:
             "Sức khỏe của khách hàng, cộng đồng và hành tinh là trọng tâm của chúng tôi. Mỗi ngày, chúng tôi gắn kết với các giá trị cốt lõi để liên tục cải thiện hoạt động và giảm thiểu tác động, đồng thời tối đa hóa lợi ích.",
         ingredients: {
             icon: "🌱",
-            title: "Thành phần từ thiên nhiên",
+            title: "Tập trung vào quả thể",
             description:
-                "Thảo mộc, nấm và siêu thực phẩm của chúng tôi được thu hoạch có trách nhiệm từ nhiều đối tác."
+                "Chúng tôi chỉ chiết xuất từ phần giàu dưỡng chất nhất – nguồn tinh túy đậm đặc và hoàn toàn loại bỏ những thành phần không cần thiết."
         },
         quality: {
             icon: "⭐",
-            title: "Chất lượng hàng đầu",
+            title: "Nguồn nguyên liệu chất lượng cao",
             description:
-                "Chúng tôi kiểm tra độ tinh khiết và độ mạnh để đảm bảo mang đến những gì tốt nhất từ thiên nhiên."
+                "Chúng tôi trực tiếp kết nối với nhà sản xuất, kiểm chứng nghiêm ngặt nguồn gốc và đảm bảo sự công bằng xuyên suốt chuỗi cung ứng."
         },
         formulated: {
             icon: "🔍",
-            title: "Công thức bởi lương y thảo dược",
+            title: "Quy trình Spagyric",
             description:
-                "Sản phẩm được các lương y thảo dược lâm sàng thiết kế cẩn thận để đảm bảo hiệu quả và dễ sử dụng."
+                "Phương pháp Spagyric của chúng tôi tái hợp ba yếu tố cốt lõi của cây: tinh thần (hoạt chất chiết xuất bằng ethanol), linh hồn (tinh dầu) và thể xác (muối khoáng)."
         },
         community: {
             icon: "🤝",
-            title: "Tư duy cộng đồng",
+            title: "Chế phẩm nền glycerin",
             description:
-                "Chúng tôi cam kết trách nhiệm xã hội và hành động để tạo tác động tích cực cho cộng đồng."
+                "Chúng tôi chiết xuất toàn bộ hoạt chất bằng ethanol, sau đó loại bỏ hoàn toàn qua chưng cất chân không và thay thế bằng glycerin thực vật dịu nhẹ."
         }
     },
     businessForGood: {
@@ -132,7 +154,7 @@ export default {
     },
     shipping: {
         title: "MIỄN PHÍ VẬN CHUYỂN",
-        description: "Đơn hàng từ $75 trở lên được miễn phí vận chuyển trong Canada."
+        description: "Đơn hàng từ 1.000.000 VNĐ trở lên được miễn phí vận chuyển trong Canada."
     },
     customerService: {
         title: "DỊCH VỤ KHÁCH HÀNG",
@@ -197,8 +219,8 @@ export default {
         description: "Chúng tôi là ai và làm gì để tạo ra sự khác biệt.",
     },
     blog: {
-        title: "Blog Harmonic Arts",
-        description: "Công thức, mẹo vặt, ý tưởng và chia sẻ sức khỏe với cộng đồng. Ghé thăm blog của chúng tôi để xem đội ngũ Harmonic Arts đang làm gì.",
+        title: "Blog Herbalism",
+        description: "Công thức, mẹo vặt, ý tưởng và chia sẻ sức khỏe với cộng đồng. Ghé thăm blog của chúng tôi để xem đội ngũ Herbalism đang làm gì.",
         readMore: "Xem thêm",
 
         notFound: "Không tìm thấy bài viết này",
@@ -207,7 +229,7 @@ export default {
 
         valuesDrivenBusiness: {
             title: "Điều gì cần để điều hành một doanh nghiệp dựa trên giá trị?",
-            excerpt: "Tại Harmonic Arts, chúng tôi luôn nỗ lực cân bằng giữa chất lượng, tính bền vững và khả năng tiếp cận. Khám phá điều gì tạo nên một doanh nghiệp dựa trên giá trị.",
+            excerpt: "Tại Herbalism, chúng tôi luôn nỗ lực cân bằng giữa chất lượng, tính bền vững và khả năng tiếp cận. Khám phá điều gì tạo nên một doanh nghiệp dựa trên giá trị.",
             readMore: "XEM THÊM"
         },
 
@@ -322,7 +344,7 @@ export default {
         productLeft: "Còn lại trong kho",
         addCart: "Thêm vào giỏ hàng",
         addToCartSuccess: "Đã thêm vào giỏ hàng thành công",
-        freeShipping: "Miễn phí vận chuyển cho đơn hàng từ $75",
+        freeShipping: "Miễn phí vận chuyển cho đơn hàng từ 1.000.000 VNĐ",
         quality: "Đảm bảo chất lượng",
         refundIn30Days: "Hoàn tiền trong 30 ngày",
         productDetail: "Chi tiết sản phẩm",
@@ -335,6 +357,7 @@ export default {
         submit: "Gửi",
         addedToCartSuccess: "Đã thêm vào giỏ hàng thành công",
         addToCartError: "Có lỗi xảy ra khi thêm vào giỏ hàng",
+        relatedProducts: "Các sản phẩm liên quan"
     },
     footer: {
         company: {
@@ -362,7 +385,7 @@ export default {
             blog: "Blog"
         },
         copyright:
-            "© 2025 Harmonic Arts. Cung cấp thảo dược với mục đích từ năm 2009.",
+            "© 2025 Herbalism. Cung cấp thảo dược với mục đích từ năm 2009.",
         byShopify: "Trên Shopify bởi Voltage"
     }
 };

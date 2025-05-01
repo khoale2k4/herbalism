@@ -11,8 +11,8 @@ interface MadeInCanadaIconProps {
 const MadeInCanadaIcon: React.FC<MadeInCanadaIconProps> = ({
     size = 48,
     className = '',
-    fillColor = '#5D652C',
-    strokeColor = '#4A3829',
+    fillColor = "#FAEBD7",
+    strokeColor = "#C7B299",
     ariaHidden = true,
 }) => {
     return (

@@ -28,11 +28,11 @@ const ImpactReport = () => {
                 <div className="ml-6 mt-4 lg:mt-0 flex items-center">
                     <div>
                         <h3 className="text-lg font-semibold text-gray-600">GOOD FOR YOU, GOOD FOR THE PLANET</h3>
-                        <h2 className="text-4xl font-serif text-gray-800 mt-2">Our 2024 Impact Report is Here!</h2>
+                        <h2 className="text-4xl  text-gray-800 mt-2">Our 2024 Impact Report is Here!</h2>
                         <p className="mt-4 text-gray-700">
                             We are committed to nurturing the connection between people and planet through our values-led initiatives. Driven by this purpose, we strive to stay rooted in nature and continuously prioritize regenerative actions that help us put the earth first. Read our 2024 Impact Report to learn about the intentional steps we took towards a healthier planet last year.
                         </p>
-                        <button className="mt-6 bg-[#5c652c] text-white px-4 py-2 rounded hover:bg-[#747c61] transition duration-300">
+                        <button className="mt-6 bg-[#3e4f3d] text-white px-4 py-2 rounded hover:bg-[#747c61] transition duration-300">
                             READ NOW
                         </button>
                     </div>

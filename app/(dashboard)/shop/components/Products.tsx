@@ -18,7 +18,7 @@ const ProductsList = ({ showSidebar, filteredProducts, setSearchQuery, viewMode 
     setSearchQuery(event.target.value);
   };
   const handleClickProduct = (id: string) => {
-    router.push(`/product?productId=${id}`);
+    router.push(`/product/${id}`);
   }
 
   return (<div className="container mx-auto py-6 px-4">

@@ -33,7 +33,7 @@ const OurPeople = ({
 
             <div className={`container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center ${imagePosition === 'left' ? 'md:grid-cols-[1fr_auto]' : ''}`}>
                 <div className={`order-2 ${imagePosition === 'left' ? 'md:order-1 md:pr-12' : 'md:order-2 md:pl-12'}`}>
-                    <h2 className="text-4xl font-serif text-gray-800 mb-6">{title}</h2>
+                    <h2 className="text-4xl  text-gray-800 mb-6">{title}</h2>
                     <p className="text-gray-600 leading-relaxed">{description}</p>
                 </div>
 

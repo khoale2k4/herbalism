@@ -7,16 +7,16 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @font-face {
-	font-family: 'Montserrat-VariableFont_wght';
-	src: url('/fonts/Montserrat-VariableFont_wght.ttf') format('truetype');
+@font-face {
+	font-family: 'NunitoSans-Regular';
+	src: url('/fonts/NunitoSans-Regular.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 }
 
 body {
-  font-family: 'font-serif', sans-serif;
-} */
+	font-family: 'NunitoSans-Regular', sans-serif;
+}
 
 @layer base {
 	html {
@@ -41,6 +41,21 @@ input.defaultCheckbox::before {
 
 input:checked.defaultCheckbox::before {
 	opacity: 1;
+}
+
+.swiper-pagination-bullet {
+	background-color: #c3d4c0;
+	opacity: 1;
+	margin: 0 4px;
+	width: 10px;
+	height: 10px;
+	border-radius: 9999px;
+}
+
+.swiper-pagination-bullet-active {
+	background-color: #3e4f3d;
+	width: 12px;
+	height: 12px;
 }
 
 /* SCROLLBAR */

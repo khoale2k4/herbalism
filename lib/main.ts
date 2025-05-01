@@ -4,7 +4,7 @@ export class AuthOperation {
     private baseUrl: string;
 
     constructor() {
-        this.baseUrl = (process.env.API_HOST || "http://localhost:3000") + '/auth';
+        this.baseUrl = (process.env.NEXT_PUBLIC_API_HOST || "http://localhost:3000") + '/auth';
     }
 
     async login(mail: string, password: string) {
@@ -41,7 +41,40 @@ export class CustomerOperation {
     private baseUrl: string;
 
     constructor() {
-        this.baseUrl = (process.env.API_HOST || "http://localhost:3000") + '/customer';
+        this.baseUrl = (process.env.NEXT_PUBLIC_API_HOST || "http://localhost:3000") + '/customer';
+    }
+
+    async getInfo(token: string) {
+        try {
+            const response = await fetch(this.baseUrl, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+            });
+
+            const result = await response.json();
+            if (!response.ok) {
+                return {
+                    success: false,
+                    message: result.message,
+                    data: null
+                };
+            }
+
+            return {
+                success: true,
+                message: result.message,
+                data: result.data
+            };
+        } catch (error: any) {
+            return {
+                success: false,
+                message: error?.message || 'Unknown error',
+                data: null
+            };
+        }
     }
 
     async getAddress(token: string) {
@@ -102,14 +135,14 @@ export class CustomerOperation {
             };
         }
     }
-    
+
 }
 
 export class ArticleOperation {
     private baseUrl: string;
 
     constructor() {
-        this.baseUrl = (process.env.API_HOST || "http://localhost:3000") + '/article';
+        this.baseUrl = (process.env.NEXT_PUBLIC_API_HOST || "http://localhost:3000") + '/article';
     }
 
     async getAll() {
@@ -173,7 +206,7 @@ export class ProductOperation {
     private baseUrl: string;
 
     constructor() {
-        this.baseUrl = (process.env.API_HOST || "http://localhost:3000") + '/product';
+        this.baseUrl = (process.env.NEXT_PUBLIC_API_HOST || "http://localhost:3000") + '/product';
     }
 
     async getAll() {
@@ -292,13 +325,41 @@ export class ProductOperation {
             };
         }
     }
+
+    async getSuggested() {
+        try {
+            const response = await fetch(this.baseUrl + '/suggest', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Get article failed with status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            return {
+                success: result.success,
+                message: result.message,
+                data: result.data
+            };
+        } catch (error: any) {
+            return {
+                success: false,
+                message: error?.message || 'Unknown error',
+                data: null
+            };
+        }
+    }
 }
 
 export class OrderOperation {
     private baseUrl: string;
 
     constructor() {
-        this.baseUrl = (process.env.API_HOST || "http://localhost:3000") + '/order';
+        this.baseUrl = (process.env.NEXT_PUBLIC_API_HOST || "http://localhost:3000") + '/order';
     }
 
     async getFee() {
@@ -329,7 +390,7 @@ export class OrderOperation {
         }
     }
 
-    async getUnpaid(token: string){
+    async getUnpaid(token: string) {
         try {
             const response = await fetch(this.baseUrl + '/unpaid', {
                 method: 'GET',
@@ -392,7 +453,7 @@ export class CartOperation {
     private baseUrl: string;
 
     constructor() {
-        this.baseUrl = (process.env.API_HOST || "http://localhost:3000") + '/cart';
+        this.baseUrl = (process.env.NEXT_PUBLIC_API_HOST || "http://localhost:3000") + '/cart';
     }
 
     async getMyCartItems(token: string) {
@@ -449,7 +510,7 @@ export class CommentOperation {
     private baseUrl: string;
 
     constructor() {
-        this.baseUrl = (process.env.API_HOST || "http://localhost:3000") + '/comment';
+        this.baseUrl = (process.env.NEXT_PUBLIC_API_HOST || "http://localhost:3000") + '/comment';
     }
 
     async checkComment(productId: string, token: string) {
@@ -476,16 +537,16 @@ export class CommentOperation {
         }
     }
 
-    async createComment(dto: CreateCommentDto, token: string) {
+    async createComment(dto: CreateCommentDto, token: string | null) {
         try {
             const response = await fetch(this.baseUrl + '/create', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': "Bearer " + token
+                    'Authorization': "Bearer " + (token ?? "")
                 },
                 body: JSON.stringify(
-                    { 
+                    {
                         content: dto.content,
                         rate: dto.rate,
                         productId: dto.productId

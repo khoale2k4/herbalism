@@ -47,8 +47,8 @@ const NatureRemedies = () => {
                 }`}
         >
             {isVisible && (
-                <div className="bg-[#5c652c] py-16 px-8">
-                    <h2 className="text-left text-3xl font-serif text-white mb-2">
+                <div className="bg-[#3e4f3d] py-16 px-8">
+                    <h2 className="text-left text-3xl  text-white mb-2">
                         YOUR REVIEWS AND CREATIONS:
                     </h2>
                     <h3 className="text-left text-2xl font-semibold text-green-100 mb-6">

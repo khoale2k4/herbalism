@@ -23,7 +23,7 @@ const NewProductComponent = () => {
                     <p className="mt-2 text-gray-600">
                         {t.newProduct.description}
                     </p>
-                    <button className="mt-4 w-full bg-[#5c652c] hover:bg-[#747c61] text-white px-4 py-2 rounded-full transition-all duration-300 ease-in-out">
+                    <button className="mt-4 w-full bg-[#3e4f3d] hover:bg-[#747c61] text-white px-4 py-2 rounded-full transition-all duration-300 ease-in-out">
                         {t.newProduct.button}
                     </button>
                 </div>

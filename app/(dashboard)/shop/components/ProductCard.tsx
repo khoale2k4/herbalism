@@ -26,7 +26,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, viewMode, onClick })
                         <span className="text-sm text-gray-600">{product.rate}</span>
                     </div>
                 </div>
-                <div className="text-lg font-semibold text-green-600">
+                <div className="text-lg font-semibold text-[#3e4f3d]">
                     ${product.price.toFixed(2)}
                 </div>
             </div>
@@ -50,7 +50,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, viewMode, onClick })
                         <FiStar className="text-yellow-400 mr-1" />
                         <span className="text-sm text-gray-600">{product.rate}</span>
                     </div>
-                    <div className="text-lg font-semibold text-green-600">
+                    <div className="text-lg font-semibold text-[#3e4f3d]">
                         ${product.price.toFixed(2)}
                     </div>
                 </div>

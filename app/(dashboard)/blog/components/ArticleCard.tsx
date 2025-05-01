@@ -5,7 +5,7 @@ const ArticleCard = ({ article }: { article: Article }) => {
     const router = useRouter();
   
     const handleClick = () => {
-        router.push(`/blog/read?blogId=${article.id}`);
+        router.push(`/blog/${article.id}`);
     };
     
     return (

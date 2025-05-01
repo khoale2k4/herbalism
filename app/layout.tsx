@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
 import { useLanguage } from '@/hooks/useLanguage';
 import ClientOnly from '@/components/ClientOnly/ClientOnly';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'Herbalism - Home',
@@ -28,7 +29,7 @@ export default function RootLayout({
     <html lang="vi">
       <body className="min-h-screen flex flex-col">
         <ClientOnly>
-          <main className="flex-1">{children}</main>
+          <Suspense >{children}</Suspense>
         </ClientOnly>
       </body>
     </html>

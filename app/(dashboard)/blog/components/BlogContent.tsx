@@ -9,7 +9,7 @@ interface BlogContentProps {
 const BlogContent = ({ children }: BlogContentProps) => {
   return (
     <div className="prose prose-lg max-w-none dark:prose-invert 
-                  prose-headings:font-serif prose-headings:font-normal
+                  prose-headings: prose-headings:font-normal
                   prose-p:leading-relaxed prose-p:text-justify
                   prose-img:rounded-xl prose-img:shadow-lg
                   prose-blockquote:border-l-4 prose-blockquote:border-primary
@@ -52,9 +52,9 @@ const processContent = (content: ReactNode[]) => {
     if (typeof item.type === 'string') {
       switch (item.type) {
         case 'h1':
-          return <h1 key={index} className="text-4xl mt-12 mb-6 font-serif">{item.props.children}</h1>;
+          return <h1 key={index} className="text-4xl mt-12 mb-6 ">{item.props.children}</h1>;
         case 'h2':
-          return <h2 key={index} className="text-3xl mt-10 mb-5 font-serif">{item.props.children}</h2>;
+          return <h2 key={index} className="text-3xl mt-10 mb-5 ">{item.props.children}</h2>;
         case 'h3':
           return <h3 key={index} className="text-2xl mt-8 mb-4">{item.props.children}</h3>;
         case 'ul':

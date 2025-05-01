@@ -194,10 +194,10 @@ const Dropdown: React.FC<DropdownProps> = ({
             {/* Dropdown trigger button */}
             <button
                 type="button"
-                className={`flex items-center justify-between w-full ${sizeClasses.button[size]} bg-[#5c652c] transition-all duration-200
+                className={`flex items-center justify-between w-full ${sizeClasses.button[size]} transition-all duration-200
           ${variantClasses[variant]}
           ${isOpen ? 'ring-2 ring-green-500 border-green-500' : ''}
-          ${disabled ? 'bg-gray-50 cursor-not-allowed opacity-70' : 'cursor-pointer'}
+          ${disabled ? 'cursor-not-allowed opacity-70' : 'cursor-pointer'}
           ${buttonClassName}`}
                 onClick={toggleDropdown}
                 disabled={disabled}
@@ -325,7 +325,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                                             key={option.value}
                                             className={`
                         ${sizeClasses.option[size]} cursor-pointer transition-colors duration-150 flex items-center
-                        ${option.disabled ? 'opacity-50 cursor-not-allowed bg-gray-50' : ''}
+                        ${option.disabled ? 'opacity-50 cursor-not-allowed' : ''}
                         ${isSelected ? `bg-green-50 text-green-700 ${selectedClassName}` : 'hover:bg-gray-50 text-gray-700'}
                         ${optionClassName}
                       `}

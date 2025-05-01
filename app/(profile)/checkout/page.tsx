@@ -1,12 +1,12 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react'
 import PaymentStatus from './components/PaymentStatus';
 import { ItemInCart } from '@/components/Cart/cart';
 import { CartOperation, CustomerOperation, OrderOperation } from '@/lib/main';
 import { getTokenFromCookie } from '@/app/utils/token';
-import { SaveIcon } from 'lucide-react';
+import { CreditCard, SaveIcon } from 'lucide-react';
 
 export type Address = {
     id: string;
@@ -18,6 +18,12 @@ export type Address = {
     city: string;
     country: string;
     zipCode: string;
+}
+
+export type Voucher = {
+    id: string;
+    discount: number;
+    type: string;
 }
 
 export type CardPayment = {
@@ -37,6 +43,7 @@ export type PaypalPayment = {
 
 export default function CheckoutPage() {
     const searchParams = useSearchParams();
+    const router = useRouter();
     const success = searchParams.get('success');
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
@@ -66,7 +73,9 @@ export default function CheckoutPage() {
     const [isChecked, setIsChecked] = useState(false);
     const [cartItems, setCartItems] = useState<ItemInCart[]>([]);
     const [savedAddresses, setSavedAddresses] = useState<Address[]>([]);
-
+    const [showVoucher, setShowVoucher] = useState(false);
+    const [voucherCode, setVoucherCode] = useState('');
+    const [selectedVoucher, setSelectedVoucher] = useState<Voucher | null>(null);
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
     };
@@ -99,7 +108,6 @@ export default function CheckoutPage() {
             setPayment({} as PaypalPayment);
         }
     }
-
 
     const handleAddressChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedId = e.target.value;
@@ -143,6 +151,11 @@ export default function CheckoutPage() {
             name: 'Ví MoMo',
             icon: '💜'
         },
+        {
+            id: 'pay-later',
+            name: 'Thanh toán khi nhận',
+            icon: ''
+        }
     ];
 
     // const cartItems: ItemInCart = [
@@ -151,9 +164,22 @@ export default function CheckoutPage() {
     //     { id: 3, name: 'Giày thể thao', price: 500000, quantity: 1 }
     // ]
 
-    const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.num), 0)
+    const [subtotal, setSubtotal] = useState(0);
     const [shippingFee, setShippingFee] = useState<number>(0);
-    const total = subtotal + shippingFee
+    const [total, setTotal] = useState(0);
+
+    const calculateFee = async () => {
+        const newSubtotal = cartItems.reduce((sum, item) => sum + (item.price * item.num), 0);
+        setSubtotal(newSubtotal);
+
+        const feeResponse = await orderOp.getFee();
+        if (feeResponse.success) {
+            const newShippingFee = feeResponse.data;
+            setShippingFee(newShippingFee);
+        } else {
+            setShippingFee(0);
+        }
+    }
 
     const handleInputChange = (e: any) => {
         const { name, value } = e.target
@@ -196,6 +222,58 @@ export default function CheckoutPage() {
             .replace(/\s₫/, '₫')
     }
 
+    const checkValid = () => {
+        if (step === 1) {
+            return !formData.firstName || !formData.lastName || !formData.email || !formData.phone || !formData.addressId;
+        }
+
+        if (step === 2) {
+            if (formData.paymentMethod === 'credit-card') {
+                const card = payment as CardPayment;
+                return (
+                    card.number.replace(/\s+/g, '').length !== 16 ||
+                    card.cvc.length !== 3 ||
+                    !/^(0[1-9]|1[0-2])\/\d{2}$/.test(card.date)
+                );
+            }
+
+            if (formData.paymentMethod === 'paypal' || formData.paymentMethod === 'momo' || formData.paymentMethod === 'pay-later') {
+                return false;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    const handleSubmit = async () => {
+        const token = getTokenFromCookie();
+        if (!token) return;
+        let passValue: {
+            id: string;
+            number?: string;
+            cvc?: string;
+            date?: string;
+            name?: string;
+        } = {
+            id: formData.paymentMethod,
+        }
+        if (formData.paymentMethod === 'credit-card') {
+            passValue = {
+                ...passValue,
+                number: (payment as CardPayment).number,
+                cvc: (payment as CardPayment).cvc,
+                date: (payment as CardPayment).date,
+                name: (payment as CardPayment).name
+            };
+        }
+        sessionStorage.setItem('paymentMethod', JSON.stringify(passValue));
+        router.push('/checkout/pending');
+
+        // const response = await orderOp.createFromCart(token);
+    }
+
     const fetchProcessingOrder = async () => {
         const token = getTokenFromCookie();
         if (!token) return;
@@ -211,10 +289,6 @@ export default function CheckoutPage() {
                     size: product.size
                 } as ItemInCart;
             }))
-        }
-        const feeResponse = await orderOp.getFee();
-        if (feeResponse.success) {
-            setShippingFee(feeResponse.data);
         }
     }
 
@@ -245,6 +319,17 @@ export default function CheckoutPage() {
         fetchAddress();
     }, [])
 
+    useEffect(() => {
+        if (cartItems.length > 0) {
+            calculateFee();
+        }
+    }, [cartItems]);
+
+    useEffect(() => {
+        const newFee = subtotal + shippingFee - (selectedVoucher?.type === 'amount' ? selectedVoucher?.discount : subtotal * (selectedVoucher?.discount || 1) || 0);
+        setTotal(newFee > 0 ? newFee : 0);
+    }, [subtotal, shippingFee, selectedVoucher]);
+
     return (
         <div className="min-h-screen bg-[#fdf8f7] font-sans text-gray-800">
             <div className="max-w-6xl mx-auto px-4 py-10">
@@ -262,12 +347,12 @@ export default function CheckoutPage() {
                             {[1, 2, 3].map((i) => (
                                 <div key={i} className="flex flex-col items-center relative">
                                     <div className={`w-9 h-9 rounded-full flex items-center justify-center shadow-sm transition-all duration-300
-                                        ${step > i ? 'bg-blue-500 text-white' :
-                                            step === i ? 'bg-blue-600 text-white ring-4 ring-blue-100' :
+                                        ${step > i ? 'bg-[#6e7a34] text-white' :
+                                            step === i ? 'bg-[#6e7a34] text-white ring-4 ring-blue-100' :
                                                 'bg-white text-gray-400 border border-gray-200'}`}>
                                         {step > i ? '✓' : i}
                                     </div>
-                                    <span className={`text-xs font-medium mt-2 ${step >= i ? 'text-blue-600' : 'text-gray-500'}`}>
+                                    <span className={`text-xs font-medium mt-2 ${step >= i ? 'text-[#6e7a34]' : 'text-gray-500'}`}>
                                         {i === 1 ? 'Thông tin' : i === 2 ? 'Thanh toán' : 'Xác nhận'}
                                     </span>
                                 </div>
@@ -327,8 +412,8 @@ export default function CheckoutPage() {
                                                         id="new-address"
                                                         name="address-type"
                                                         checked={newAddress}
-                                                        className="mr-2"
                                                         onChange={() => setNewAddress(true)}
+                                                        className="mr-2 h-4 w-4 text-[#b3c27b] focus:ring-[#b3c27b] border-gray-300"
                                                     />
                                                     <label htmlFor="new-address" className="font-medium">Use a new address</label>
                                                 </div>
@@ -339,11 +424,12 @@ export default function CheckoutPage() {
                                                         id="saved-address"
                                                         name="address-type"
                                                         checked={!newAddress}
-                                                        className="mr-2"
                                                         onChange={() => setNewAddress(false)}
+                                                        className="mr-2 h-4 w-4 text-[#b3c27b] focus:ring-[#b3c27b] border-gray-300"
                                                     />
                                                     <label htmlFor="saved-address" className="font-medium">Use saved address</label>
                                                 </div>
+
                                             </div>
 
                                             {!newAddress && <div>
@@ -504,10 +590,13 @@ export default function CheckoutPage() {
                                         <button
                                             key={method.id}
                                             className={`px-4 py-2 font-medium text-sm focus:outline-none ${formData.paymentMethod === method.id
-                                                ? 'text-blue-600 border-b-2 border-blue-600'
+                                                ? 'text-[#6e7a34] border-b-2 border-[#6e7a34]'
                                                 : 'text-gray-500 hover:text-gray-700'
                                                 }`}
-                                            onClick={() => setFormData(prev => ({ ...prev, paymentMethod: method.id }))}
+                                            onClick={() => {
+                                                setFormData(prev => ({ ...prev, paymentMethod: method.id }));
+                                                console.log(formData);
+                                            }}
                                         >
                                             {method.name}
                                         </button>
@@ -603,6 +692,24 @@ export default function CheckoutPage() {
                                             </div>
                                         </div>
                                     )}
+
+                                    {formData.paymentMethod === 'pay-later' && (
+                                        <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                                            <div className="flex items-start">
+                                                <div className="flex-shrink-0 text-yellow-500 mr-3 mt-1">
+                                                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9z" clipRule="evenodd" />
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <h3 className="font-medium text-yellow-800">Thanh toán khi nhận hàng</h3>
+                                                    <p className="text-sm text-yellow-700 mt-1">
+                                                        Tiến hành thanh toán khi đã nhận được hàng.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         )}
@@ -656,7 +763,7 @@ export default function CheckoutPage() {
 
                                             <button
                                                 onClick={() => setStep(1)}
-                                                className="mt-4 text-sm text-blue-600 hover:text-blue-800 flex items-center"
+                                                className="mt-4 text-sm text-[#8a974c] hover:text-[#6e7a34] flex items-center"
                                             >
                                                 <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -697,7 +804,7 @@ export default function CheckoutPage() {
 
                                             <button
                                                 onClick={() => setStep(2)}
-                                                className="mt-4 text-sm text-blue-600 hover:text-blue-800 flex items-center"
+                                                className="mt-4 text-sm text-[#8a974c] hover:text-[#6e7a34] flex items-center"
                                             >
                                                 <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -737,22 +844,17 @@ export default function CheckoutPage() {
 
                             {step < 3 ? (
                                 <button
-                                    onClick={() => { handleNextStep(); if (step === 1 && newAddress) saveAddress(); }}
-                                    disabled={(step === 1 &&
-                                        (newAddress && (!formData.email || !formData.phone || !formData.address || !formData.province || !formData.zipCode)) ||
-                                        (!newAddress && (!formData.email || !formData.phone || !formData.address))) ||
-                                        (step === 2 && 
-                                            ((formData.paymentMethod === 'credit-card' && (payment as CardPayment).number.replace(/\s+/g, '').length !== 16 || (payment as CardPayment).cvc.length !== 3 || !/^(0[1-9]|1[0-2])\/\d{2}$/.test((payment as CardPayment).date)) || 
-                                            !formData.paymentMethod)
-                                        )}
+                                    onClick={() => {
+                                        if (step === 1 && newAddress) {
+                                            saveAddress();
+                                        }
+                                        handleNextStep();
+                                    }}
+                                    disabled={checkValid()}
                                     className={`px-5 py-2.5 rounded-lg text-white font-medium transition-all flex items-center shadow-sm
-                                        ${((step === 1 && (newAddress && (!formData.email || !formData.phone || !formData.address || !formData.province || !formData.zipCode)) ||
-                                            (!newAddress && (!formData.email || !formData.phone || !formData.address))) ||
-                                            (step === 2 && 
-                                                ((formData.paymentMethod === 'credit-card' && (payment as CardPayment).number.replace(/\s+/g, '').length !== 16 || (payment as CardPayment).cvc.length !== 3 || !/^(0[1-9]|1[0-2])\/\d{2}$/.test((payment as CardPayment).date)) || 
-                                                !formData.paymentMethod)))
+                                            ${checkValid()
                                             ? 'bg-gray-400 cursor-not-allowed opacity-70'
-                                            : 'bg-blue-600 hover:bg-blue-700'}`}
+                                            : 'bg-[#8a974c] hover:bg-[#6e7a34]'}`}
                                 >
                                     Tiếp tục
                                     <svg className="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -763,10 +865,11 @@ export default function CheckoutPage() {
                                 <button
                                     onClick={() => {
                                         console.log(formData);
-                                        alert('Đơn hàng đã được xác nhận!');
+                                        // alert('Đơn hàng đã được xác nhận!');
+                                        handleSubmit();
                                     }}
                                     disabled={false && success !== "success"}
-                                    className="px-5 py-2.5 bg-green-600 rounded-lg text-white hover:bg-green-700 font-medium transition-colors shadow-sm"
+                                    className="px-5 py-2.5 rounded-lg text-white bg-[#8a974c] hover:bg-[#6e7a34] font-medium transition-colors shadow-sm"
                                 >
                                     Hoàn tất đơn hàng
                                 </button>
@@ -811,9 +914,41 @@ export default function CheckoutPage() {
                                 <span className="text-gray-600">Phí vận chuyển:</span>
                                 <span>{formatCurrency(shippingFee)}</span>
                             </div>
+
+                            <div className="flex flex-col gap-2">
+                                <label htmlFor="voucherInput" className="text-gray-600 font-medium">
+                                    Mã giảm giá:
+                                </label>
+                                <div className="flex gap-2 items-center">
+                                    <input
+                                        id="voucherInput"
+                                        type="text"
+                                        value={voucherCode}
+                                        onChange={(e) => setVoucherCode(e.target.value)}
+                                        placeholder="Nhập mã voucher..."
+                                        className="border border-gray-300 px-3 py-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-[#8a974c]"
+                                    />
+                                    <button
+                                        onClick={() => { }}
+                                        className="bg-[#8a974c] hover:bg-[#6e7a34] text-white px-2 py-2 rounded min-w-[100px]"
+                                    >
+                                        Áp dụng
+                                    </button>
+                                </div>
+                                {/* {voucherError && (
+                                    <div className="text-red-500 text-sm">{voucherError}</div>
+                                )} */}
+                                {selectedVoucher && (
+                                    <div className="text-green-600 text-sm">
+                                        ✅ Đã áp dụng mã: <strong>{selectedVoucher.id}</strong> - Giảm {selectedVoucher.discount}%
+                                    </div>
+                                )}
+                            </div>
+
+
                             <div className="flex justify-between font-bold text-lg pt-3 border-t border-gray-100">
                                 <span>Tổng cộng:</span>
-                                <span className="text-blue-700">{formatCurrency(total)}</span>
+                                <span className="text-[#6e7a34]">{formatCurrency(total)}</span>
                             </div>
                         </div>
 
