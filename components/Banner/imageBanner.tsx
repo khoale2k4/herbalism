@@ -45,7 +45,7 @@ const ImageBanner = ({ title, button = null, description, description2 = null, i
                             initial={{ scale: 1, opacity: 1, y: 500 }}
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             transition={{ duration: 2, ease: 'easeOut' }}
-                            className={`bg-white p-6 shadow-xl max-w-sm m${imagePos === 'left' ? 'l' : 'r'}-10`}
+                            className={`bg-white p-6 shadow-xl max-w-sm ${imagePos === 'left' ? 'ml-10' : 'mr-10'}`}
                         >
                             <h2 className="text-xl font-bold mb-2">{title}</h2>
                             <p className="mb-4 text-gray-700">{description}</p>

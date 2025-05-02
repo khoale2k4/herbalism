@@ -206,208 +206,213 @@ const Navbar = () => {
       </div>
 
       {/* Navbar */}
-      <nav className="sticky top-0 z-50 bg-[#3e4f3d] shadow-sm py-4 px-6 flex justify-between items-center text-[#c7b299]">
-        <button
-          className="md:hidden relative text-[#c7b299]"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          <Menu size={24} />
-        </button>
-        <a href="/">
-          <div className="md:hidden relative w-[150px] h-[30px]">
-            <Image
-              src="/img/logo-with-word.png"
-              alt="Logo"
-              fill
-              className="object-contain"
-              sizes="80px"
-            />
-          </div>
-        </a>
-        <div className="hidden md:flex items-center space-x-8">
-          <a href="/">
-            <div className="relative w-[150px] h-[30px]">
-              <Image
-                src="/img/logo-with-word.png"
-                alt="Logo"
-                fill
-                className="object-contain"
-                sizes="80px"
-              />
-            </div>
-          </a>
-
-          {/* Shop Dropdown */}
-          <div className="relative group">
-            <span className="cursor-pointer flex items-center gap-1 py-2 border-b-2 border-transparent group-hover:border-[#6e7a34] transition-all duration-300">
-              <a
-                href="/shop"
-              >
-                {t.navbar.shop}
-              </a>
-              <svg className="w-4 h-4 transform group-hover:rotate-180 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </span>
-            <div className="absolute top-full left-0 overflow-hidden max-h-0 group-hover:max-h-60 transition-all duration-300 w-48 bg-white shadow-lg rounded-b-lg">
-              <div className="p-1">
-                {["Herbs", "Teas", "Supplements"].map(label => (
-                  <a
-                    key={label}
-                    href="#"
-                    className="block p-3 hover:bg-gray-50 transition-colors rounded my-1 border-l-2 border-transparent hover:border-[#6e7a34]"
-                  >
-                    {label}
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-          <a
-            href="/blog"
-            className="cursor-pointer py-2 border-b-2 border-transparent hover:border-[#6e7a34] transition-all duration-300"
-          >
-            {t.navbar.learn}
-          </a>
-          <a
-            href="/about"
-            className="cursor-pointer py-2 border-b-2 border-transparent hover:border-[#6e7a34] transition-all duration-300"
-          >
-            {t.navbar.about}
-          </a>
-        </div>
-
-        {/* Hiển thị SearchBar khi searchBoxOpen = true */}
-        {searchBoxOpen && (
-          <SearchBar
-            backgroundColor="#5f735d"
-            textColor="#f4e3b2"
-          />
-        )}
-
-        <div className="flex items-center space-x-4">
-          {/* User Menu */}
-          {
-            user && <div className="hidden md:relative">
-              <button
-                className="group p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 focus:outline-none flex items-center gap-2"
-                onClick={() => setActiveMenu(activeMenu === "user" ? null : "user")}
-                aria-expanded={activeMenu === "user"}
-                aria-haspopup="true"
-              >
-                <div className="relative">
-                  <UserCircle size={24} className="text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-[#6e7a34] transition-colors" />
-                  <span className="ab÷solute -bottom-1 -right-1 w-3 h-3 bg-[#6e7a34] rounded-full border-2 border-white dark:border-gray-900"></span>
-                </div>
-                <span className="hidden sm:inline text-sm font-medium text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-[#6e7a34] transition-colors">{t.common.account}</span>
-                <ChevronDown size={16} className={`hidden sm:block text-gray-500 transition-transform duration-300 ${activeMenu === "user" ? "rotate-180" : ""}`} />
-              </button>
-
-              <div
-                className={`absolute right-0 bg-white dark:bg-gray-900 shadow-lg w-48 mt-2 py-2 z-40 rounded-lg transform transition-all duration-200 origin-top-right border border-gray-100 dark:border-gray-800 ${activeMenu === "user"
-                  ? "opacity-100 scale-100"
-                  : "opacity-0 scale-95 pointer-events-none"
-                  }`}
-              >
-                <div className="px-4 py-2 border-b border-gray-100 dark:border-gray-800">
-                  <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{user.name}</p>
-                  <p className="text-xs text-gray-500">{user.mail}</p>
-                </div>
-
-                <div className="py-1">
-                  <a
-                    href="#"
-                    className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 group"
-                  >
-                    <Package size={18} className="text-gray-500 group-hover:text-[#6e7a34] dark:group-hover:text-green-500" />
-                    <span>{t.common.orders}</span>
-                  </a>
-
-                  <a
-                    href="#"
-                    className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 group"
-                  >
-                    <UserCircle size={18} className="text-gray-500 group-hover:text-[#6e7a34] dark:group-hover:text-green-500" />
-                    <span>{t.common.info}</span>
-                  </a>
-
-                  <a
-                    href="#"
-                    className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 group"
-                  >
-                    <Settings size={18} className="text-gray-500 group-hover:text-[#6e7a34] dark:group-hover:text-green-500" />
-                    <span>{t.common.setting}</span>
-                  </a>
-                </div>
-
-                <div className="border-t border-gray-100 dark:border-gray-800 py-1">
-                  <a
-                    href="#"
-                    className="flex items-center gap-3 px-4 py-2 text-sm text-red-600 dark:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 group"
-                  >
-                    <LogOut size={18} className="text-red-500" />
-                    <span>{t.common.logout}</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          }
-          {
-            !user &&
-            <Link
-              className="group p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 focus:outline-none hidden md:flex items-center gap-2"
-              href={"/login"} >
-              <div className="relative">
-                <UserCircle size={24} className="text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-green-500 transition-colors" />
-                {/* <span className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-gray-900"></span> */}
-              </div>
-              {/* <span className="hidden sm:inline text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-green-500 transition-colors">{t.common.login}</span> */}
-            </Link>
-          }
-
-          {isMobile && !searchBoxOpen && (
-            <div className="relative">
-              <button
-                className="group p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 focus:outline-none flex items-center gap-2"
-                onClick={() => setSearchBoxOpen(true)}
-              >
-                <div className="relative">
-                  <FaSearch size={24} className="text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-green-500 transition-colors" />
-                </div>
-              </button>
-            </div>
-          )}
-          {/* Cart Button */}
-          <div className="relative">
+      <nav className="sticky top-0 z-50 bg-[#3e4f3d] shadow-sm py-4 px-6 text-[#c7b299]">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4 flex-shrink-0">
             <button
-              className="group p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 focus:outline-none flex items-center gap-2"
-              onClick={() => setActiveMenu(activeMenu === "cart" ? null : "cart")}
-              aria-label="Shopping cart"
+              className="md:hidden relative text-[#c7b299]"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
-              <div className="relative">
-                <ShoppingBag size={24} className="text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-green-500 transition-colors" />
-
-                {cartItems.length > 0 && (
-                  <span className="absolute -top-2 -right-2 flex items-center justify-center min-w-[18px] h-[18px] text-xs font-medium text-white bg-[#6e7a34] rounded-full px-1">
-                    {cartItems.length > 9 ? '9+' : cartItems.length}
-                  </span>
-                )}
-              </div>
-              {/* <span className="hidden sm:inline text-sm font-medium text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-green-500 transition-colors">{t.common.cart}</span> */}
+              <Menu size={24} />
             </button>
-            <CartSidebar
-              activeMenu={activeMenu}
-              setActiveMenu={setActiveMenu}
-              cartItems={cartItems}
-              fetchData={fetchItems}
-              fee={fee}
-            />
-            <MenuSidebar openMenu={mobileMenuOpen} setOpenMenu={(open: boolean) => setMobileMenuOpen(open)} onCartClick={handleOnCartClick}/>
+            <a href="/">
+              <div className="md:hidden relative w-[150px] h-[30px]">
+                <Image
+                  src="/img/logo-with-word.png"
+                  alt="Logo"
+                  fill
+                  className="object-contain"
+                  sizes="80px"
+                />
+              </div>
+            </a>
+            <div className="hidden md:flex items-center space-x-8">
+              <a href="/">
+                <div className="relative w-[150px] h-[30px]">
+                  <Image
+                    src="/img/logo-with-word.png"
+                    alt="Logo"
+                    fill
+                    className="object-contain"
+                    sizes="80px"
+                  />
+                </div>
+              </a>
+
+              {/* Shop Dropdown */}
+              <div className="relative group">
+                <span className="cursor-pointer flex items-center gap-1 py-2 border-b-2 border-transparent group-hover:border-[#6e7a34] transition-all duration-300">
+                  <a
+                    href="/shop"
+                  >
+                    {t.navbar.shop}
+                  </a>
+                  <svg className="w-4 h-4 transform group-hover:rotate-180 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </span>
+                <div className="absolute top-full left-0 overflow-hidden max-h-0 group-hover:max-h-60 transition-all duration-300 w-48 bg-white shadow-lg rounded-b-lg">
+                  <div className="p-1">
+                    {["Herbs", "Teas", "Supplements"].map(label => (
+                      <a
+                        key={label}
+                        href="#"
+                        className="block p-3 hover:bg-gray-50 transition-colors rounded my-1 border-l-2 border-transparent hover:border-[#6e7a34]"
+                      >
+                        {label}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <a
+                href="/blog"
+                className="cursor-pointer py-2 border-b-2 border-transparent hover:border-[#6e7a34] transition-all duration-300"
+              >
+                {t.navbar.learn}
+              </a>
+              <a
+                href="/about"
+                className="cursor-pointer py-2 border-b-2 border-transparent hover:border-[#6e7a34] transition-all duration-300"
+              >
+                {t.navbar.about}
+              </a>
+            </div>
+          </div>
+          <div className="flex-1 flex justify-center">
+            {searchBoxOpen && (
+              <div className="w-[400px]">
+                <SearchBar
+                  backgroundColor="#5f735d"
+                  textColor="#f4e3b2"
+                />
+              </div>
+            )}
+          </div>
+          <div className="flex items-center gap-4 flex-shrink-0">
+            <div className="flex items-center space-x-4">
+              {/* User Menu */}
+              {
+                user && <div className="hidden md:relative">
+                  <button
+                    className="group p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 focus:outline-none flex items-center gap-2"
+                    onClick={() => setActiveMenu(activeMenu === "user" ? null : "user")}
+                    aria-expanded={activeMenu === "user"}
+                    aria-haspopup="true"
+                  >
+                    <div className="relative">
+                      <UserCircle size={24} className="text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-[#6e7a34] transition-colors" />
+                      <span className="ab÷solute -bottom-1 -right-1 w-3 h-3 bg-[#6e7a34] rounded-full border-2 border-white dark:border-gray-900"></span>
+                    </div>
+                    <span className="hidden sm:inline text-sm font-medium text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-[#6e7a34] transition-colors">{t.common.account}</span>
+                    <ChevronDown size={16} className={`hidden sm:block text-gray-500 transition-transform duration-300 ${activeMenu === "user" ? "rotate-180" : ""}`} />
+                  </button>
+
+                  <div
+                    className={`absolute right-0 bg-white dark:bg-gray-900 shadow-lg w-48 mt-2 py-2 z-40 rounded-lg transform transition-all duration-200 origin-top-right border border-gray-100 dark:border-gray-800 ${activeMenu === "user"
+                      ? "opacity-100 scale-100"
+                      : "opacity-0 scale-95 pointer-events-none"
+                      }`}
+                  >
+                    <div className="px-4 py-2 border-b border-gray-100 dark:border-gray-800">
+                      <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{user.name}</p>
+                      <p className="text-xs text-gray-500">{user.mail}</p>
+                    </div>
+
+                    <div className="py-1">
+                      <a
+                        href="#"
+                        className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+                      >
+                        <Package size={18} className="text-gray-500 group-hover:text-[#6e7a34] dark:group-hover:text-green-500" />
+                        <span>{t.common.orders}</span>
+                      </a>
+
+                      <a
+                        href="#"
+                        className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+                      >
+                        <UserCircle size={18} className="text-gray-500 group-hover:text-[#6e7a34] dark:group-hover:text-green-500" />
+                        <span>{t.common.info}</span>
+                      </a>
+
+                      <a
+                        href="#"
+                        className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+                      >
+                        <Settings size={18} className="text-gray-500 group-hover:text-[#6e7a34] dark:group-hover:text-green-500" />
+                        <span>{t.common.setting}</span>
+                      </a>
+                    </div>
+
+                    <div className="border-t border-gray-100 dark:border-gray-800 py-1">
+                      <a
+                        href="#"
+                        className="flex items-center gap-3 px-4 py-2 text-sm text-red-600 dark:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 group"
+                      >
+                        <LogOut size={18} className="text-red-500" />
+                        <span>{t.common.logout}</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              }
+              {
+                !user &&
+                <Link
+                  className="group p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 focus:outline-none hidden md:flex items-center gap-2"
+                  href={"/login"} >
+                  <div className="relative">
+                    <UserCircle size={24} className="text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-green-500 transition-colors" />
+                    {/* <span className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-gray-900"></span> */}
+                  </div>
+                  {/* <span className="hidden sm:inline text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-green-500 transition-colors">{t.common.login}</span> */}
+                </Link>
+              }
+
+              {isMobile && !searchBoxOpen && (
+                <div className="relative">
+                  <button
+                    className="group p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 focus:outline-none flex items-center gap-2"
+                    onClick={() => setSearchBoxOpen(true)}
+                  >
+                    <div className="relative">
+                      <FaSearch size={24} className="text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-green-500 transition-colors" />
+                    </div>
+                  </button>
+                </div>
+              )}
+              {/* Cart Button */}
+              <div className="relative">
+                <button
+                  className="group p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 focus:outline-none flex items-center gap-2"
+                  onClick={() => setActiveMenu(activeMenu === "cart" ? null : "cart")}
+                  aria-label="Shopping cart"
+                >
+                  <div className="relative">
+                    <ShoppingBag size={24} className="text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-green-500 transition-colors" />
+
+                    {cartItems.length > 0 && (
+                      <span className="absolute -top-2 -right-2 flex items-center justify-center min-w-[18px] h-[18px] text-xs font-medium text-white bg-[#6e7a34] rounded-full px-1">
+                        {cartItems.length > 9 ? '9+' : cartItems.length}
+                      </span>
+                    )}
+                  </div>
+                  {/* <span className="hidden sm:inline text-sm font-medium text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-green-500 transition-colors">{t.common.cart}</span> */}
+                </button>
+                <CartSidebar
+                  activeMenu={activeMenu}
+                  setActiveMenu={setActiveMenu}
+                  cartItems={cartItems}
+                  fetchData={fetchItems}
+                  fee={fee}
+                />
+                <MenuSidebar openMenu={mobileMenuOpen} setOpenMenu={(open: boolean) => setMobileMenuOpen(open)} onCartClick={handleOnCartClick} />
+              </div>
+            </div>
           </div>
         </div>
       </nav>
-
-
       {/* <MarqueeText words={wordsList} speed={50} /> */}
     </>
   );

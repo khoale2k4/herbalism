@@ -8,6 +8,7 @@ import ProductsList from "./components/Products";
 import { useLanguage } from "@/hooks/useLanguage";
 import { ProductOperation } from "@/lib/main";
 import { Product } from "@/types/product";
+import ImageBanner, { ImageBannerProps } from "@/components/Banner/imageBanner";
 
 type Props = {};
 const ShopPage: FC<Props> = () => {
@@ -19,57 +20,16 @@ const ShopPage: FC<Props> = () => {
   const { t } = useLanguage();
   const [products, setProducts] = useState<Product[]>([]);
 
-  // Sample product data
-  // const products: Product[] = [
-  //   {
-  //     id: 1,
-  //     name: "Organic Chamomile Tea",
-  //     price: 12.99,
-  //     category: "Teas",
-  //     image: "/products/tea.jpg",
-  //     rating: 4.5
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Echinacea Immune Support",
-  //     price: 24.99,
-  //     category: "Capsules",
-  //     image: "/products/capsules.jpg",
-  //     rating: 4.2
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Lavender Essential Oil",
-  //     price: 18.99,
-  //     category: "Liquid",
-  //     image: "/products/oil.jpg",
-  //     rating: 4.7
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "Turmeric & Ginger Powder",
-  //     price: 15.99,
-  //     category: "Powders",
-  //     image: "/products/powder.jpg",
-  //     rating: 4.3
-  //   },
-  //   {
-  //     id: 5,
-  //     name: "Valerian Root Sleep Aid",
-  //     price: 22.99,
-  //     category: "Tablets",
-  //     image: "/products/tablets.jpg",
-  //     rating: 4.1
-  //   },
-  //   {
-  //     id: 6,
-  //     name: "Arnica Muscle Relief Balm",
-  //     price: 19.99,
-  //     category: "Creams",
-  //     image: "/products/balm.jpg",
-  //     rating: 4.6
-  //   },
-  // ];
+  const ibProps1: ImageBannerProps = {
+    title: t.homeVideoBanner1.title,
+    description: t.homeVideoBanner1.description1,
+    imageUrl: "/img/herbalism-02.jpg",
+    button: t.homeVideoBanner1.button,
+    description2: t.homeVideoBanner1.description2,
+    imagePos: "right",
+    onClick: () => {
+    }
+  }
 
   const sortOptions = [
     { value: "featured", label: t.shop.featured },
@@ -116,6 +76,7 @@ const ShopPage: FC<Props> = () => {
 
   return (
     <div className="flex flex-col w-full">
+      <ImageBanner {...ibProps1} />
       <div className="flex flex-col w-full bg-[#fdf8f7]">
         {/* <TopBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} setSortOption={setSortOption} viewMode={viewMode} showSidebar={showSidebar} sortOption={sortOption} sortOptions={sortOptions} toggleSidebar={toggleSidebar} setViewMode={setViewMode} /> */}
         <ProductsList filteredProducts={filteredProducts} setSearchQuery={setSearchQuery} showSidebar={showSidebar} viewMode={viewMode} />

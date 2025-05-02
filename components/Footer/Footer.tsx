@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaFacebookF, FaInstagram, FaEnvelope } from 'react-icons/fa';
 
 const Footer = () => {
     return (
@@ -41,56 +42,57 @@ const Footer = () => {
                     </div>
 
                     {/* Right section */}
-                    <div className="grid grid-cols-3 gap-6">
-                        {[
-                            {
-                                title: 'COMPANY',
-                                links: [
-                                    'About Us',
-                                    'Our Impact',
-                                    'Our Mushrooms',
-                                    'Work With Us',
-                                    'Contact',
-                                    'Help Center',
-                                    'FAQs',
-                                ],
-                            },
-                            {
-                                title: 'INFO',
-                                links: [
-                                    'Retail Locations',
-                                    'Wholesale',
-                                    'Rewards Program',
-                                    'Refund Policy',
-                                    'Shipping Policy',
-                                    'Privacy Policy',
-                                    'Terms of Service',
-                                ],
-                            },
-                            {
-                                title: 'LEARN',
-                                links: ['Mushrooms 101', 'Webinars', 'Recipes', 'Blog'],
-                            },
-                        ].map((section) => (
-                            <div key={section.title}>
-                                <h3 className="text-lg font-semibold mb-4 text-[#cce2a3]">
-                                    {section.title}
-                                </h3>
-                                <ul className="space-y-2">
-                                    {section.links.map((link) => (
-                                        <li key={link}>
-                                            <a
-                                                href={`/${link.toLowerCase().replace(/\s+/g, '-')}`}
-                                                className="text-[#e8f3d2] hover:text-white transition-colors text-sm"
-                                            >
-                                                {link}
-                                            </a>
-                                        </li>
-                                    ))}
-                                </ul>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        {/* Legal Links */}
+                        <div>
+                            <h3 className="text-lg font-semibold mb-4 text-[#cce2a3]">LEGAL</h3>
+                            <ul className="space-y-2">
+                                {['Shipping Policy', 'Privacy Policy', 'Terms of Service'].map((link) => (
+                                    <li key={link}>
+                                        <a
+                                            href={`/${link.toLowerCase().replace(/\s+/g, '-')}`}
+                                            className="text-[#e8f3d2] hover:text-white transition-colors text-sm"
+                                        >
+                                            {link}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        {/* Contact */}
+                        <div>
+                            <h3 className="text-lg font-semibold mb-4 text-[#cce2a3]">CONNECT</h3>
+                            <div className="flex space-x-4">
+                                <a
+                                    href="https://facebook.com"
+                                    className="text-[#e8f3d2] hover:text-white transition-colors"
+                                    aria-label="Facebook"
+                                >
+                                    <FaFacebookF />
+                                </a>
+                                <a
+                                    href="https://instagram.com"
+                                    className="text-[#e8f3d2] hover:text-white transition-colors"
+                                    aria-label="Instagram"
+                                >
+                                    <FaInstagram />
+                                </a>
+                                <a
+                                    href="mailto:info@example.com"
+                                    className="text-[#e8f3d2] hover:text-white transition-colors"
+                                    aria-label="Email"
+                                >
+                                    <FaEnvelope />
+                                </a>
                             </div>
-                        ))}
+                        </div>
                     </div>
+                </div>
+
+                {/* Disclaimer Section */}
+                <div className="mb-8 text-sm text-[#cce2a3] leading-relaxed">
+                    The products and information provided through this website have not been evaluated by the Vietnam Ministry of Health (MoH), Therapeutic Goods Administration (TGA), Food and Drug Administration of the USA (FDA), or Herbalism Ltd, and are not intended to diagnose, treat, cure or prevent disease. Any information on this website, or on any of our product labels or packaging, is for informational purposes only and is not intended as a substitute for advice from your primary healthcare provider. Please consult a healthcare professional before use, and regarding any medical or health-related diagnosis or treatment options. The products available on this website contain a variety of concentrated plant extracts. Ensure you do not have any allergies to any ingredients before using.
                 </div>
 
                 {/* Bottom bar */}
