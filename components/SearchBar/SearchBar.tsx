@@ -49,7 +49,7 @@ const SearchBar = ({
 
     return (
         <div
-            className="relative w-96 rounded-full overflow-hidden transition-all duration-300 shadow-md hover:shadow-lg"
+            className="relative w-full rounded-full overflow-hidden transition-all duration-300 shadow-md hover:shadow-lg"
             style={{ backgroundColor }}
         >
             <div className="flex items-center h-full">
@@ -61,12 +61,11 @@ const SearchBar = ({
                     ref={inputRef}
                     type="text"
                     placeholder={isInputFocused ? t.navbar.search : typingEffect}
-                    className="w-full p-3 pl-3 outline-none border-none focus:ring-0 placeholder-[#f4e3b2] placeholder-opacity-80"
+                    className={`w-full p-3 pl-3 outline-none border-none focus:ring-0 placeholder-[${textColor}] placeholder-opacity-80 text-[${textColor}]`}
                     style={{
                         backgroundColor,
                         color: textColor,
                         caretColor: textColor,
-                        // ::placeholder: {color: textColor },
                     }}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
@@ -87,7 +86,6 @@ const SearchBar = ({
                 )}
             </div>
 
-            {/* Focus underline effect */}
             <div
                 className="absolute bottom-0 left-0 h-0.5 transition-all duration-300"
                 style={{

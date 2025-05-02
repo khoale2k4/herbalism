@@ -23,11 +23,11 @@ const ProductsList = ({ showSidebar, filteredProducts, setSearchQuery, viewMode 
 
   return (<div className="container mx-auto py-6 px-4">
     <div className="flex flex-col md:flex-row gap-6">
-      {showSidebar && (
+      {/* {showSidebar && (
         <div className="w-full md:w-72 flex-shrink-0">
           <Sidebar />
         </div>
-      )}
+      )} */}
 
       {/* Product Listing */}
       <div className="flex-grow">

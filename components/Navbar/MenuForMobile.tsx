@@ -1,5 +1,5 @@
 import { useLanguage } from "@/hooks/useLanguage";
-import { X, ChevronDown, ChevronRight, User, ShoppingBag } from "lucide-react";
+import { X, ChevronDown, ChevronRight, User, ShoppingBag, LogOut } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -8,6 +8,7 @@ import SearchBar from "../SearchBar/SearchBar";
 type Props = {
     openMenu: boolean;
     setOpenMenu: (open: boolean) => void;
+    onCartClick: () => void;
 };
 
 type SubMenuProps = {
@@ -44,11 +45,8 @@ const SubMenu = ({ title, items, defaultOpen = false }: SubMenuProps) => {
     );
 };
 
-export default function MenuSidebar({ openMenu, setOpenMenu }: Props) {
+export default function MenuSidebar({ openMenu, setOpenMenu, onCartClick }: Props) {
     const { t } = useLanguage();
-
-    // Sample cart count
-    const cartCount = 3;
 
     return (
         <>
@@ -61,7 +59,7 @@ export default function MenuSidebar({ openMenu, setOpenMenu }: Props) {
             )}
 
             <div
-                className={`fixed top-0 left-0 w-full max-w-xs h-full bg-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out ${openMenu ? "translate-x-0" : "-translate-x-full"
+                className={`fixed top-0 left-0 w-full max-w-xs h-full bg-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out bg-[#f2f2f2] ${openMenu ? "translate-x-0" : "-translate-x-full"
                     }`}
             >
                 <div className="flex flex-col h-full">
@@ -91,29 +89,11 @@ export default function MenuSidebar({ openMenu, setOpenMenu }: Props) {
 
                     {/* Menu items */}
                     <div className="flex-grow overflow-y-auto py-2 px-5">
-                        <SearchBar />
+                        <div className="w-full px-4 mb-3 mt-3">
+                            <SearchBar backgroundColor="#f4f4f5" textColor="#9ca3af" />
+                        </div>
+
                         <nav className="flex flex-col text-gray-800">
-                            {/* <SubMenu
-                                title={t.navbar.shop || "Shop"}
-                                defaultOpen={true}
-                                items={[
-                                    { label: "Herbs", href: "/shop/herbs" },
-                                    { label: "Teas", href: "/shop/teas" },
-                                    { label: "Supplements", href: "/shop/supplements" },
-                                    // { label: "New Arrivals", href: "/shop/new" },
-                                    // { label: "Best Sellers", href: "/shop/best-sellers" }
-                                ]}
-                            />
-
-                            <SubMenu
-                                title={t.navbar.learn || "Learn"}
-                                items={[
-                                    { label: "Blog", href: "/blog" },
-                                    { label: "Recipes", href: "/recipes" },
-                                    { label: "Guides", href: "/guides" }
-                                ]}
-                            /> */}
-
                             <div className="border-b border-gray-100 py-2">
                                 <Link
                                     href="/shop"
@@ -143,44 +123,36 @@ export default function MenuSidebar({ openMenu, setOpenMenu }: Props) {
                                     {t.navbar.about || "About"}
                                 </Link>
                             </div>
-
-                            {/* <div className="border-b border-gray-100 py-2">
-                                <Link
-                                    href="/contact"
-                                    className="block py-2 hover:text-emerald-600 transition-colors duration-200 font-medium"
-                                    onClick={() => setOpenMenu(false)}
-                                >
-                                    {t.navbar.contact || "Contact"}
-                                </Link>
-                            </div> */}
+                            <SubMenu
+                                title={t.common.account || "Account"}
+                                defaultOpen={false}
+                                items={[
+                                    { label: t.common.orders, href: "/shop/herbs" },
+                                    { label: t.common.info, href: "/shop/teas" },
+                                    { label: t.common.setting, href: "/shop/supplements" },
+                                ]}
+                            />
                         </nav>
                     </div>
 
-                    {/* Footer with account and cart */}
                     <div className="border-t border-gray-100 p-5">
                         <div className="flex justify-between">
-                            <Link
-                                href="/account"
-                                className="flex items-center space-x-2 py-2 px-4 bg-gray-50 rounded-md hover:bg-gray-100 transition-colors duration-200"
-                                onClick={() => setOpenMenu(false)}
-                            >
-                                <User size={18} />
-                                <span>{t.common.account || "Account"}</span>
-                            </Link>
-
-                            <Link
-                                href="/cart"
+                            <button
                                 className="flex items-center space-x-2 py-2 px-4 bg-emerald-50 rounded-md hover:bg-emerald-100 transition-colors duration-200 relative"
-                                onClick={() => setOpenMenu(false)}
+                                onClick={onCartClick}
                             >
                                 <ShoppingBag size={18} className="text-emerald-600" />
                                 <span className="text-emerald-600">{t.common.cart || "Cart"}</span>
-                                {cartCount > 0 && (
-                                    <span className="absolute -top-1 -right-1 bg-emerald-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                                        {cartCount}
-                                    </span>
-                                )}
-                            </Link>
+                            </button>
+                            <div className="dark:border-gray-800 py-1">
+                                <a
+                                    href="#"
+                                    className="flex items-center gap-3 px-4 py-2 text-sm text-red-600 dark:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 group"
+                                >
+                                    <LogOut size={18} className="text-red-500" />
+                                    <span>{t.common.logout}</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

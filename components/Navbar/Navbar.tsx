@@ -139,6 +139,11 @@ const Navbar = () => {
     }
   };
 
+  const handleOnCartClick = () => {
+    setMobileMenuOpen(false);
+    setActiveMenu('cart');
+  }
+
   const handleCurrencySelect = (setter: (val: string) => void, options: any[]) => (value: string) => {
     const selected = options.find((opt) => opt.value === value);
     if (selected) setter(selected.value);
@@ -272,16 +277,6 @@ const Navbar = () => {
           </a>
         </div>
 
-
-        {isMobile && !searchBoxOpen && (
-          <button
-            onClick={() => setSearchBoxOpen(true)}
-            className="p-2 rounded-full bg-gray-200 hover:bg-gray-300"
-          >
-            <FaSearch className="text-gray-700" />
-          </button>
-        )}
-
         {/* Hiển thị SearchBar khi searchBoxOpen = true */}
         {searchBoxOpen && (
           <SearchBar
@@ -370,7 +365,18 @@ const Navbar = () => {
             </Link>
           }
 
-
+          {isMobile && !searchBoxOpen && (
+            <div className="relative">
+              <button
+                className="group p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 focus:outline-none flex items-center gap-2"
+                onClick={() => setSearchBoxOpen(true)}
+              >
+                <div className="relative">
+                  <FaSearch size={24} className="text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-green-500 transition-colors" />
+                </div>
+              </button>
+            </div>
+          )}
           {/* Cart Button */}
           <div className="relative">
             <button
@@ -396,7 +402,7 @@ const Navbar = () => {
               fetchData={fetchItems}
               fee={fee}
             />
-            <MenuSidebar openMenu={mobileMenuOpen} setOpenMenu={(open: boolean) => setMobileMenuOpen(open)} />
+            <MenuSidebar openMenu={mobileMenuOpen} setOpenMenu={(open: boolean) => setMobileMenuOpen(open)} onCartClick={handleOnCartClick}/>
           </div>
         </div>
       </nav>
