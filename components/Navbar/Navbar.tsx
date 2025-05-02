@@ -215,7 +215,7 @@ const Navbar = () => {
             >
               <Menu size={24} />
             </button>
-            <a href="/">
+            {!searchBoxOpen && <a href="/">
               <div className="md:hidden relative w-[150px] h-[30px]">
                 <Image
                   src="/img/logo-with-word.png"
@@ -225,7 +225,7 @@ const Navbar = () => {
                   sizes="80px"
                 />
               </div>
-            </a>
+            </a>}
             <div className="hidden md:flex items-center space-x-8">
               <a href="/">
                 <div className="relative w-[150px] h-[30px]">
@@ -281,7 +281,7 @@ const Navbar = () => {
           </div>
           <div className="flex-1 flex justify-center">
             {searchBoxOpen && (
-              <div className="w-[400px]">
+              <div className="md:w-[400px]">
                 <SearchBar
                   backgroundColor="#5f735d"
                   textColor="#f4e3b2"
@@ -293,7 +293,7 @@ const Navbar = () => {
             <div className="flex items-center space-x-4">
               {/* User Menu */}
               {
-                user && <div className="hidden md:relative">
+                user && <div className="hidden md:flex ">
                   <button
                     className="group p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 focus:outline-none flex items-center gap-2"
                     onClick={() => setActiveMenu(activeMenu === "user" ? null : "user")}
@@ -302,10 +302,10 @@ const Navbar = () => {
                   >
                     <div className="relative">
                       <UserCircle size={24} className="text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-[#6e7a34] transition-colors" />
-                      <span className="ab÷solute -bottom-1 -right-1 w-3 h-3 bg-[#6e7a34] rounded-full border-2 border-white dark:border-gray-900"></span>
+                      {/* <span className="ab÷solute -bottom-1 -right-1 w-3 h-3 bg-[#6e7a34] rounded-full border-2 border-white dark:border-gray-900"></span> */}
                     </div>
-                    <span className="hidden sm:inline text-sm font-medium text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-[#6e7a34] transition-colors">{t.common.account}</span>
-                    <ChevronDown size={16} className={`hidden sm:block text-gray-500 transition-transform duration-300 ${activeMenu === "user" ? "rotate-180" : ""}`} />
+                    {/* <span className="hidden sm:inline text-sm font-medium text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-[#6e7a34] transition-colors">{t.common.account}</span>
+                    <ChevronDown size={16} className={`hidden sm:block text-gray-500 transition-transform duration-300 ${activeMenu === "user" ? "rotate-180" : ""}`} /> */}
                   </button>
 
                   <div
@@ -370,19 +370,6 @@ const Navbar = () => {
                 </Link>
               }
 
-              {isMobile && !searchBoxOpen && (
-                <div className="relative">
-                  <button
-                    className="group p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 focus:outline-none flex items-center gap-2"
-                    onClick={() => setSearchBoxOpen(true)}
-                  >
-                    <div className="relative">
-                      <FaSearch size={24} className="text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-green-500 transition-colors" />
-                    </div>
-                  </button>
-                </div>
-              )}
-              {/* Cart Button */}
               <div className="relative">
                 <button
                   className="group p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 focus:outline-none flex items-center gap-2"
