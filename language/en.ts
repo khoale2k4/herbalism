@@ -7,7 +7,7 @@ export default {
         contact: "Contact",
         cart: "Cart",
         checkout: "Checkout",
-        account: "Accoune",
+        account: "Account",
         login: "Login",
         orders: "My orders",
         info: "Info",

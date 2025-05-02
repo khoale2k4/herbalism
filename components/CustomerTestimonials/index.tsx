@@ -68,11 +68,11 @@ const CustomerTestimonials: React.FC = () => {
     return (
         <div
             ref={ref}
-            className={`relative overflow-hidden transition-opacity duration-700 min-h-[800px] !bg-[#fdf8f7] ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            className={`relative overflow-hidden transition-opacity duration-700 min-h-[650px] !bg-[#fdf8f7] ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                 }`}
         >
             {isVisible && (
-                <div className="w-full py-4 lg:py-24 bg-[#fdf8f7]">
+                <div className="w-full py-4 lg:py-24">
                     <div className="container mx-auto px-4">
                         <div className="text-center max-w-2xl mx-auto mb-12">
                             {/* <span className="inline-block py-1 px-3 rounded-full bg-blue-100 text-blue-700 text-sm font-medium mb-3">
@@ -86,7 +86,7 @@ const CustomerTestimonials: React.FC = () => {
                             </p>
                         </div>
 
-                        <div className="relative max-w-6xl mx-auto pb-16">
+                        <div className="relative max-w-6xl mx-auto pb-4">
                             {/* Decorative elements */}
                             <div className="hidden md:block absolute -left-6 top-1/4 w-12 h-12 bg-blue-100 rounded-full opacity-60"></div>
                             <div className="hidden md:block absolute -right-6 bottom-1/4 w-20 h-20 bg-blue-100 rounded-full opacity-60"></div>

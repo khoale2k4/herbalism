@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef, useCallback } from "react";
-import { FaUser, FaShoppingCart } from "react-icons/fa";
+import { FaUser, FaShoppingCart, FaSearch } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
 import SearchBar from "../SearchBar/SearchBar";
 import Dropdown from "../Dropdown/Dropdown";
@@ -10,23 +10,25 @@ import MarqueeText from "../MarqueeText/MarqueeText";
 import { useLanguage } from "@/hooks/useLanguage";
 import Image from "next/image";
 import { CartOperation, CustomerOperation, OrderOperation } from "@/lib/main";
-import { ChevronDown, LogOut, Package, Settings, ShoppingBag, UserCircle } from "lucide-react";
+import { ChevronDown, LogOut, Menu, Package, Settings, ShoppingBag, UserCircle } from "lucide-react";
 import { getTokenFromCookie } from "@/app/utils/token";
 import { User } from "@/types/user";
 import Link from "next/link";
 import { useCurrency } from "@/hooks/useCurrency";
+import MenuSidebar from "./MenuForMobile";
 
 const Navbar = () => {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [messageIndex, setMessageIndex] = useState(0);
   const { t, currentLang, changeLanguage } = useLanguage();
   const { changeCurrency, currentCurrency } = useCurrency();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const cartOp = new CartOperation();
   const orderOp = new OrderOperation();
   const cusOp = new CustomerOperation();
   const languageOptions = [
     { value: "en", label: t.common.language.english },
-    { value: "fr", label: "French" },
+    // { value: "fr", label: "French" },
     { value: "vi", label: t.common.language.vietnamese },
   ];
   const currencyOptions = [
@@ -40,6 +42,8 @@ const Navbar = () => {
   const [currency, setCurrency] = useState<string>(defaultCurrency);
   console.log(currency, defaultCurrency, currentCurrency);
   const [user, setUser] = useState<User | null>(null);
+  const [searchBoxOpen, setSearchBoxOpen] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   const messages = [
     t.navbar.message1,
     t.navbar.message2,
@@ -108,6 +112,23 @@ const Navbar = () => {
     fetchUser();
   }, [fetchUser]);
 
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const isMobileScreen = window.innerWidth <= 768; // hoặc Tailwind md breakpoint
+      setIsMobile(isMobileScreen);
+      if (isMobileScreen) {
+        setSearchBoxOpen(false); // ẩn searchbar ở mobile
+      } else {
+        setSearchBoxOpen(true); // hiện searchbar ở desktop
+      }
+    };
+
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
+
   const handleLangSelect = (setter: (val: string) => void, options: any[]) => (value: string) => {
     const selected = options.find((opt) => opt.value === value);
     if (selected) setter(selected.label);
@@ -139,7 +160,7 @@ const Navbar = () => {
   return (
     <>
       {/* Top Bar */}
-      <div className="bg-[#f2f2f2] text-sm py-2 px-6 flex justify-between z-60 relative">
+      <div className="bg-[#f2f2f2] text-sm py-2 px-6 hidden md:flex justify-between z-60 relative">
         <div className="relative w-[400px] text-white h-5 overflow-hidden">
           <AnimatePresence mode="wait">
             <motion.div
@@ -181,7 +202,24 @@ const Navbar = () => {
 
       {/* Navbar */}
       <nav className="sticky top-0 z-50 bg-[#3e4f3d] shadow-sm py-4 px-6 flex justify-between items-center text-[#c7b299]">
-        <div className="flex items-center space-x-8">
+        <button
+          className="md:hidden relative text-[#c7b299]"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        >
+          <Menu size={24} />
+        </button>
+        <a href="/">
+          <div className="md:hidden relative w-[150px] h-[30px]">
+            <Image
+              src="/img/logo-with-word.png"
+              alt="Logo"
+              fill
+              className="object-contain"
+              sizes="80px"
+            />
+          </div>
+        </a>
+        <div className="hidden md:flex items-center space-x-8">
           <a href="/">
             <div className="relative w-[150px] h-[30px]">
               <Image
@@ -234,12 +272,28 @@ const Navbar = () => {
           </a>
         </div>
 
-        <SearchBar />
+
+        {isMobile && !searchBoxOpen && (
+          <button
+            onClick={() => setSearchBoxOpen(true)}
+            className="p-2 rounded-full bg-gray-200 hover:bg-gray-300"
+          >
+            <FaSearch className="text-gray-700" />
+          </button>
+        )}
+
+        {/* Hiển thị SearchBar khi searchBoxOpen = true */}
+        {searchBoxOpen && (
+          <SearchBar
+            backgroundColor="#5f735d"
+            textColor="#f4e3b2"
+          />
+        )}
 
         <div className="flex items-center space-x-4">
           {/* User Menu */}
           {
-            user && <div className="relative">
+            user && <div className="hidden md:relative">
               <button
                 className="group p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 focus:outline-none flex items-center gap-2"
                 onClick={() => setActiveMenu(activeMenu === "user" ? null : "user")}
@@ -248,7 +302,7 @@ const Navbar = () => {
               >
                 <div className="relative">
                   <UserCircle size={24} className="text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-[#6e7a34] transition-colors" />
-                  <span className="absolute -bottom-1 -right-1 w-3 h-3 bg-[#6e7a34] rounded-full border-2 border-white dark:border-gray-900"></span>
+                  <span className="ab÷solute -bottom-1 -right-1 w-3 h-3 bg-[#6e7a34] rounded-full border-2 border-white dark:border-gray-900"></span>
                 </div>
                 <span className="hidden sm:inline text-sm font-medium text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-[#6e7a34] transition-colors">{t.common.account}</span>
                 <ChevronDown size={16} className={`hidden sm:block text-gray-500 transition-transform duration-300 ${activeMenu === "user" ? "rotate-180" : ""}`} />
@@ -306,13 +360,13 @@ const Navbar = () => {
           {
             !user &&
             <Link
-              className="group p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 focus:outline-none flex items-center gap-2"
+              className="group p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 focus:outline-none hidden md:flex items-center gap-2"
               href={"/login"} >
               <div className="relative">
-                <UserCircle size={24} className="text-gray-700 dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-green-500 transition-colors" />
-                <span className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-gray-900"></span>
+                <UserCircle size={24} className="text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-green-500 transition-colors" />
+                {/* <span className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-gray-900"></span> */}
               </div>
-              <span className="hidden sm:inline text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-green-500 transition-colors">{t.common.login}</span>
+              {/* <span className="hidden sm:inline text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-green-500 transition-colors">{t.common.login}</span> */}
             </Link>
           }
 
@@ -333,7 +387,7 @@ const Navbar = () => {
                   </span>
                 )}
               </div>
-              <span className="hidden sm:inline text-sm font-medium text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-green-500 transition-colors">{t.common.cart}</span>
+              {/* <span className="hidden sm:inline text-sm font-medium text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-green-500 transition-colors">{t.common.cart}</span> */}
             </button>
             <CartSidebar
               activeMenu={activeMenu}
@@ -342,11 +396,13 @@ const Navbar = () => {
               fetchData={fetchItems}
               fee={fee}
             />
+            <MenuSidebar openMenu={mobileMenuOpen} setOpenMenu={(open: boolean) => setMobileMenuOpen(open)} />
           </div>
         </div>
       </nav>
 
-      <MarqueeText words={wordsList} speed={50} />
+
+      {/* <MarqueeText words={wordsList} speed={50} /> */}
     </>
   );
 };

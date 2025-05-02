@@ -31,7 +31,7 @@ const HomePage: FC<Props> = () => {
     const ibProps1: ImageBannerProps = {
         title: t.homeVideoBanner1.title,
         description: t.homeVideoBanner1.description1,
-        imageUrl: "/img/herbalism-01.jpg",
+        imageUrl: "/img/herbalism-02.jpg",
         button: t.homeVideoBanner1.button,
         description2: t.homeVideoBanner1.description2,
         imagePos: "right",
