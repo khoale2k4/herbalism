@@ -116,7 +116,7 @@ export default function MenuSidebar({ openMenu, setOpenMenu, onCartClick }: Prop
 
                             <div className="border-b border-gray-100 py-2">
                                 <Link
-                                    href="/about"
+                                    href="/process"
                                     className="block py-2 hover:text-emerald-600 transition-colors duration-200 font-medium"
                                     onClick={() => setOpenMenu(false)}
                                 >
