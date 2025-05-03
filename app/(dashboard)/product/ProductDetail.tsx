@@ -29,6 +29,15 @@ interface Tab {
     content: string;
 }
 
+export async function generateStaticParams() {
+    const productOp = new ProductOperation();
+    const products = await productOp.getAll();
+
+    return products.data.map((product: Product) => ({
+        productId: product.id,
+    }));
+}
+
 export default function ProductDetail({ productId }: { productId: string }) {
     const { t } = useLanguage();
     const [loading, setLoading] = useState(true);

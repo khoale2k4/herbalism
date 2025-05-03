@@ -10,6 +10,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const productOp = new ProductOperation();
     const param = await params;
     const response = await productOp.getById(param.productId);
+    
     if (response.success) {
         const product = response.data;
         return {
@@ -25,6 +26,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Main({ params }: Props) {
     const param = await params;
-    console.log(param.productId); 
+    console.log(param.productId);
     return <ProductDetail productId={param.productId} />;
 }

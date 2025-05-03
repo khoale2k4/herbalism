@@ -22,7 +22,7 @@ const DifferenceSection = () => {
         }`}
     >
 
-      <div className="h-12 bg-white relative">
+      <div className="h-12 bg-white md:bg-[#fdf8f7] relative">
       </div>
       <div className="absolute top-[50px] left-[60px] transform -translate-x-1/2 -translate-y-1/2 z-10">
         <RotatingText text={t.features.spinningWords} radius={35} />

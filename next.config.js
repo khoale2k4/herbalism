@@ -7,6 +7,7 @@ module.exports = {
     experimental: {
         missingSuspenseWithCSRBailout: false,
     },
+    reactStrictMode: true,
     images: {
         remotePatterns: [
             {
