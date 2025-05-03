@@ -1,4 +1,4 @@
-import { formatCurrency } from "@/app/utils/format-currency";
+import { formatPrice } from "@/app/utils/format-currency";
 import { ItemInCart } from "@/components/Cart/cart";
 
 type PaymentMethod = {
@@ -54,7 +54,7 @@ const OrderDetail = ({ formData, cartItems, shippingFee, subtotal, total, step, 
                         </div>
                     </div>
                     <div className="font-medium text-right">
-                        {formatCurrency(item.price * item.num)}
+                        {formatPrice(item.price * item.num)}
                     </div>
                 </div>
             ))}
@@ -63,15 +63,15 @@ const OrderDetail = ({ formData, cartItems, shippingFee, subtotal, total, step, 
         <div className="space-y-3 mb-6 text-sm">
             <div className="flex justify-between">
                 <span className="text-gray-600">Tạm tính:</span>
-                <span>{formatCurrency(subtotal)}</span>
+                <span>{formatPrice(subtotal)}</span>
             </div>
             <div className="flex justify-between">
                 <span className="text-gray-600">Phí vận chuyển:</span>
-                <span>{formatCurrency(shippingFee)}</span>
+                <span>{formatPrice(shippingFee)}</span>
             </div>
             <div className="flex justify-between font-bold text-lg pt-3 border-t border-gray-100">
                 <span>Tổng cộng:</span>
-                <span className="text-blue-700">{formatCurrency(total)}</span>
+                <span className="text-blue-700">{formatPrice(total)}</span>
             </div>
         </div>
 
