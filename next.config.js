@@ -1,3 +1,5 @@
+const { hostname } = require("os");
+
 module.exports = {
     eslint: {
         ignoreDuringBuilds: true,
@@ -14,5 +16,6 @@ module.exports = {
                 pathname: '/uploads/**',
             },
         ],
+        domains: ['sufficient-chrystal-khoale2k4-c17296fe.koyeb.app'],
     },
 }
