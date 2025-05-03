@@ -9,28 +9,26 @@ const ListItems = () => {
     const [ref, isVisible] = useOnScreen();
 
     return (
-        // <div
-        //     ref={ref}
-        //     className={`bg-[#f4eada] relative overflow-hidden transition-opacity duration-700 min-h-[500px] ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10 bg-[#fdf8f7]"
-        //         }`}
-        // >
-        //     {isVisible && (
-        <div className="max-w-6xl mx-auto flex flex-col min-h-[500px] lg:flex-row items-center justify-center gap-6 pb-4">
+        <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-6 pb-4 px-4">
             <div className="w-full lg:w-1/3">
                 <NewProductComponent />
             </div>
 
-            <div className="overflow-x-auto scroll-smooth p-2">
-                <div className="flex space-x-4">
-                    <ImageHoverComponent />
-                    <ImageHoverComponent />
-                    <ImageHoverComponent />
+            <div className="w-full lg:w-2/3 overflow-x-auto scroll-smooth p-2">
+                <div className="flex space-x-4 min-w-max">
+                    <div className="min-w-[250px]">
+                        <ImageHoverComponent />
+                    </div>
+                    <div className="min-w-[250px]">
+                        <ImageHoverComponent />
+                    </div>
+                    <div className="min-w-[250px]">
+                        <ImageHoverComponent />
+                    </div>
                 </div>
             </div>
         </div>
-        // )
-        // }
-        // </div>
+
     );
 };
 

@@ -5,7 +5,7 @@ import Image from "next/image";
 
 const ImageHoverComponent = () => {
     return (
-        <div className="relative max-w-sm mx-auto overflow-hidden rounded-lg border shadow-lg group">
+        <div className="relative w-[250px] sm:w-[280px] md:w-[300px] mx-auto overflow-hidden rounded-lg border shadow-lg group">
             <div className="relative">
                 <Image
                     src="/img/tinture_1.png"

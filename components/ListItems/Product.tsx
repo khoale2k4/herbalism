@@ -15,7 +15,7 @@ const NewProductComponent = () => {
                     alt="New Product"
                     width={300}
                     height={150}
-                    className="w-full h-40 object-cover"
+                    className="w-full h-40 object-cover sm:h-48"
                 />
 
                 <div className="p-4 text-left">

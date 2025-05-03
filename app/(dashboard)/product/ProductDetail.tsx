@@ -13,6 +13,7 @@ import CustomLoadingElement from "@/app/loading";
 import { getTokenFromCookie } from "@/app/utils/token";
 import RelatedProducts from "@/components/RelatedProducts";
 import { useCurrency } from "@/hooks/useCurrency";
+import { formatPrice } from "@/app/utils/format-currency";
 
 interface Review {
     id: string;
@@ -31,7 +32,6 @@ interface Tab {
 export default function ProductDetail({ productId }: { productId: string }) {
     const { t } = useLanguage();
     const [loading, setLoading] = useState(true);
-    const { tcurrency, changeCurrency, currentCurrency } = useCurrency();
     const [product, setProduct] = useState<Product | null>(null);
     const [suggestProducts, setSuggestProducts] = useState<Product[]>([]);
     const [tabs, setTabs] = useState<Tab[]>([]);
@@ -81,10 +81,6 @@ export default function ProductDetail({ productId }: { productId: string }) {
     const selectedSizeStock = useMemo(() => {
         return product?.size_stock.find(s => s.size === selectedSize);
     }, [product, selectedSize]);
-
-    const formatPrice = (price: number) => {
-        return tcurrency(price);
-    };
 
     const toggleTab = (tabId: string) => {
         setExpandedTabs(prev =>
@@ -184,9 +180,13 @@ export default function ProductDetail({ productId }: { productId: string }) {
     if (!product) return <NotFoundPage />;
 
     return (
-        <div className="w-full bg-[#fdf8f7] min-h-screen">
+        <div className="w-full bg-[#fdf8f7] min-h-screen"
+            style={{
+                backgroundImage: "url('/img/background.png')",
+                backgroundColor: "#fdf8f7",
+            }}
+        >
             <div className="max-w-7xl mx-auto px-4 py-10">
-                <NotificationComponent />
                 <nav className="text-sm text-gray-500 mb-6">
                     <ol className="flex space-x-2">
                         <li><a href="/" className="hover:text-[#3e4f3d]">{t.common.home}</a></li>
@@ -296,7 +296,7 @@ export default function ProductDetail({ productId }: { productId: string }) {
                                         max={selectedSizeStock?.stock}
                                         value={quantity}
                                         onChange={(e) => handleQuantityChange(parseInt(e.target.value) || 1)}
-                                        className="h-10 w-16 border-y border-gray-300 text-center focus:outline-none"
+                                        className="h-10 w-16 bg-[#fdf8f7] border-y border-gray-300 text-center focus:outline-none"
                                     />
                                     <button
                                         onClick={() => handleQuantityChange(quantity + 1)}
@@ -373,7 +373,7 @@ export default function ProductDetail({ productId }: { productId: string }) {
                     <div className="flex justify-between items-center mb-6">
                         <h2 className="text-2xl font-bold">{t.product.customerReiviews}</h2>
                         {!isCommented && <button
-                            className="px-4 py-2 border border-green-600 text-green-600 rounded-md hover:bg-green-50"
+                            className="px-4 py-2 border border-[#3e4f3d] text-[#3e4f3d] rounded-md hover:bg-green-50"
                             onClick={() => setShowReviewForm(true)}
                         >
                             {t.product.writeAReview}
@@ -422,7 +422,7 @@ export default function ProductDetail({ productId }: { productId: string }) {
                                     </button>
                                     <button
                                         type="submit"
-                                        className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+                                        className="px-4 py-2 bg-[#3e4f3d] text-white rounded-md hover:bg-[#747c61]"
                                     >
                                         {t.product.submit}
                                     </button>

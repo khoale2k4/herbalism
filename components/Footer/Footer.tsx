@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from "next/image";
 import { FaFacebookF, FaInstagram, FaEnvelope } from 'react-icons/fa';
 
 const Footer = () => {
@@ -85,6 +86,15 @@ const Footer = () => {
                                 >
                                     <FaEnvelope />
                                 </a>
+                            </div>
+                            <div className="relative w-[120px] h-[40px] mt-2 pt-20">
+                                <Image
+                                    src="/img/logo-with-word.png"
+                                    alt="Harmonic Arts Logo"
+                                    fill
+                                    className="object-contain"
+                                    sizes="120px"
+                                />
                             </div>
                         </div>
                     </div>

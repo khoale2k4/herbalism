@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Product } from "@/types/product";
-import { formatPrice } from "@/app/utils/formatCurrency";
+import { formatPrice } from "@/app/utils/format-currency";
 
 interface RelatedProductsProps {
     products: Product[];
@@ -125,7 +125,7 @@ export default function RelatedProducts({
                     productGrid: "relative flex snap-x overflow-x-auto scrollbar-hide gap-4 pb-2",
                     productCard: "min-w-[240px] flex-shrink-0 snap-start rounded-lg hover:shadow-md transition-shadow bg-white",
                     imageContainer: "aspect-[4/3] mb-3 overflow-hidden rounded-t-lg",
-                    productName: "font-medium text-gray-800 line-clamp-1 hover:text-blue-600",
+                    productName: "font-medium text-gray-800 line-clamp-1 hover:text-green-900",
                     priceContainer: "flex items-baseline gap-2 mt-1",
                 };
         }        
@@ -159,21 +159,6 @@ export default function RelatedProducts({
                                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                     className="object-cover rounded"
                                 />}
-                                {/* {product.isNew && (
-                                    <span className="absolute top-2 left-2 bg-blue-500 text-white text-xs px-2 py-0.5 rounded-full">
-                                        Mới
-                                    </span>
-                                )}
-                                {product.isBestSeller && (
-                                    <span className="absolute top-2 right-2 bg-amber-500 text-white text-xs px-2 py-0.5 rounded-full">
-                                        Bán chạy
-                                    </span>
-                                )}
-                                {product.isSoldOut && (
-                                    <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                                        <span className="text-white font-medium">Hết hàng</span>
-                                    </div>
-                                )} */}
                             </div>
                         </div>
 
@@ -182,14 +167,8 @@ export default function RelatedProducts({
 
                             <div className={classes.priceContainer}>
                                 <span className="font-medium text-gray-900">
-                                    {formatPrice( product.price)}
+                                    {formatPrice(product.price)}
                                 </span>
-
-                                {/* {product.price && (
-                                    <span className="text-xs text-gray-500 line-through">
-                                        {formatPrice(product.price)}
-                                    </span>
-                                )} */}
                             </div>
                         </div>
                     </Link>
@@ -203,7 +182,7 @@ export default function RelatedProducts({
                             <button
                                 key={index}
                                 className={`w-2 h-2 rounded-full transition-all ${currentSlide === index
-                                        ? "bg-blue-600 w-6"
+                                        ? "bg-green-900 w-6"
                                         : "bg-gray-300 hover:bg-gray-400"
                                     }`}
                                 onClick={() => scrollToSlide(index)}
