@@ -272,7 +272,7 @@ const Navbar = () => {
                 {t.navbar.learn}
               </a>
               <a
-                href="/about"
+                href="/process"
                 className="cursor-pointer py-2 border-b-2 border-transparent hover:border-[#6e7a34] transition-all duration-300"
               >
                 {t.navbar.about}

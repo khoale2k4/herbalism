@@ -36,7 +36,7 @@ export default {
         shop: "Shop",
         learn: "Learn",
         blog: "Blog",
-        about: "About Us",
+        about: "Our process",
         search: "Search",
         searchPlaceholders: ["Search...", "Products...", "Blogs...", "Explore..."],
         marquee: {

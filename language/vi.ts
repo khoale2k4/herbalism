@@ -37,7 +37,7 @@ export default {
         shop: "Cửa hàng",
         learn: "Tìm hiểu",
         blog: "Blog",
-        about: "Về chúng tôi",
+        about: "Hành trình chiết xuất",
         search: "Tìm kiếm",
         searchPlaceholders: ["Tìm kiếm...", "Sản phẩm...", "Bài viết...", "Khám phá..."],
         marquee: {

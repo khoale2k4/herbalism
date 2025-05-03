@@ -190,10 +190,6 @@ export default function ProductDetail({ productId }: { productId: string }) {
 
     return (
         <div className="w-full bg-[#fdf8f7] min-h-screen"
-            style={{
-                backgroundImage: "url('/img/background.png')",
-                backgroundColor: "#fdf8f7",
-            }}
         >
             <div className="max-w-7xl mx-auto px-4 py-10">
                 <nav className="text-sm text-gray-500 mb-6">
@@ -206,7 +202,11 @@ export default function ProductDetail({ productId }: { productId: string }) {
                     </ol>
                 </nav>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12"
+                    style={{
+                        backgroundImage: "url('/img/background.png')",
+                        backgroundColor: "#fdf8f7",
+                    }}>
                     <div className="space-y-6">
                         <div className="bg-gray-50 rounded-xl overflow-hidden">
                             <img
@@ -351,7 +351,11 @@ export default function ProductDetail({ productId }: { productId: string }) {
                     </div>
                 </div>
 
-                <div className="mt-16 border-t pt-8">
+                <div className="mt-16 border-t pt-8"
+                    style={{
+                        backgroundImage: "url('/img/background.png')",
+                        backgroundColor: "#fdf8f7",
+                    }}>
                     <h2 className="text-2xl font-bold mb-6">{t.product.productDetail}</h2>
                     <div className="space-y-4">
                         {tabs.map((tab) => (
