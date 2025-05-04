@@ -449,6 +449,42 @@ export class OrderOperation {
     }
 }
 
+export class VoucherOperation {
+    private baseUrl: string;
+
+    constructor() {
+        this.baseUrl = (process.env.NEXT_PUBLIC_API_HOST || "http://localhost:3000") + '/voucher';
+    }
+
+    async getVoucher(id: string) {
+        try {
+            const response = await fetch(this.baseUrl + '/' + id, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Get voucher failed with status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            return {
+                success: true,
+                message: result.message,
+                data: result.data
+            };
+        } catch (error: any) {
+            return {
+                success: false,
+                message: error?.message || 'Unknown error',
+                data: null
+            };
+        }
+    }
+}
+
 export class CartOperation {
     private baseUrl: string;
 

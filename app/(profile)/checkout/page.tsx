@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react'
 import PaymentStatus from './components/PaymentStatus';
 import { ItemInCart } from '@/components/Cart/cart';
-import { CartOperation, CustomerOperation, OrderOperation } from '@/lib/main';
+import { CartOperation, CustomerOperation, OrderOperation, VoucherOperation } from '@/lib/main';
 import { getTokenFromCookie } from '@/app/utils/token';
 import { CreditCard, SaveIcon } from 'lucide-react';
 
@@ -70,6 +70,7 @@ export default function CheckoutPage() {
     const orderOp = new OrderOperation();
     const cartOp = new CartOperation();
     const customerOp = new CustomerOperation();
+    const voucherOp = new VoucherOperation();
     const [isChecked, setIsChecked] = useState(false);
     const [cartItems, setCartItems] = useState<ItemInCart[]>([]);
     const [savedAddresses, setSavedAddresses] = useState<Address[]>([]);
@@ -129,11 +130,13 @@ export default function CheckoutPage() {
         }
     };
 
+    const handleGetVoucher = async (id: string) => {
+        const response = await voucherOp.getVoucher(id);
 
-    // const [savedAddresses] = useState([
-    //     { id: 1, address: '123 Đường ABC, Quận 1, TP.HCM' },
-    //     { id: 2, address: '456 Đường XYZ, Quận 2, TP.HCM' }
-    // ])
+        if (response.success) {
+            setSelectedVoucher(response.data);
+        }
+    }
 
     const paymentMethods = [
         {
@@ -158,28 +161,20 @@ export default function CheckoutPage() {
         }
     ];
 
-    // const cartItems: ItemInCart = [
-    //     { id: 1, name: 'Áo thun nam', price: 150000, quantity: 2 },
-    //     { id: 2, name: 'Quần jean nữ', price: 350000, quantity: 1 },
-    //     { id: 3, name: 'Giày thể thao', price: 500000, quantity: 1 }
-    // ]
-
     const [subtotal, setSubtotal] = useState(0);
     const [shippingFee, setShippingFee] = useState<number>(0);
     const [total, setTotal] = useState(0);
-
     const calculateFee = async () => {
         const newSubtotal = cartItems.reduce((sum, item) => sum + (item.price * item.num), 0);
         setSubtotal(newSubtotal);
-
+    
         const feeResponse = await orderOp.getFee();
         if (feeResponse.success) {
-            const newShippingFee = feeResponse.data;
-            setShippingFee(newShippingFee);
+            setShippingFee(feeResponse.data);
         } else {
             setShippingFee(0);
         }
-    }
+    };    
 
     const handleInputChange = (e: any) => {
         const { name, value } = e.target
@@ -192,6 +187,7 @@ export default function CheckoutPage() {
     }
 
     const handlePrevStep = () => {
+        if (step === 1) router.back()
         if (step > 1) setStep(step - 1)
     }
 
@@ -224,8 +220,29 @@ export default function CheckoutPage() {
 
     const checkValid = () => {
         if (step === 1) {
-            return !formData.firstName || !formData.lastName || !formData.email || !formData.phone || !formData.addressId;
+            if (newAddress) {
+                return (
+                    !formData.firstName ||
+                    !formData.lastName ||
+                    !formData.email ||
+                    !formData.phone ||
+                    !formData.country ||
+                    !formData.address ||
+                    !formData.city ||
+                    !formData.province ||
+                    !formData.zipCode
+                );
+            } else {
+                return (
+                    !formData.firstName ||
+                    !formData.lastName ||
+                    !formData.email ||
+                    !formData.phone ||
+                    !formData.addressId
+                );
+            }
         }
+
 
         if (step === 2) {
             if (formData.paymentMethod === 'credit-card') {
@@ -315,20 +332,29 @@ export default function CheckoutPage() {
     }
 
     useEffect(() => {
-        fetchProcessingOrder();
-        fetchAddress();
-    }, [])
-
-    useEffect(() => {
         if (cartItems.length > 0) {
             calculateFee();
         }
-    }, [cartItems]);
+    }, [cartItems]);    
 
     useEffect(() => {
-        const newFee = subtotal + shippingFee - (selectedVoucher?.type === 'amount' ? selectedVoucher?.discount : subtotal * (selectedVoucher?.discount || 1) || 0);
-        setTotal(newFee > 0 ? newFee : 0);
-    }, [subtotal, shippingFee, selectedVoucher]);
+        let discountAmount = 0;
+        if (selectedVoucher) {
+            if (selectedVoucher.type === 'amount') {
+                discountAmount = selectedVoucher.discount;
+            } else if (selectedVoucher.type === 'percent') {
+                discountAmount = subtotal * (selectedVoucher.discount / 100);
+            }
+        }
+    
+        const newTotal = subtotal + shippingFee - discountAmount;
+        setTotal(newTotal > 0 ? newTotal : 0);
+    }, [subtotal, shippingFee, selectedVoucher]);    
+
+    useEffect(() => {
+        fetchProcessingOrder();
+        fetchAddress();
+    }, [])
 
     return (
         <div className="min-h-screen bg-[#fdf8f7] font-sans text-gray-800">
@@ -820,27 +846,15 @@ export default function CheckoutPage() {
 
 
                         <div className="mt-10 flex justify-between">
-                            {step > 1 ? (
-                                <button
-                                    onClick={() => { handlePrevStep() }}
-                                    className="px-5 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium transition-colors flex items-center"
-                                >
-                                    <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-                                    </svg>
-                                    Quay lại
-                                </button>
-                            )
-                                // : newAddress ?
-                                //     <button
-                                //         onClick={saveAddress}
-                                //         className="px-5 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium transition-colors flex items-center"
-                                //     >
-                                //         <SaveIcon />
-                                //         Lưu địa chỉ
-                                //     </button>
-                                : <div></div>
-                            }
+                            <button
+                                onClick={() => { handlePrevStep() }}
+                                className="px-5 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium transition-colors flex items-center"
+                            >
+                                <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                                </svg>
+                                Quay lại
+                            </button>
 
                             {step < 3 ? (
                                 <button
@@ -914,11 +928,14 @@ export default function CheckoutPage() {
                                 <span className="text-gray-600">Phí vận chuyển:</span>
                                 <span>{formatCurrency(shippingFee)}</span>
                             </div>
+                            <div className="flex justify-between">
+                                <span className="text-gray-600">Mã giảm giá:</span>
+                            </div>
 
+                            <div className="flex justify-between">
+                                {selectedVoucher && <span><strong>{selectedVoucher.id}</strong> - Giảm {selectedVoucher.discount} {selectedVoucher.type === 'amount'? "VNĐ": "%"}</span>}
+                            </div>
                             <div className="flex flex-col gap-2">
-                                <label htmlFor="voucherInput" className="text-gray-600 font-medium">
-                                    Mã giảm giá:
-                                </label>
                                 <div className="flex gap-2 items-center">
                                     <input
                                         id="voucherInput"
@@ -929,20 +946,12 @@ export default function CheckoutPage() {
                                         className="border border-gray-300 px-3 py-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-[#8a974c]"
                                     />
                                     <button
-                                        onClick={() => { }}
+                                        onClick={() => { handleGetVoucher(voucherCode) }}
                                         className="bg-[#8a974c] hover:bg-[#6e7a34] text-white px-2 py-2 rounded min-w-[100px]"
                                     >
                                         Áp dụng
                                     </button>
                                 </div>
-                                {/* {voucherError && (
-                                    <div className="text-red-500 text-sm">{voucherError}</div>
-                                )} */}
-                                {selectedVoucher && (
-                                    <div className="text-green-600 text-sm">
-                                        ✅ Đã áp dụng mã: <strong>{selectedVoucher.id}</strong> - Giảm {selectedVoucher.discount}%
-                                    </div>
-                                )}
                             </div>
 
 

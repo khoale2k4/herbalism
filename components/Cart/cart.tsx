@@ -182,7 +182,7 @@ export default function CartSidebar({
                             </p>
                             <button
                                 onClick={() => setActiveMenu(null)}
-                                className="text-green-600 border border-green-600 px-4 py-2 rounded-md hover:bg-green-50 transition-colors text-sm font-medium"
+                                className="text-[#6e7a34] border border-[#6e7a34] px-4 py-2 rounded-md hover:bg-green-50 transition-colors text-sm font-medium"
                             >
                                 Tiếp tục mua sắm
                             </button>

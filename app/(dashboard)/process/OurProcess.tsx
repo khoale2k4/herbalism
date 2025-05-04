@@ -235,7 +235,7 @@ export default function OurProcess() {
                 <div className="inline-block mb-8">
                     <Leaf size={48} className="text-emerald-500 mx-auto" />
                 </div>
-                <h2 className="text-3xl font-semibold mb-6">A Gift from Earth and Sky</h2>
+                <h2 className="text-3xl font-semibold mb-6">A Gift from Earth and Universe</h2>
                 <p className="max-w-3xl mx-auto text-lg">
                     Spagyric is more than herbal medicine—it's a journey of unity between human, nature, and cosmos.
                     It reconnects us to the elemental and the divine.
