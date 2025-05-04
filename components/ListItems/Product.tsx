@@ -3,9 +3,11 @@
 import React from "react";
 import Image from "next/image";
 import { useLanguage } from "@/hooks/useLanguage";
+import { useRouter } from "next/navigation";
 
 const NewProductComponent = () => {
     const { t } = useLanguage();
+    const router = useRouter();
 
     return (
         <div className="flex-shrink-0 w-full">
@@ -23,7 +25,10 @@ const NewProductComponent = () => {
                     <p className="mt-2 text-gray-600">
                         {t.newProduct.description}
                     </p>
-                    <button className="mt-4 w-full bg-[#3e4f3d] hover:bg-[#747c61] text-white px-4 py-2 rounded-full transition-all duration-300 ease-in-out">
+                    <button
+                        className="mt-4 w-full bg-[#3e4f3d] hover:bg-[#747c61] text-white px-4 py-2 rounded-full transition-all duration-300 ease-in-out"
+                        onClick={() => { router.push('/shop') }}
+                    >
                         {t.newProduct.button}
                     </button>
                 </div>

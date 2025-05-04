@@ -359,33 +359,316 @@ export default {
         addToCartError: "Có lỗi xảy ra khi thêm vào giỏ hàng",
         relatedProducts: "Các sản phẩm liên quan"
     },
-    footer: {
-        company: {
-            aboutUs: "Về chúng tôi",
-            ourImpact: "Tác động của chúng tôi",
-            ourMushrooms: "Nấm của chúng tôi",
-            workWithUs: "Làm việc với chúng tôi",
-            contact: "Liên hệ",
-            helpCenter: "Trung tâm trợ giúp",
-            faqs: "Câu hỏi thường gặp"
+    customer: {
+        title: "Khách hàng nói gì về chúng tôi",
+        description: "Chúng tôi tự hào về dịch vụ mà mình cung cấp và hạnh phúc khi nhận được những phản hồi tích cực từ khách hàng."
+    },
+    ourProcessData: {
+        hero: {
+            title: 'Our Process',
+            subtitle: 'Spagyric – The Sacred Alchemy of Healing',
+            description:
+                'In the rich tradition of Western alchemy, Spagyric is more than a method of herbal preparation—it is a profound philosophical symbol of transformation—of matter, soul, and the human being.',
         },
+        paracelsus: {
+            title: 'Paracelsus',
+            badge: 'The Alchemist',
+            imageUrl:
+                'https://merian-alchemie.ub.uni-frankfurt.de/wp-content/uploads/Rubens-Paracelsus_Beitrag-Esposito-1200x1722.jpg',
+            paragraphs: [
+                'Paracelsus (1493–1541), born Philippus Aureolus Theophrastus Bombastus von Hohenheim, was a Swiss-German alchemist, physician, astrologer, botanist, and philosopher.',
+                'A revolutionary thinker of the Renaissance, he is regarded not only as the father of Spagyric alchemy, but also as a pioneer of iatrochemistry—a precursor to modern pharmaceutical science.',
+                'Paracelsus introduced a holistic view of medicine, one that treated illness not as an isolated symptom, but as an imbalance of the whole being—requiring healing at the root.',
+            ],
+        },
+        origins: {
+            title: 'The Alchemical Origins of Spagyric',
+            spagyricRoots: [
+                { term: 'Spao', definition: 'to separate' },
+                { term: 'Ageiro', definition: 'to recombine' },
+            ],
+            description1:
+                'This principle, "separate – purify – reunite," lies at the heart of Spagyric. It reflects the timeless alchemical axiom:',
+            quote: '"Solve et Coagula" – dissolve to recombine.',
+            description2:
+                'In Spagyric, plants are broken down into their three fundamental components—Spirit, Soul, and Body—each one purified, then reunited to create an Elixir that embodies the complete essence of the plant, physically and energetically.',
+        },
+        principles: {
+            title: 'The Three Sacred Principles',
+            items: [
+                {
+                    title: 'Salt',
+                    description: 'The Body: structure and mineral foundation',
+                    icon: 'Sparkles', // biểu tượng dùng từ lucide-react
+                },
+                {
+                    title: 'Sulfur',
+                    description: 'The Soul: essence, emotions, and inner fire',
+                    icon: 'Flame',
+                },
+                {
+                    title: 'Mercury',
+                    description: 'The Spirit: the volatile force, life and consciousness',
+                    icon: 'Droplets',
+                },
+            ],
+        },
+        steps: {
+            title: 'The Classical Spagyric Process',
+            items: [
+                {
+                    step: 1,
+                    title: 'Fermentation & Distillation: Extracting the Spirit',
+                    description:
+                        "The plant matter is fermented to produce alcohol, then distilled to obtain the plant's \"living spirit\"—its vital essence.",
+                },
+                {
+                    step: 2,
+                    title: 'Maceration & Extraction: Extracting the Soul',
+                    description:
+                        'The leftover plant material is macerated in the alcohol to release its soul—the essential oils, resins, and subtle compounds—followed by careful filtration.',
+                },
+                {
+                    step: 3,
+                    title: 'Calcination: Purifying the Body',
+                    description:
+                        'The plant residue is incinerated at high heat into white ash, then repeatedly washed and purified to yield mineral salts—the body of the plant.',
+                },
+                {
+                    step: 4,
+                    title: 'Recombination: Coagula – uniting all elements',
+                    description:
+                        'The purified salts (Body), essential extracts (Soul), and distilled alcohol (Spirit) are finally recombined into a unified Spagyric Elixir, embodying the full spectrum...',
+                },
+            ],
+        },
+        transformation: {
+            title: "Spagyric as a Sacred Path of Inner Transformation",
+            intro: "To a true alchemist, crafting a Spagyric remedy is not just making medicine—it is a sacred ritual. Every stage of the process mirrors an inner transformation:",
+            steps: [
+                {
+                    number: 1,
+                    title: "Extracting the essence",
+                    description: "is an act of devotion to nature's purity"
+                },
+                {
+                    number: 2,
+                    title: "Burning the plant's residue",
+                    description: "symbolizes letting go of the old self, the ego"
+                },
+                {
+                    number: 3,
+                    title: "Recombining the elements",
+                    description: "reflects the soul's rebirth—a higher, more luminous state of being"
+                }
+            ],
+            teachings: [
+                "Nothing is wasted. Even ashes contain wisdom.",
+                "The dark serves the light. The separation is necessary for wholeness."
+            ]
+        },
+
+        final: {
+            icon: "Leaf",
+            title: "A Gift from Earth and Universe",
+            description: "Spagyric is more than herbal medicine—it's a journey of unity between human, nature, and cosmos. It reconnects us to the elemental and the divine."
+        }
+    },
+    cartSidebar: {
+        header: {
+            title: "Giỏ hàng của bạn",
+            itemCount: (count: number) => `${count}`,
+        },
+        emptyCart: {
+            title: "Giỏ hàng của bạn đang trống",
+            description: "Hãy thêm một vài sản phẩm và quay lại đây nhé",
+            continueShopping: "Tiếp tục mua sắm",
+        },
+        cartItem: {
+            sizeLabel: "Size:",
+            remove: "Xóa",
+            decrease: "Giảm",
+            increase: "Tăng",
+        },
+        summary: {
+            subtotal: "Tạm tính",
+            shippingFee: "Phí vận chuyển",
+            freeShipping: "Miễn phí",
+            total: "Tổng cộng",
+            checkoutButton: "Thanh toán ngay",
+            continueShoppingButton: "Tiếp tục mua sắm",
+        },
+        relatedProducts: {
+            title: "Sản phẩm liên quan",
+        },
+    },
+    paymentPage: {
+        common: {
+            backButton: "Quay lại",
+            continueButton: "Tiếp tục",
+            completeOrderButton: "Hoàn tất đơn hàng",
+            editButton: "Chỉnh sửa",
+            changeButton: "Thay đổi",
+            securePayment: "Thanh toán an toàn & bảo mật",
+            applyButton: "Áp dụng",
+            voucherPlaceholder: "Nhập mã voucher...",
+        },
+
+        pageTitle: "Thanh toán",
+
+        progressSteps: {
+            step1: "Thông tin",
+            step2: "Thanh toán",
+            step3: "Xác nhận",
+        },
+
+        addressStep: {
+            title: "Thông tin giao hàng",
+            emailLabel: "Email",
+            emailPlaceholder: "email@example.com",
+            phoneLabel: "Số điện thoại",
+            phonePlaceholder: "0901 234 567",
+            newsletterCheckbox: "Nhận mail xác nhận",
+            addressLabel: "Địa chỉ giao hàng",
+            newAddressOption: "Sử dụng địa chỉ mới",
+            savedAddressOption: "Sử dụng địa chỉ đã lưu",
+            selectAddressPlaceholder: "Chọn địa chỉ",
+
+            countryLabel: "Quốc gia",
+            countryPlaceholder: "Chọn quốc gia",
+            firstNameLabel: "Tên",
+            lastNameLabel: "Họ",
+            addressPlaceholder: "Nhập địa chỉ",
+            apartmentLabel: "Căn hộ, tòa nhà (tùy chọn)",
+            cityLabel: "Thành phố",
+            cityPlaceholder: "Nhập thành phố",
+            provinceLabel: "Tỉnh/Thành phố",
+            provincePlaceholder: "Chọn tỉnh/thành phố",
+            zipCodeLabel: "Mã bưu điện",
+            zipCodePlaceholder: "Nhập mã bưu điện",
+        },
+
+        paymentStep: {
+            title: "Phương thức thanh toán",
+            creditCard: {
+                title: "Thẻ tín dụng",
+                cardNumberLabel: "Số thẻ",
+                cardNumberPlaceholder: "1234 5678 9012 3456",
+                expiryDateLabel: "Ngày hết hạn",
+                expiryDatePlaceholder: "MM/YY",
+                cvcLabel: "Mã bảo mật",
+                cvcPlaceholder: "CVC",
+                nameLabel: "Tên trên thẻ",
+                namePlaceholder: "NGUYEN VAN A",
+            },
+            paypal: {
+                title: "PayPal",
+                noticeTitle: "Bạn sẽ được chuyển đến PayPal",
+                noticeDescription: "Sau khi nhấn 'Hoàn tất thanh toán', bạn sẽ được chuyển đến trang PayPal để hoàn tất giao dịch.",
+            },
+            momo: {
+                title: "Ví MoMo",
+                noticeTitle: "Bạn sẽ được chuyển đến MoMo",
+                noticeDescription: "Sau khi nhấn 'Hoàn tất thanh toán', ứng dụng MoMo sẽ mở để bạn xác nhận thanh toán.",
+            },
+            cod: {
+                title: "Thanh toán khi nhận",
+                noticeTitle: "Thanh toán khi nhận hàng",
+                noticeDescription: "Tiến hành thanh toán khi đã nhận được hàng.",
+            },
+        },
+
+        reviewStep: {
+            title: "Xác nhận đơn hàng",
+            shippingTitle: "Thông tin giao hàng",
+            paymentTitle: "Phương thức thanh toán",
+            infoLabels: {
+                fullName: "Họ tên:",
+                phone: "Điện thoại:",
+                email: "Email:",
+                address: "Địa chỉ:",
+                province: "Tỉnh thành:",
+                zipCode: "Zip code:",
+                country: "Quốc gia:",
+                paymentMethod: "Phương thức:",
+                creditCard: "Thẻ tín dụng: "
+            },
+            missingInfo: "Chưa có thông tin",
+        },
+
+        orderSummary: {
+            title: "Đơn hàng của bạn",
+            subtotalLabel: "Tạm tính:",
+            shippingLabel: "Phí vận chuyển:",
+            discountLabel: "Mã giảm giá:",
+            discount: "Giảm",
+            totalLabel: "Tổng cộng:",
+            freeShipping: "Miễn phí",
+            orderInfoTitle: "Thông tin đơn hàng",
+            infoLabels: {
+                email: "Email:",
+                phone: "Điện thoại:",
+                address: "Địa chỉ:",
+                paymentMethod: "Phương thức:",
+                size: "Kích thước:",
+                amount: "SL:"
+            },
+            missingInfo: "Chưa nhập",
+            notSelected: "Chưa chọn",
+        },
+
+        paymentMethods: [
+            {
+                id: 'credit-card',
+                name: 'Thẻ tín dụng',
+                icon: '💳'
+            },
+            {
+                id: 'paypal',
+                name: 'PayPal',
+                icon: '🔵'
+            },
+            {
+                id: 'momo',
+                name: 'Ví MoMo',
+                icon: '💜'
+            },
+            {
+                id: 'pay-later',
+                name: 'Thanh toán khi nhận',
+                icon: ''
+            }
+        ],
+
+        provinces: [
+            "Hồ Chí Minh",
+            "Hà Nội",
+            "Đà Nẵng",
+        ],
+
+        countries: [
+            { value: "VN", label: "Vietnam" },
+            { value: "US", label: "United States" },
+            { value: "CA", label: "Canada" },
+            { value: "UK", label: "United Kingdom" },
+            { value: "JP", label: "Japan" },
+            { value: "KR", label: "South Korea" },
+            { value: "OTHER", label: "Other countries" },
+        ]
+    },
+    footer: {
+        contact: "LIÊN HỆ",
+        legal: "PHÁP LÝ",
+        enterEmail: "Nhập địa chỉ email của bạn",
+        join: "Tham gia cộng đồng của chúng tôi",
+        stayConnect: "Luôn kết nối với kiến thức thảo dược, thông tin sức khỏe và ưu đãi độc quyền.",
+        description: "Các sản phẩm và thông tin được cung cấp qua trang web này chưa được Bộ Y tế Việt Nam (MoH), Cơ quan Quản lý Hàng hóa Trị liệu Úc (TGA), Cục Quản lý Thực phẩm và Dược phẩm Hoa Kỳ (FDA) hoặc Herbalism Ltd đánh giá, và không nhằm mục đích chẩn đoán, điều trị, chữa khỏi hoặc ngăn ngừa bất kỳ bệnh nào. Mọi thông tin trên trang web này, hoặc trên nhãn hay bao bì sản phẩm của chúng tôi, chỉ nhằm mục đích cung cấp thông tin và không thay thế cho lời khuyên từ chuyên gia chăm sóc sức khỏe chính của bạn. Vui lòng tham khảo ý kiến chuyên gia y tế trước khi sử dụng, cũng như khi cần chẩn đoán hoặc điều trị các vấn đề y tế. Các sản phẩm trên trang web này chứa nhiều chiết xuất thảo dược cô đặc. Hãy đảm bảo rằng bạn không bị dị ứng với bất kỳ thành phần nào trước khi sử dụng.",
         info: {
-            retailLocations: "Địa điểm bán lẻ",
-            wholesale: "Bán buôn",
-            rewardsProgram: "Chương trình tích điểm",
-            refundPolicy: "Chính sách hoàn tiền",
             shippingPolicy: "Chính sách vận chuyển",
             privacyPolicy: "Chính sách bảo mật",
             termsOfService: "Điều khoản dịch vụ"
         },
-        learn: {
-            mushrooms101: "Nấm 101",
-            webinars: "Hội thảo trực tuyến",
-            recipes: "Công thức",
-            blog: "Blog"
-        },
         copyright:
-            "© 2025 Herbalism. Cung cấp thảo dược với mục đích từ năm 2009.",
-        byShopify: "Trên Shopify bởi Voltage"
+            "© 2025 Herbalism. Cung cấp thảo dược với mục đích từ năm 2025.",
     }
 };

@@ -8,6 +8,7 @@ import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 import { QuoteIcon, Star, User } from "lucide-react";
 import useOnScreen from "@/hooks/useOnScreen";
+import { useLanguage } from "@/hooks/useLanguage";
 
 type Testimonial = {
     name: string;
@@ -21,49 +22,42 @@ const testimonials: Testimonial[] = [
     {
         name: "Anna Nguyễn",
         title: "CEO, Green Co.",
-        comment: "Sản phẩm tuyệt vời, đáp ứng mọi nhu cầu của doanh nghiệp chúng tôi. Chắc chắn tôi sẽ quay lại và giới thiệu cho đối tác!",
+        comment:
+            "Excellent products that meet all of our business needs. I’ll definitely come back and recommend it to our partners!",
         rating: 5
     },
     {
         name: "Bình Trần",
         title: "Marketing Manager",
-        comment: "Dịch vụ khách hàng rất tốt! Nhân viên luôn sẵn sàng hỗ trợ và giải quyết mọi vấn đề một cách nhanh chóng.",
+        comment:
+            "Dịch vụ khách hàng rất tốt! Nhân viên luôn sẵn sàng hỗ trợ và giải quyết mọi vấn đề một cách nhanh chóng.",
         rating: 5
     },
     {
         name: "Chloe Lê",
         title: "Content Creator",
-        comment: "Tôi yêu trải nghiệm mua sắm ở đây. Giao diện dễ sử dụng và sản phẩm chất lượng cao.",
+        comment:
+            "Tôi yêu trải nghiệm mua sắm ở đây. Giao diện dễ sử dụng và sản phẩm chất lượng cao.",
         rating: 4
     },
     {
         name: "David Phạm",
         title: "Freelancer",
-        comment: "Nhanh chóng và đáng tin cậy. Đã sử dụng dịch vụ nhiều lần và chưa bao giờ thất vọng.",
+        comment:
+            "Fast and reliable. I’ve used the service many times and have never been disappointed.",
         rating: 5
     },
     {
         name: "Emma Võ",
         title: "UI/UX Designer",
-        comment: "Thiết kế đẹp và dễ dùng. Tôi đặc biệt ấn tượng với sự chú ý đến từng chi tiết nhỏ.",
+        comment:
+            "Thiết kế đẹp và dễ dùng. Tôi đặc biệt ấn tượng với sự chú ý đến từng chi tiết nhỏ.",
         rating: 4
-    },
+    }
 ];
 
 const CustomerTestimonials: React.FC = () => {
-    const renderStars = (rating: number = 5) => {
-        return (
-            <div className="flex justify-center mt-2 mb-4">
-                {[...Array(5)].map((_, i) => (
-                    <Star
-                        key={i}
-                        size={16}
-                        className={i < rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}
-                    />
-                ))}
-            </div>
-        );
-    };
+    const { t } = useLanguage();
     const [ref, isVisible] = useOnScreen();
     return (
         <div
@@ -79,10 +73,10 @@ const CustomerTestimonials: React.FC = () => {
                         Phản hồi khách hàng
                     </span> */}
                             <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-                                Khách hàng nói gì về chúng tôi
+                                {t.customer.title}
                             </h2>
                             <p className="text-gray-600">
-                                Chúng tôi tự hào về dịch vụ mà mình cung cấp và hạnh phúc khi nhận được những phản hồi tích cực từ khách hàng.
+                                {t.customer.description}
                             </p>
                         </div>
 

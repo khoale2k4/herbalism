@@ -69,6 +69,33 @@ export default {
         title: "Welcome to Our Website",
         subtitle: "Discover amazing products and deals.",
         button: "Shop Now"
+    }, cartSidebar: {
+        header: {
+            title: "Your Cart",
+            itemCount: (count: number) => `${count}`,
+        },
+        emptyCart: {
+            title: "Your cart is empty",
+            description: "Add some products and come back here",
+            continueShopping: "Continue Shopping",
+        },
+        cartItem: {
+            sizeLabel: "Size:",
+            remove: "Remove",
+            decrease: "Decrease",
+            increase: "Increase",
+        },
+        summary: {
+            subtotal: "Subtotal",
+            shippingFee: "Shipping Fee",
+            freeShipping: "Free",
+            total: "Total",
+            checkoutButton: "Checkout Now",
+            continueShoppingButton: "Continue Shopping",
+        },
+        relatedProducts: {
+            title: "Related Products",
+        },
     },
     collections: {
         title: "The Revival of Botanical Wisdom",
@@ -358,33 +385,287 @@ export default {
         addToCartError: "Error adding to cart",
         relatedProducts: "You also may like"
     },
+    customer: {
+        title: "What our customers say about us",
+        description: "We take pride in the service we provide and are delighted to receive positive feedback from our customers."
+    },
     footer: {
-        company: {
-            aboutUs: "About Us",
-            ourImpact: "Our Impact",
-            ourMushrooms: "Our Mushrooms",
-            workWithUs: "Work With Us",
-            contact: "Contact",
-            helpCenter: "Help Center",
-            faqs: "FAQs"
-        },
+        contact: "CONTACT",
+        legal: "LEGAL",
+        enterEmail: "Enter your email address",
+        join: "Join out community",
+        stayConnect: "Stay connected with herbal education, wellness insights, and exclusive offers.",
+        description: "The products and information provided through this website have not been evaluated by the Vietnam Ministry of Health (MoH), Therapeutic Goods Administration (TGA), Food and Drug Administration of the USA (FDA), or Herbalism Ltd, and are not intended to diagnose, treat, cure or prevent disease. Any information on this website, or on any of our product labels or packaging, is for informational purposes only and is not intended as a substitute for advice from your primary healthcare provider. Please consult a healthcare professional before use, and regarding any medical or health-related diagnosis or treatment options. The products available on this website contain a variety of concentrated plant extracts. Ensure you do not have any allergies to any ingredients before using.",
         info: {
-            retailLocations: "Retail Locations",
-            wholesale: "Wholesale",
-            rewardsProgram: "Rewards Program",
-            refundPolicy: "Refund Policy",
             shippingPolicy: "Shipping Policy",
             privacyPolicy: "Privacy Policy",
             termsOfService: "Terms of Service"
         },
-        learn: {
-            mushrooms101: "Mushrooms 101",
-            webinars: "Webinars",
-            recipes: "Recipes",
-            blog: "Blog"
-        },
         copyright:
-            "© 2025 Harmonic Arts. Providing plant medicine with purpose since 2009.",
-        byShopify: "On Shopify by Voltage"
+            "© 2025 Harmonic Arts. Providing plant medicine with purpose since 2025."
+    }, paymentPage: {
+        common: {
+            backButton: "Back",
+            continueButton: "Continue",
+            completeOrderButton: "Complete Order",
+            editButton: "Edit",
+            changeButton: "Change",
+            securePayment: "Secure & Safe Payment",
+            applyButton: "Apply",
+            voucherPlaceholder: "Enter voucher code...",
+        },
+
+        pageTitle: "Checkout",
+
+        progressSteps: {
+            step1: "Information",
+            step2: "Payment",
+            step3: "Confirmation",
+        },
+
+        addressStep: {
+            title: "Shipping Information",
+            emailLabel: "Email",
+            emailPlaceholder: "email@example.com",
+            phoneLabel: "Phone Number",
+            phonePlaceholder: "0901 234 567",
+            newsletterCheckbox: "Receive confirmation email",
+            addressLabel: "Shipping Address",
+            newAddressOption: "Use a new address",
+            savedAddressOption: "Use saved address",
+            selectAddressPlaceholder: "Select an address",
+
+            countryLabel: "Country",
+            countryPlaceholder: "Select country",
+            firstNameLabel: "First Name",
+            lastNameLabel: "Last Name",
+            addressPlaceholder: "Enter address",
+            apartmentLabel: "Apartment, building (optional)",
+            cityLabel: "City",
+            cityPlaceholder: "Enter city",
+            provinceLabel: "Province/City",
+            provincePlaceholder: "Select province/city",
+            zipCodeLabel: "Postal Code",
+            zipCodePlaceholder: "Enter postal code",
+        },
+
+        paymentStep: {
+            title: "Payment Method",
+            creditCard: {
+                title: "Credit Card",
+                cardNumberLabel: "Card Number",
+                cardNumberPlaceholder: "1234 5678 9012 3456",
+                expiryDateLabel: "Expiry Date",
+                expiryDatePlaceholder: "MM/YY",
+                cvcLabel: "Security Code",
+                cvcPlaceholder: "CVC",
+                nameLabel: "Cardholder Name",
+                namePlaceholder: "NGUYEN VAN A",
+            },
+            paypal: {
+                title: "PayPal",
+                noticeTitle: "You will be redirected to PayPal",
+                noticeDescription: "After clicking 'Complete Payment', you will be redirected to PayPal to finish the transaction.",
+            },
+            momo: {
+                title: "MoMo Wallet",
+                noticeTitle: "You will be redirected to MoMo",
+                noticeDescription: "After clicking 'Complete Payment', the MoMo app will open for you to confirm the payment.",
+            },
+            cod: {
+                title: "Cash on Delivery",
+                noticeTitle: "Pay upon delivery",
+                noticeDescription: "Make payment when you receive the goods.",
+            },
+        },
+
+        reviewStep: {
+            title: "Order Confirmation",
+            shippingTitle: "Shipping Information",
+            paymentTitle: "Payment Method",
+            infoLabels: {
+                fullName: "Full Name:",
+                phone: "Phone:",
+                email: "Email:",
+                address: "Address:",
+                province: "Province:",
+                zipCode: "Zip code:",
+                country: "Country:",
+                paymentMethod: "Method:",
+                creditCard: "Credit Card: ",
+            },
+            missingInfo: "No information provided",
+        },
+
+        orderSummary: {
+            title: "Your Order",
+            subtotalLabel: "Subtotal:",
+            shippingLabel: "Shipping Fee:",
+            discountLabel: "Discount Code:",
+            discount: "Discount",
+            totalLabel: "Total:",
+            freeShipping: "Free",
+            orderInfoTitle: "Order Information",
+            infoLabels: {
+                email: "Email:",
+                phone: "Phone:",
+                address: "Address:",
+                paymentMethod: "Method:",
+                size: "Size:",
+                amount: "Qty:"
+            },
+            missingInfo: "Not entered",
+            notSelected: "Not selected",
+        },
+
+        paymentMethods: [
+            {
+                id: 'credit-card',
+                name: 'Credit Card',
+                icon: '💳'
+            },
+            {
+                id: 'paypal',
+                name: 'PayPal',
+                icon: '🔵'
+            },
+            {
+                id: 'momo',
+                name: 'MoMo Wallet',
+                icon: '💜'
+            },
+            {
+                id: 'pay-later',
+                name: 'Cash on Delivery',
+                icon: ''
+            }
+        ],
+
+        provinces: [
+            "Ho Chi Minh City",
+            "Hanoi",
+            "Da Nang",
+        ],
+
+        countries: [
+            { value: "VN", label: "Vietnam" },
+            { value: "US", label: "United States" },
+            { value: "CA", label: "Canada" },
+            { value: "UK", label: "United Kingdom" },
+            { value: "JP", label: "Japan" },
+            { value: "KR", label: "South Korea" },
+            { value: "OTHER", label: "Other countries" },
+        ]
+    },
+    ourProcessData: {
+        hero: {
+            title: 'Our Process',
+            subtitle: 'Spagyric – The Sacred Alchemy of Healing',
+            description:
+                'In the rich tradition of Western alchemy, Spagyric is more than a method of herbal preparation—it is a profound philosophical symbol of transformation—of matter, soul, and the human being.',
+        },
+        paracelsus: {
+            title: 'Paracelsus',
+            badge: 'The Alchemist',
+            imageUrl:
+                'https://merian-alchemie.ub.uni-frankfurt.de/wp-content/uploads/Rubens-Paracelsus_Beitrag-Esposito-1200x1722.jpg',
+            paragraphs: [
+                'Paracelsus (1493–1541), born Philippus Aureolus Theophrastus Bombastus von Hohenheim, was a Swiss-German alchemist, physician, astrologer, botanist, and philosopher.',
+                'A revolutionary thinker of the Renaissance, he is regarded not only as the father of Spagyric alchemy, but also as a pioneer of iatrochemistry—a precursor to modern pharmaceutical science.',
+                'Paracelsus introduced a holistic view of medicine, one that treated illness not as an isolated symptom, but as an imbalance of the whole being—requiring healing at the root.',
+            ],
+        },
+        origins: {
+            title: 'The Alchemical Origins of Spagyric',
+            spagyricRoots: [
+                { term: 'Spao', definition: 'to separate' },
+                { term: 'Ageiro', definition: 'to recombine' },
+            ],
+            description1:
+                'This principle, "separate – purify – reunite," lies at the heart of Spagyric. It reflects the timeless alchemical axiom:',
+            quote: '"Solve et Coagula" – dissolve to recombine.',
+            description2:
+                'In Spagyric, plants are broken down into their three fundamental components—Spirit, Soul, and Body—each one purified, then reunited to create an Elixir that embodies the complete essence of the plant, physically and energetically.',
+        },
+        principles: {
+            title: 'The Three Sacred Principles',
+            items: [
+                {
+                    title: 'Salt',
+                    description: 'The Body: structure and mineral foundation',
+                    icon: 'Sparkles',
+                },
+                {
+                    title: 'Sulfur',
+                    description: 'The Soul: essence, emotions, and inner fire',
+                    icon: 'Flame',
+                },
+                {
+                    title: 'Mercury',
+                    description: 'The Spirit: the volatile force, life and consciousness',
+                    icon: 'Droplets',
+                },
+            ],
+        },
+        steps: {
+            title: 'The Classical Spagyric Process',
+            items: [
+                {
+                    step: 1,
+                    title: 'Fermentation & Distillation: Extracting the Spirit',
+                    description:
+                        "The plant matter is fermented to produce alcohol, then distilled to obtain the plant's \"living spirit\"—its vital essence.",
+                },
+                {
+                    step: 2,
+                    title: 'Maceration & Extraction: Extracting the Soul',
+                    description:
+                        'The leftover plant material is macerated in the alcohol to release its soul—the essential oils, resins, and subtle compounds—followed by careful filtration.',
+                },
+                {
+                    step: 3,
+                    title: 'Calcination: Purifying the Body',
+                    description:
+                        'The plant residue is incinerated at high heat into white ash, then repeatedly washed and purified to yield mineral salts—the body of the plant.',
+                },
+                {
+                    step: 4,
+                    title: 'Recombination: Coagula – uniting all elements',
+                    description:
+                        'The purified salts (Body), essential extracts (Soul), and distilled alcohol (Spirit) are finally recombined into a unified Spagyric Elixir, embodying the full spectrum...',
+                },
+            ],
+        },
+        transformation: {
+            title: "Spagyric as a Sacred Path of Inner Transformation",
+            intro: "To a true alchemist, crafting a Spagyric remedy is not just making medicine—it is a sacred ritual. Every stage of the process mirrors an inner transformation:",
+            steps: [
+                {
+                    number: 1,
+                    title: "Extracting the essence",
+                    description: "is an act of devotion to nature's purity"
+                },
+                {
+                    number: 2,
+                    title: "Burning the plant's residue",
+                    description: "symbolizes letting go of the old self, the ego"
+                },
+                {
+                    number: 3,
+                    title: "Recombining the elements",
+                    description: "reflects the soul's rebirth—a higher, more luminous state of being"
+                }
+            ],
+            teachings: [
+                "Nothing is wasted. Even ashes contain wisdom.",
+                "The dark serves the light. The separation is necessary for wholeness."
+            ]
+        },
+
+        final: {
+            icon: "Leaf",
+            title: "A Gift from Earth and Universe",
+            description: "Spagyric is more than herbal medicine—it's a journey of unity between human, nature, and cosmos. It reconnects us to the elemental and the divine."
+        }
     }
 }

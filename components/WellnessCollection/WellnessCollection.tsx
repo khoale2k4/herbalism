@@ -5,11 +5,13 @@ import useOnScreen from "@/hooks/useOnScreen";
 import Image from "next/image";
 import { useRef } from "react";
 import ListItems from "../ListItems/ListItem";
+import { useRouter } from "next/navigation";
 
 const WellnessCollections = () => {
   const { t } = useLanguage();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [ref, isVisible] = useOnScreen();
+  const router = useRouter();
 
   const collections = [
     {
@@ -79,7 +81,9 @@ const WellnessCollections = () => {
             <p className="text-gray-600 max-w-2xl mx-auto mt-4 text-sm sm:text-base">
               {t.collections.description}
             </p>
-            <button className="mt-6 bg-[#3e4f3d] hover:bg-[#747c61] text-white px-6 py-2 text-sm sm:text-base rounded-full transition duration-300">
+            <button 
+            className="mt-6 bg-[#3e4f3d] hover:bg-[#747c61] text-white px-6 py-2 text-sm sm:text-base rounded-full transition duration-300"
+            onClick={() => {router.push('/blog')}}>
               {t.collections.button}
             </button>
           </div>

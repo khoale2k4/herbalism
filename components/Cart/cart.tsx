@@ -104,7 +104,7 @@ export default function CartSidebar({
                 <div className="flex justify-between items-center px-6 py-4 border-b">
                     <div className="flex items-center gap-2">
                         <ShoppingBag size={20} className="text-[#6e7a34]" />
-                        <h3 className="text-lg font-semibold">Giỏ hàng của bạn</h3>
+                        <h3 className="text-lg font-semibold">{t.cartSidebar.header.title}</h3>
                         <span className="bg-[#b3c27b] text-[#6e7a34] text-xs font-medium px-2 py-0.5 rounded-full">
                             {cartItems.length}
                         </span>
@@ -176,15 +176,15 @@ export default function CartSidebar({
                             <div className="bg-gray-100 p-4 rounded-full mb-4">
                                 <ShoppingBag size={32} className="text-gray-400" />
                             </div>
-                            <p className="text-gray-500 mb-2">Giỏ hàng của bạn đang trống</p>
+                            <p className="text-gray-500 mb-2">{t.cartSidebar.emptyCart.title}</p>
                             <p className="text-gray-400 text-sm text-center mb-6">
-                                Hãy thêm một vài sản phẩm và quay lại đây nhé
+                            {t.cartSidebar.emptyCart.description}
                             </p>
                             <button
                                 onClick={() => setActiveMenu(null)}
                                 className="text-[#6e7a34] border border-[#6e7a34] px-4 py-2 rounded-md hover:bg-green-50 transition-colors text-sm font-medium"
                             >
-                                Tiếp tục mua sắm
+                                {t.cartSidebar.emptyCart.continueShopping}
                             </button>
                         </div>
                     )}
@@ -200,11 +200,11 @@ export default function CartSidebar({
                     <div className="border-t px-6 py-4 bg-gray-50">
                         <div className="space-y-2 mb-4">
                             <div className="flex justify-between text-sm">
-                                <span className="text-gray-500">Tạm tính</span>
+                                <span className="text-gray-500">{t.cartSidebar.summary.subtotal}</span>
                                 <span>{formatter.format(subtotal)}</span>
                             </div>
                             <div className="flex justify-between text-sm">
-                                <span className="text-gray-500">Phí vận chuyển</span>
+                                <span className="text-gray-500">{t.cartSidebar.summary.shippingFee}</span>
                                 <span>
                                     {shippingFee === 0
                                         ? "Miễn phí"
@@ -213,7 +213,7 @@ export default function CartSidebar({
                             </div>
                             <div className="pt-2 border-t mt-2">
                                 <div className="flex justify-between">
-                                    <span className="font-medium">Tổng cộng</span>
+                                    <span className="font-medium">{t.cartSidebar.summary.total}</span>
                                     <span className="font-medium text-[#6e7a34]">
                                         {formatter.format(total)}
                                     </span>
@@ -224,13 +224,13 @@ export default function CartSidebar({
                             <button
                                 onClick={() => checkout()}
                                 className="w-full bg-[#7d8b40] text-white py-3 rounded-md hover:bg-[#6e7a34] transition-colors font-medium">
-                                Thanh toán ngay
+                                {t.cartSidebar.summary.checkoutButton}
                             </button>
                             <button
                                 onClick={() => setActiveMenu(null)}
                                 className="w-full bg-white text-[#6e7a34] border border-[#6e7a34] py-2 rounded-md hover:bg-[#6e7a34] hover:text-white transition-colors text-sm"
                             >
-                                Tiếp tục mua sắm
+                                {t.cartSidebar.summary.continueShoppingButton}
                             </button>
                         </div>
                     </div>

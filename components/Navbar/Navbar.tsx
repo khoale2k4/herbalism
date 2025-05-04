@@ -44,6 +44,7 @@ const Navbar = () => {
   const [user, setUser] = useState<User | null>(null);
   const [searchBoxOpen, setSearchBoxOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
   const messages = [
     t.navbar.message1,
     t.navbar.message2,
@@ -162,6 +163,25 @@ const Navbar = () => {
     // t.navbar.marquee.message4,
   ];
 
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        userMenuRef.current &&
+        !userMenuRef.current.contains(event.target as Node)
+      ) {
+        // Nếu click ra ngoài, đóng dropdown
+        if (activeMenu === "user") {
+          setActiveMenu(null);
+        }
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [activeMenu]);
+
   return (
     <>
       {/* Top Bar */}
@@ -176,7 +196,7 @@ const Navbar = () => {
               transition={{ duration: 0.7, ease: "easeInOut" }}
               className="absolute w-full text-[#3e4f3d]"
             >
-              {messages[messageIndex]} <a href="#" className="underline ml-2 text-[#3e4f3d]">Learn more &gt;</a>
+              {messages[messageIndex]} <a href="/blog" className="underline ml-2 text-[#3e4f3d]">Learn more &gt;</a>
             </motion.div>
           </AnimatePresence>
         </div>
@@ -289,7 +309,7 @@ const Navbar = () => {
               </div>
             )}
           </div>
-          <div className="flex items-center gap-4 flex-shrink-0">
+          <div ref={userMenuRef} className="flex items-center gap-4 flex-shrink-0">
             <div className="flex items-center space-x-4">
               {/* User Menu */}
               {
@@ -309,11 +329,8 @@ const Navbar = () => {
                   </button>
 
                   <div
-                    className={`absolute right-0 bg-white dark:bg-gray-900 shadow-lg w-48 mt-2 py-2 z-40 rounded-lg transform transition-all duration-200 origin-top-right border border-gray-100 dark:border-gray-800 ${activeMenu === "user"
-                      ? "opacity-100 scale-100"
-                      : "opacity-0 scale-95 pointer-events-none"
-                      }`}
-                  >
+                    className={`absolute right-0 bg-white dark:bg-gray-900 shadow-lg w-48 mt-2 py-2 z-40 rounded-lg transform transition-all duration-200 origin-top-right border border-gray-100 dark:border-gray-800 ${activeMenu === "user" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}`}>
+                  
                     <div className="px-4 py-2 border-b border-gray-100 dark:border-gray-800">
                       <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{user.name}</p>
                       <p className="text-xs text-gray-500">{user.mail}</p>
