@@ -91,29 +91,30 @@ export default function OurProcess() {
             <section>
                 <h2 className="text-3xl font-semibold mb-12 text-center">The Three Sacred Principles</h2>
                 <div className="grid md:grid-cols-3 gap-8">
-                    <div className="bg-gradient-to-b from-stone-50 to-stone-100 p-8 rounded-2xl shadow-md">
-                        <div className="w-16 h-16 bg-stone-200 rounded-full flex items-center justify-center mb-6 mx-auto">
-                            <Sparkles size={32} className="text-stone-600" />
+                    <div className="bg-gradient-to-b from-amber-50 to-amber-100 p-8 rounded-2xl shadow-md">
+                        <div className="w-16 h-16 bg-amber-200 rounded-full flex items-center justify-center mb-6 mx-auto">
+                            <Sparkles size={32} className="text-amber-600" />
                         </div>
                         <h3 className="text-2xl font-semibold mb-4 text-center">Salt</h3>
                         <p className="text-center text-lg">The Body: structure and mineral foundation</p>
                     </div>
 
-                    <div className="bg-gradient-to-b from-amber-50 to-amber-100 p-8 rounded-2xl shadow-md">
-                        <div className="w-16 h-16 bg-amber-200 rounded-full flex items-center justify-center mb-6 mx-auto">
-                            <Flame size={32} className="text-amber-600" />
+                    <div className="bg-gradient-to-b from-green-50 to-green-100 p-8 rounded-2xl shadow-md">
+                        <div className="w-16 h-16 bg-green-200 rounded-full flex items-center justify-center mb-6 mx-auto">
+                            <Flame size={32} className="text-green-600" />
                         </div>
                         <h3 className="text-2xl font-semibold mb-4 text-center">Sulfur</h3>
-                        <p className="text-center text-lg">The Soul: essence, emotions, and will</p>
+                        <p className="text-center text-lg">The Soul: essence, emotions, and inner fire</p>
                     </div>
 
-                    <div className="bg-gradient-to-b from-sky-50 to-sky-100 p-8 rounded-2xl shadow-md">
-                        <div className="w-16 h-16 bg-sky-200 rounded-full flex items-center justify-center mb-6 mx-auto">
-                            <Droplets size={32} className="text-sky-600" />
+                    <div className="bg-gradient-to-b from-blue-50 to-blue-100 p-8 rounded-2xl shadow-md">
+                        <div className="w-16 h-16 bg-blue-200 rounded-full flex items-center justify-center mb-6 mx-auto">
+                            <Droplets size={32} className="text-blue-600" />
                         </div>
                         <h3 className="text-2xl font-semibold mb-4 text-center">Mercury</h3>
                         <p className="text-center text-lg">The Spirit: the volatile force, life and consciousness</p>
                     </div>
+
                 </div>
             </section>
 
@@ -198,7 +199,7 @@ export default function OurProcess() {
                                 <span className="font-bold text-amber-800">1</span>
                             </div>
                             <p className="text-center">
-                                <strong>Burning the plant's residue</strong> symbolizes letting go of the old self, the ego.
+                                <strong>Extracting the essence</strong> is an act of devotion to nature's purity.
                             </p>
                         </div>
 
@@ -207,7 +208,7 @@ export default function OurProcess() {
                                 <span className="font-bold text-amber-800">2</span>
                             </div>
                             <p className="text-center">
-                                <strong>Extracting the essence</strong> is an act of devotion to nature's purity.
+                                <strong>Burning the plant's residue</strong> symbolizes letting go of the old self, the ego.
                             </p>
                         </div>
 

@@ -247,11 +247,11 @@ const Navbar = () => {
                   >
                     {t.navbar.shop}
                   </a>
-                  <svg className="w-4 h-4 transform group-hover:rotate-180 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {/* <svg className="w-4 h-4 transform group-hover:rotate-180 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                  </svg>
+                  </svg> */}
                 </span>
-                <div className="absolute top-full left-0 overflow-hidden max-h-0 group-hover:max-h-60 transition-all duration-300 w-48 bg-white shadow-lg rounded-b-lg">
+                {/* <div className="absolute top-full left-0 overflow-hidden max-h-0 group-hover:max-h-60 transition-all duration-300 w-48 bg-white shadow-lg rounded-b-lg">
                   <div className="p-1">
                     {["Herbs", "Teas", "Supplements"].map(label => (
                       <a
@@ -263,7 +263,7 @@ const Navbar = () => {
                       </a>
                     ))}
                   </div>
-                </div>
+                </div> */}
               </div>
               <a
                 href="/blog"
