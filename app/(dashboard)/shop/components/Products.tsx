@@ -36,12 +36,12 @@ const ProductsList = ({ showSidebar, filteredProducts, setSearchQuery, viewMode 
         {filteredProducts.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-gray-500 text-lg">{t.shop.noProductsFound}</p>
-            <button
+            {/* <button
               onClick={() => setSearchQuery("")}
               className="mt-4 text-green-600 hover:text-green-800"
             >
               Clear filters
-            </button>
+            </button> */}
           </div>
         ) : (
           <div className={viewMode === "grid"

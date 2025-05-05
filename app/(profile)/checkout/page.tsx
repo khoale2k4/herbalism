@@ -8,7 +8,7 @@ import ReviewStep from './components/ReviewStep';
 import OrderSummary from './components/OrderSummary';
 import { CartOperation, CustomerOperation, OrderOperation, VoucherOperation } from '@/lib/main';
 import { getTokenFromCookie } from '@/app/utils/token';
-import { Address, CardPayment, ItemInCart, MomoPayment, PaypalPayment, Voucher } from '@/types/checkout';
+import { Address, BankPayment, CardPayment, CodPayment, ItemInCart, MomoPayment, PaypalPayment, Voucher } from '@/types/checkout';
 import { useLanguage } from '@/hooks/useLanguage';
 
 const CheckoutPage: React.FC = () => {
@@ -29,14 +29,9 @@ const CheckoutPage: React.FC = () => {
         city: '',
         country: 'VN',
         zipCode: '',
-        paymentMethod: 'credit-card',
+        paymentMethod: 'cod',
     })
-    const [payment, setPayment] = useState<CardPayment | MomoPayment | PaypalPayment>({
-        number: '',
-        date: '',
-        cvc: '',
-        name: ''
-    } as CardPayment);
+    const [payment, setPayment] = useState<CardPayment | MomoPayment | PaypalPayment | CodPayment | BankPayment>({} as CodPayment);
     const [newAddress, setNewAddress] = useState(false);
     const orderOp = new OrderOperation();
     const cartOp = new CartOperation();
@@ -157,6 +152,10 @@ const CheckoutPage: React.FC = () => {
         });
 
         if (response.success) {
+            setFormData({
+                ...formData,
+                addressId: response.data.id
+            })
             // implement notify later
             console.log("Success", response.data);
         }
@@ -204,7 +203,7 @@ const CheckoutPage: React.FC = () => {
                 );
             }
 
-            if (formData.paymentMethod === 'paypal' || formData.paymentMethod === 'momo' || formData.paymentMethod === 'pay-later') {
+            if (formData.paymentMethod === 'paypal' || formData.paymentMethod === 'momo' || formData.paymentMethod === 'cod' || formData.paymentMethod === 'bank') {
                 return false;
             }
 
@@ -235,6 +234,7 @@ const CheckoutPage: React.FC = () => {
                 name: (payment as CardPayment).name
             };
         }
+        sessionStorage.setItem('addressId', JSON.stringify(formData.addressId));
         sessionStorage.setItem('paymentMethod', JSON.stringify(passValue));
         router.push('/checkout/pending');
 

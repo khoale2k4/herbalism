@@ -238,7 +238,7 @@ export default {
         priceRange: "Price Range",
         applyFilters: "Apply Filters",
         shopOurProducts: "Shop Our Products",
-        noProductsFound: "No products found matching your criteria.",
+        noProductsFound: "No products found.",
     },
     about: {
         title: "About us",
@@ -386,8 +386,8 @@ export default {
         relatedProducts: "You also may like"
     },
     customer: {
-        title: "What our customers say about us",
-        description: "We take pride in the service we provide and are delighted to receive positive feedback from our customers."
+        title: "What our customers say ",
+        description: "We're proud to provide great service and love hearing your feedback."
     },
     footer: {
         contact: "CONTACT",
@@ -477,6 +477,11 @@ export default {
                 noticeTitle: "Pay upon delivery",
                 noticeDescription: "Make payment when you receive the goods.",
             },
+            bank: {
+                title: "Bank Transfer",
+                noticeTitle: "Pay upon delivery",
+                noticeDescription: "Scan this QR for bank transfer",
+            }
         },
 
         reviewStep: {
@@ -519,23 +524,28 @@ export default {
         },
 
         paymentMethods: [
+            // {
+            //     id: 'credit-card',
+            //     name: 'Credit Card',
+            //     icon: ''
+            // },
+            // {
+            //     id: 'paypal',
+            //     name: 'PayPal',
+            //     icon: ''
+            // },
+            // {
+            //     id: 'momo',
+            //     name: 'MoMo Wallet',
+            //     icon: ''
+            // },
             {
-                id: 'credit-card',
-                name: 'Credit Card',
-                icon: '💳'
+                id: 'bank',
+                name: 'Bank Transfer',
+                icon: ''
             },
             {
-                id: 'paypal',
-                name: 'PayPal',
-                icon: '🔵'
-            },
-            {
-                id: 'momo',
-                name: 'MoMo Wallet',
-                icon: '💜'
-            },
-            {
-                id: 'pay-later',
+                id: 'cod',
                 name: 'Cash on Delivery',
                 icon: ''
             }
@@ -556,6 +566,49 @@ export default {
             { value: "KR", label: "South Korea" },
             { value: "OTHER", label: "Other countries" },
         ]
+    },
+    orderProcessingTranslations: {
+        pageTitle: {
+            processing: "Order is Being Created",
+            complete: "Order Created Successfully!"
+        },
+        statusMessages: {
+            processing: "We are currently processing your order. This usually takes just a few minutes to complete.",
+            complete: "Your order has been successfully created and is ready for the next steps."
+        },
+        timeEstimation: {
+            processing: "Estimated processing time: ",
+            complete: "Your order has been processed successfully!"
+        },
+        steps: [
+            { label: "Create Order", icon: "📋" },
+            { label: "Confirm Payment", icon: "💳" },
+            { label: "Complete", icon: "✅" }
+        ],
+        orderInfo: {
+            orderNumber: "Order Number",
+            orderDate: "Order Date",
+            paymentMethod: "Payment Method"
+        },
+        buttons: {
+            continueShopping: "Continue Shopping"
+        },
+        loadingIndicator: "10 - 15 seconds"
+    }, 
+    customLoadingTranslations: {
+        loadingMessages: {
+            initializing: "Initializing...",
+            loadingData: "Loading data...",
+            almostDone: "Almost done...",
+            redirecting: "Redirecting..."
+        },
+        statusText: {
+            loading: "Loading",
+            ready: "Ready!"
+        },
+        animation: {
+            typingDots: "..."
+        }
     },
     ourProcessData: {
         hero: {

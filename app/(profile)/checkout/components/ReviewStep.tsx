@@ -103,6 +103,12 @@ const ReviewStep: React.FC<ReviewStepProps> = ({
                                     <span>MoMo ({formData.phone})</span>
                                 </>
                             )}
+                            {formData.paymentMethod === 'cod' && (
+                                <>
+                                    <div className="w-10 h-6 bg-yellow-200 rounded mr-3 flex items-center justify-center text-yellow-800">C</div>
+                                    <span>{paymentMethods.find((m: any) => m.id === formData.paymentMethod)?.name}</span>
+                                </>
+                            )}
                         </div>
 
                         <button

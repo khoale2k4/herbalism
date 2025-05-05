@@ -25,6 +25,8 @@ export type CardPayment = {
 
 export type MomoPayment = {}
 export type PaypalPayment = {}
+export type CodPayment = {}
+export type BankPayment = {}
 
 export type PaymentMethod = {
     id: string;

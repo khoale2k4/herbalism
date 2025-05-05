@@ -576,6 +576,11 @@ export default {
                 noticeTitle: "Thanh toán khi nhận hàng",
                 noticeDescription: "Tiến hành thanh toán khi đã nhận được hàng.",
             },
+            bank: {
+                title: "Chuyển khoản ngân hàng",
+                noticeTitle: "Pay upon delivery",
+                noticeDescription: "Quét QR để thực hiện thanh toán",
+            }
         },
 
         reviewStep: {
@@ -618,23 +623,28 @@ export default {
         },
 
         paymentMethods: [
+            // {
+            //     id: 'credit-card',
+            //     name: 'Thẻ tín dụng',
+            //     icon: '💳'
+            // },
+            // {
+            //     id: 'paypal',
+            //     name: 'PayPal',
+            //     icon: '🔵'
+            // },
+            // {
+            //     id: 'momo',
+            //     name: 'Ví MoMo',
+            //     icon: '💜'
+            // },
             {
-                id: 'credit-card',
-                name: 'Thẻ tín dụng',
-                icon: '💳'
+                id: 'bank',
+                name: 'Chuyển khoản ngân hàng',
+                icon: ''
             },
             {
-                id: 'paypal',
-                name: 'PayPal',
-                icon: '🔵'
-            },
-            {
-                id: 'momo',
-                name: 'Ví MoMo',
-                icon: '💜'
-            },
-            {
-                id: 'pay-later',
+                id: 'cod',
                 name: 'Thanh toán khi nhận',
                 icon: ''
             }
@@ -655,6 +665,49 @@ export default {
             { value: "KR", label: "South Korea" },
             { value: "OTHER", label: "Other countries" },
         ]
+    },
+    orderProcessingTranslations: {
+        pageTitle: {
+            processing: "Đơn Hàng Đang Được Tạo",
+            complete: "Đơn Hàng Đã Được Tạo!"
+        },
+        statusMessages: {
+            processing: "Chúng tôi đang xử lý đơn hàng của bạn. Quá trình này chỉ mất vài phút để hoàn tất.",
+            complete: "Đơn hàng của bạn đã được tạo thành công và sẵn sàng để xử lý tiếp theo."
+        },
+        timeEstimation: {
+            processing: "Thời gian xử lý ước tính: ",
+            complete: "Đơn hàng đã được xử lý thành công!"
+        },
+        steps: [
+            { label: "Tạo đơn hàng", icon: "📋" },
+            { label: "Xác nhận thanh toán", icon: "💳" },
+            { label: "Hoàn tất", icon: "✅" }
+        ],
+        orderInfo: {
+            orderNumber: "Mã đơn hàng",
+            orderDate: "Ngày đặt hàng",
+            paymentMethod: "Phương thức thanh toán"
+        },
+        buttons: {
+            continueShopping: "Tiếp tục mua sắm"
+        },
+        loadingIndicator: "10 - 15 giây"
+    },
+    customLoadingTranslations: {
+        loadingMessages: {
+            initializing: "Đang khởi tạo...",
+            loadingData: "Đang tải dữ liệu...",
+            almostDone: "Chuẩn bị hoàn tất...",
+            redirecting: "Đang chuyển hướng..."
+        },
+        statusText: {
+            loading: "Đang tải",
+            ready: "Đã sẵn sàng!"
+        },
+        animation: {
+            typingDots: "..."
+        }
     },
     footer: {
         contact: "LIÊN HỆ",

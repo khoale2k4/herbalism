@@ -362,6 +362,35 @@ export class OrderOperation {
         this.baseUrl = (process.env.NEXT_PUBLIC_API_HOST || "http://localhost:3000") + '/order';
     }
 
+    async getMy(token: string) {
+        try {
+            const response = await fetch(this.baseUrl + '/getMy', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Get fee failed with status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            return {
+                success: true,
+                message: result.message,
+                data: result.data
+            };
+        } catch (error: any) {
+            return {
+                success: false,
+                message: error?.message || 'Unknown error',
+                data: null
+            };
+        }
+    }
+
     async getFee() {
         try {
             const response = await fetch(this.baseUrl + '/fee', {

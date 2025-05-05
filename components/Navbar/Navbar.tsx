@@ -338,7 +338,7 @@ const Navbar = () => {
 
                     <div className="py-1">
                       <a
-                        href="#"
+                        href="/orders"
                         className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 group"
                       >
                         <Package size={18} className="text-gray-500 group-hover:text-[#6e7a34] dark:group-hover:text-green-500" />

@@ -1,10 +1,14 @@
-'use client'
+// CustomLoadingElement.tsx
+'use client';
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export default function CustomLoadingElement() {
   const [progress, setProgress] = useState(0);
   const [showContent, setShowContent] = useState(false);
+  const { t } = useLanguage();
+  const translations = t.customLoadingTranslations;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -20,6 +24,13 @@ export default function CustomLoadingElement() {
 
     return () => clearInterval(interval);
   }, []);
+
+  const getLoadingMessage = () => {
+    if (progress < 30) return translations.loadingMessages.initializing;
+    if (progress < 60) return translations.loadingMessages.loadingData;
+    if (progress < 90) return translations.loadingMessages.almostDone;
+    return translations.loadingMessages.redirecting;
+  };
 
   return (
     <div className="w-full h-screen flex flex-col gap-4 justify-center items-center dark:text-white bg-white dark:bg-[#3a3b3c] overflow-hidden">
@@ -50,22 +61,19 @@ export default function CustomLoadingElement() {
           <p className="text-gray-600 dark:text-gray-300 text-sm font-medium">
             {progress < 100 ? (
               <>
-                <span>Đang tải</span>
+                <span>{translations.statusText.loading}</span>
                 <span className="inline-flex w-5 overflow-hidden">
-                  <span className="animate-typing">...</span>
+                  <span className="animate-typing">{translations.animation.typingDots}</span>
                 </span>
               </>
             ) : (
-              <span className="text-[#6e7a34] dark:text-green-400">Đã sẵn sàng!</span>
+              <span className="text-[#6e7a34] dark:text-green-400">{translations.statusText.ready}</span>
             )}
           </p>
         </div>
 
         <p className="text-gray-500 dark:text-gray-400 text-xs mt-2 max-w-xs text-center px-4">
-          {progress < 30 ? "Đang khởi tạo..." :
-            progress < 60 ? "Đang tải dữ liệu..." :
-              progress < 90 ? "Chuẩn bị hoàn tất..." :
-                "Đang chuyển hướng..."}
+          {getLoadingMessage()}
         </p>
       </div>
 

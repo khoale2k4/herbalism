@@ -20,40 +20,61 @@ type Testimonial = {
 
 const testimonials: Testimonial[] = [
     {
-        name: "Anna Nguyễn",
-        title: "CEO, Green Co.",
+        name: "Christine",
+        title: "Connect has been a game-changer!",
         comment:
-            "Excellent products that meet all of our business needs. I’ll definitely come back and recommend it to our partners!",
+            "Connect has been a game-changer for my meditation practice. On those days when I just can’t switch off the mental chatter after a hectic day, it helps me find my calm. It has also been a lifesaver on restless nights when my mind is racing with a million thoughts. I absolutely love this product!",
         rating: 5
     },
     {
-        name: "Bình Trần",
-        title: "Marketing Manager",
+        name: "Amanda",
+        title: "The difference is incredible",
         comment:
-            "Dịch vụ khách hàng rất tốt! Nhân viên luôn sẵn sàng hỗ trợ và giải quyết mọi vấn đề một cách nhanh chóng.",
+            "I’ve been using the Lion’s Mane tincture daily for about 2-3 weeks, and the difference is incredible. The brain fog I struggled with is completely gone, my daily headaches have disappeared, and my mind feels clearer and calmer, a true blessing for someone with OCD. I feel more motivated, focused, and confident in my decisions. This has been a game-changer!",
         rating: 5
     },
     {
-        name: "Chloe Lê",
-        title: "Content Creator",
+        name: "Daniel",
+        title: "Calm energy every day",
         comment:
-            "Tôi yêu trải nghiệm mua sắm ở đây. Giao diện dễ sử dụng và sản phẩm chất lượng cao.",
-        rating: 4
-    },
-    {
-        name: "David Phạm",
-        title: "Freelancer",
-        comment:
-            "Fast and reliable. I’ve used the service many times and have never been disappointed.",
+            "I've been using this Spagyric Ashwagandha for a few weeks and truly feel a difference. It helps me stay calm and focused throughout the day without feeling drowsy. The natural extraction method gives it a clean, earthy taste, and I appreciate the balance it brings to my mood and energy. Highly recommend for anyone seeking a natural stress reliever.",
         rating: 5
     },
     {
-        name: "Emma Võ",
-        title: "UI/UX Designer",
+        name: "Christine",
+        title: "Connect has been a game-changer!",
         comment:
-            "Thiết kế đẹp và dễ dùng. Tôi đặc biệt ấn tượng với sự chú ý đến từng chi tiết nhỏ.",
-        rating: 4
-    }
+            "Connect has been a game-changer for my meditation practice. On those days when I just can’t switch off the mental chatter after a hectic day, it helps me find my calm. It has also been a lifesaver on restless nights when my mind is racing with a million thoughts. I absolutely love this product!",
+        rating: 5
+    },
+    {
+        name: "Amanda",
+        title: "The difference is incredible",
+        comment:
+            "I’ve been using the Lion’s Mane tincture daily for about 2-3 weeks, and the difference is incredible. The brain fog I struggled with is completely gone, my daily headaches have disappeared, and my mind feels clearer and calmer, a true blessing for someone with OCD. I feel more motivated, focused, and confident in my decisions. This has been a game-changer!",
+        rating: 5
+    },
+    {
+        name: "Daniel",
+        title: "Calm energy every day",
+        comment:
+            "I've been using this Spagyric Ashwagandha for a few weeks and truly feel a difference. It helps me stay calm and focused throughout the day without feeling drowsy. The natural extraction method gives it a clean, earthy taste, and I appreciate the balance it brings to my mood and energy. Highly recommend for anyone seeking a natural stress reliever.",
+        rating: 5
+    },
+    // {
+    //     name: "David Phạm",
+    //     title: "Freelancer",
+    //     comment:
+    //         "Fast and reliable. I’ve used the service many times and have never been disappointed.",
+    //     rating: 5
+    // },
+    // {
+    //     name: "Emma Võ",
+    //     title: "UI/UX Designer",
+    //     comment:
+    //         "Thiết kế đẹp và dễ dùng. Tôi đặc biệt ấn tượng với sự chú ý đến từng chi tiết nhỏ.",
+    //     rating: 4
+    // }
 ];
 
 const CustomerTestimonials: React.FC = () => {

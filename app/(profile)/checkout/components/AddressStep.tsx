@@ -224,7 +224,7 @@ const AddressStep: React.FC<AddressStepProps> = ({
                                         <option>{t.paymentPage.addressStep.provinceLabel}</option>
                                         {
                                             t.paymentPage.provinces.map((province: string) => {
-                                                return (<option>{province}</option>);
+                                                return (<option key={province}>{province}</option>);
                                             })
                                         }
                                     </select>
