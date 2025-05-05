@@ -3,8 +3,13 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useLanguage } from '@/hooks/useLanguage';
+import { AuthOperation } from '@/lib/main';
+import { useRouter } from 'next/navigation';
 
 const Register = () => {
+    const { t } = useLanguage();
+    const router = useRouter();
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
@@ -13,7 +18,17 @@ const Register = () => {
     });
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [isLoading, setIsLoading] = useState(false);
+    const [isChecked, setIsChecked] = useState(false);
+    const [notification, setNotification] = useState<{
+        type: 'success' | 'error';
+        message: string;
+    } | null>(null);
+
+    const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setIsChecked(event.target.checked);
+    };
     const [passwordStrength, setPasswordStrength] = useState(0);
+    const authOp = new AuthOperation();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -51,23 +66,23 @@ const Register = () => {
         const newErrors: Record<string, string> = {};
 
         if (!formData.fullName.trim()) {
-            newErrors.fullName = 'Họ tên không được để trống';
+            newErrors.fullName = t.registerPage.errorMessages.fullName.required;
         }
 
         if (!formData.email.trim()) {
-            newErrors.email = 'Email không được để trống';
+            newErrors.email = t.registerPage.errorMessages.email.required;
         } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-            newErrors.email = 'Email không hợp lệ';
+            newErrors.email = t.registerPage.errorMessages.email.invalid;
         }
 
         if (!formData.password) {
-            newErrors.password = 'Mật khẩu không được để trống';
+            newErrors.password = t.registerPage.errorMessages.password.required;
         } else if (formData.password.length < 8) {
-            newErrors.password = 'Mật khẩu phải có ít nhất 8 ký tự';
+            newErrors.password = t.registerPage.errorMessages.password.minLength;
         }
 
         if (formData.password !== formData.confirmPassword) {
-            newErrors.confirmPassword = 'Mật khẩu xác nhận không khớp';
+            newErrors.confirmPassword = t.registerPage.errorMessages.confirmPassword.mismatch;
         }
 
         setErrors(newErrors);
@@ -81,14 +96,46 @@ const Register = () => {
 
         setIsLoading(true);
         try {
-            // Xử lý đăng ký - thay thế bằng API call thực tế
-            console.log('Đăng ký với:', formData);
-            await new Promise(resolve => setTimeout(resolve, 1000)); // Giả lập API call
-            // Chuyển hướng sau khi đăng ký thành công
+            const response = await authOp.register(formData.email, formData.password, formData.fullName);
+            if (response.success) {
+                setNotification({
+                    type: 'success',
+                    message: t.registerPage.notification.success
+                });
+
+                setFormData({
+                    fullName: '',
+                    email: '',
+                    password: '',
+                    confirmPassword: ''
+                });
+                await new Promise(resolve => setTimeout(resolve, 3000));
+                router.push('/login');
+            } else {
+                console.log(response.message,  response.message === "Tài khoản đã tồn tại")
+                if (response.message === "Tài khoản đã tồn tại") {
+                    setNotification({
+                        type: 'error',
+                        message: t.registerPage.notification.existedEmail
+                    });
+                } else {
+                    setNotification({
+                        type: 'error',
+                        message: t.registerPage.notification.error
+                    });
+                }
+            }
         } catch (error) {
             console.error('Lỗi đăng ký:', error);
+            setNotification({
+                type: 'error',
+                message: t.registerPage.notification.error
+            });
         } finally {
             setIsLoading(false);
+            setTimeout(() => {
+                setNotification(null);
+            }, 5000);
         }
     };
 
@@ -106,6 +153,24 @@ const Register = () => {
                 <div className="absolute bottom-20 left-1/4 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
             </div>
 
+            {notification && (
+                <div className={`fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg ${notification.type === 'success' ? 'bg-green-500' : 'bg-red-500'
+                    } text-white animate-fade-in-down`}>
+                    <div className="flex items-center">
+                        {notification.type === 'success' ? (
+                            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        ) : (
+                            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        )}
+                        <span>{notification.message}</span>
+                    </div>
+                </div>
+            )}
+
             <div className="w-full max-w-md px-6 py-8 bg-white rounded-xl shadow-lg z-10">
                 {/* Logo */}
                 <div className="flex justify-center mb-6">
@@ -120,11 +185,11 @@ const Register = () => {
                     </div>
                 </div>
 
-                <h2 className="text-2xl font-bold text-center text-gray-800 mb-2">Tạo tài khoản mới</h2>
-                <p className="text-center text-gray-600 mb-6">Đăng ký để trải nghiệm dịch vụ của chúng tôi</p>
+                <h2 className="text-2xl font-bold text-center text-gray-800 mb-2">{t.registerPage.title}</h2>
+                <p className="text-center text-gray-600 mb-6">{t.registerPage.subtitle}</p>
 
                 {/* Social Registration */}
-                <div className="mb-6">
+                {/* <div className="mb-6">
                     <button
                         onClick={handleGoogleSignup}
                         type="button"
@@ -150,20 +215,20 @@ const Register = () => {
                         </svg>
                         Đăng ký với Google
                     </button>
-                </div>
+                </div> */}
 
                 {/* Divider */}
-                <div className="relative flex items-center justify-center mb-6">
+                {/* <div className="relative flex items-center justify-center mb-6">
                     <div className="flex-grow border-t border-gray-300"></div>
                     <span className="mx-4 text-sm text-gray-500">Hoặc đăng ký với Email</span>
                     <div className="flex-grow border-t border-gray-300"></div>
-                </div>
+                </div> */}
 
                 {/* Registration Form */}
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="fullName">
-                            Họ và tên
+                            {t.registerPage.fullName}
                         </label>
                         <input
                             type="text"
@@ -173,14 +238,14 @@ const Register = () => {
                             onChange={handleChange}
                             className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300 ${errors.fullName ? 'border-red-500' : 'border-gray-300'
                                 }`}
-                            placeholder="Nguyễn Văn A"
+                            placeholder={t.registerPage.placeholder.fullName}
                         />
                         {errors.fullName && <p className="mt-1 text-sm text-red-600">{errors.fullName}</p>}
                     </div>
 
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="email">
-                            Email
+                            {t.registerPage.email}
                         </label>
                         <input
                             type="email"
@@ -190,14 +255,14 @@ const Register = () => {
                             onChange={handleChange}
                             className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300 ${errors.email ? 'border-red-500' : 'border-gray-300'
                                 }`}
-                            placeholder="email@example.com"
+                            placeholder={t.registerPage.placeholder.email}
                         />
                         {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
                     </div>
 
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="password">
-                            Mật khẩu
+                            {t.registerPage.password}
                         </label>
                         <input
                             type="password"
@@ -218,11 +283,11 @@ const Register = () => {
                                     ></div>
                                 </div>
                                 <p className="text-xs text-gray-500 mt-1">
-                                    {passwordStrength === 0 && 'Mật khẩu yếu'}
-                                    {passwordStrength === 1 && 'Mật khẩu yếu'}
-                                    {passwordStrength === 2 && 'Mật khẩu trung bình'}
-                                    {passwordStrength === 3 && 'Mật khẩu mạnh'}
-                                    {passwordStrength === 4 && 'Mật khẩu rất mạnh'}
+                                    {passwordStrength === 0 && t.registerPage.strength[0]}
+                                    {passwordStrength === 1 && t.registerPage.strength[1]}
+                                    {passwordStrength === 2 && t.registerPage.strength[2]}
+                                    {passwordStrength === 3 && t.registerPage.strength[3]}
+                                    {passwordStrength === 4 && t.registerPage.strength[4]}
                                 </p>
                             </div>
                         )}
@@ -231,7 +296,7 @@ const Register = () => {
 
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="confirmPassword">
-                            Xác nhận mật khẩu
+                            {t.registerPage.confirmPassword}
                         </label>
                         <input
                             type="password"
@@ -251,18 +316,20 @@ const Register = () => {
                             id="terms"
                             name="terms"
                             type="checkbox"
+                            checked={isChecked}
+                            onChange={handleCheckboxChange}
                             className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                         />
                         <label htmlFor="terms" className="ml-2 block text-sm text-gray-700">
-                            Tôi đồng ý với <a href="/terms" className="text-indigo-600 hover:text-indigo-800">Điều khoản</a> và{' '}
-                            <a href="/privacy" className="text-indigo-600 hover:text-indigo-800">Chính sách</a> của dịch vụ
+                            {t.registerPage.terms.label} <a href="/terms" className="text-indigo-600 hover:text-indigo-800">{t.registerPage.terms.terms}</a> {t.registerPage.terms.and}{' '}
+                            <a href="/privacy" className="text-indigo-600 hover:text-indigo-800">{t.registerPage.terms.privacy}</a> {t.registerPage.terms.suffix}
                         </label>
                     </div>
 
                     <button
                         type="submit"
-                        disabled={isLoading}
-                        className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300 mt-6 ${isLoading ? 'opacity-70 cursor-not-allowed' : ''
+                        disabled={isLoading || !isChecked}
+                        className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300 mt-6 ${isLoading || !isChecked ? 'opacity-70 cursor-not-allowed' : ''
                             }`}
                     >
                         {isLoading ? (
@@ -271,18 +338,18 @@ const Register = () => {
                                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                 </svg>
-                                Đang xử lý...
+                                {t.registerPage.submit.loading}
                             </>
                         ) : (
-                            'Đăng ký'
+                            t.registerPage.submit.default
                         )}
                     </button>
                 </form>
 
                 <p className="mt-6 text-center text-sm text-gray-600">
-                    Đã có tài khoản?{' '}
+                    {t.registerPage.loginPrompt.text}{' '}
                     <Link href="/login" className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors">
-                        Đăng nhập
+                        {t.registerPage.loginPrompt.link}
                     </Link>
                 </p>
             </div>

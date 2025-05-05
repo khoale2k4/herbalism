@@ -7,8 +7,10 @@ import { AuthOperation } from '@/lib/main';
 import { useNotification } from '@/hooks/useNotification';
 import { setTokenInCookie } from '@/app/utils/token';
 import { delay } from '@/app/utils/delay';
+import { useLanguage } from '@/hooks/useLanguage';
 
 const Login = () => {
+    const { t } = useLanguage();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -66,10 +68,9 @@ const Login = () => {
                         </div>
                     </div>
 
-                    <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Chào mừng trở lại</h2>
+                    <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">{t.loginPageText.title}</h2>
 
-                    {/* Social Login */}
-                    <div className="mb-6">
+                    {/* <div className="mb-6">
                         <button
                             onClick={handleGoogleLogin}
                             className="flex items-center justify-center w-full p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-all duration-300"
@@ -96,18 +97,17 @@ const Login = () => {
                         </button>
                     </div>
 
-                    {/* Divider */}
                     <div className="relative flex items-center justify-center mb-6">
                         <div className="flex-grow border-t border-gray-300"></div>
                         <span className="mx-4 text-sm text-gray-500">Hoặc đăng nhập với Email</span>
                         <div className="flex-grow border-t border-gray-300"></div>
-                    </div>
+                    </div> */}
 
                     {/* Login Form */}
                     <form onSubmit={handleSubmit} className="space-y-5">
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="email">
-                                Email
+                                {t.loginPageText.form.email.label}
                             </label>
                             <input
                                 type="email"
@@ -118,7 +118,7 @@ const Login = () => {
                                     setNotify(null);
                                 }}
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300"
-                                placeholder="email@example.com"
+                                placeholder={t.loginPageText.form.email.placeholder}
                                 required
                             />
                         </div>
@@ -126,10 +126,10 @@ const Login = () => {
                         <div>
                             <div className="flex items-center justify-between mb-1">
                                 <label className="block text-sm font-medium text-gray-700" htmlFor="password">
-                                    Mật khẩu
+                                    {t.loginPageText.form.password.label}
                                 </label>
                                 <Link href="/forgot-password" className="text-sm text-blue-600 hover:text-blue-800 transition-colors">
-                                    Quên mật khẩu?
+                                    {t.loginPageText.form.password.forgotPassword}
                                 </Link>
                             </div>
                             <input
@@ -147,7 +147,7 @@ const Login = () => {
                             {notify && <p className="text-red-500 text-sm mt-2">{notify}</p>}
                         </div>
 
-                        <div className="flex items-center">
+                        {/* <div className="flex items-center">
                             <input
                                 id="remember-me"
                                 name="remember-me"
@@ -155,9 +155,9 @@ const Login = () => {
                                 className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                             />
                             <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
-                                Ghi nhớ đăng nhập
+                                {t.loginPageText.form.rememberMe}
                             </label>
-                        </div>
+                        </div> */}
 
                         <button
                             type="submit"
@@ -170,18 +170,19 @@ const Login = () => {
                                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                     </svg>
-                                    Đang xử lý...
+                                    {t.loginPageText.form.submitButton.loading}
+
                                 </>
                             ) : (
-                                'Đăng nhập'
+                                t.loginPageText.form.submitButton.default
                             )}
                         </button>
                     </form>
 
                     <p className="mt-6 text-center text-sm text-gray-600">
-                        Chưa có tài khoản?{' '}
+                        {t.loginPageText.links.register.text + " "}
                         <Link href="/register" className="font-medium text-blue-600 hover:text-blue-500 transition-colors">
-                            Đăng ký ngay
+                            {t.loginPageText.links.register.action}
                         </Link>
                     </p>
                 </div>

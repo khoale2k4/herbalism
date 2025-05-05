@@ -28,6 +28,105 @@ export default {
             gbp: "United Kingdom (GBP £)",
         }
     },
+    loginPageText: {
+        title: "Welcome back",
+        form: {
+            email: {
+                label: "Email",
+                placeholder: "email@example.com"
+            },
+            password: {
+                label: "Password",
+                placeholder: "••••••••",
+                forgotPassword: "Forgot password?"
+            },
+            rememberMe: "Remember me",
+            submitButton: {
+                default: "Login",
+                loading: "Processing..."
+            }
+        },
+        links: {
+            register: {
+                text: "Don't have an account?",
+                action: "Sign up now"
+            }
+        },
+        notifications: {
+            invalidCredentials: "Incorrect email or password"
+        },
+        loadingIndicator: {
+            ariaLabel: "Loading"
+        },
+        oauth: {
+            google: {
+                label: "Sign in with Google",
+                divider: "Or sign in with Email"
+            }
+        },
+        logo: {
+            altText: "Company Logo"
+        },
+        loginSuccess: "Login successful",
+        loginError: "Login error"
+    },
+    registerPage: {
+        title: 'Create a new account',
+        subtitle: 'Sign up to experience our services',
+        fullName: 'Full Name',
+        email: 'Email',
+        password: 'Password',
+        confirmPassword: 'Confirm Password',
+        placeholder: {
+            fullName: 'John Doe',
+            email: 'email@example.com',
+            password: '••••••••',
+            confirmPassword: '••••••••'
+        },
+        strength: {
+            0: 'Weak password',
+            1: 'Weak password',
+            2: 'Medium strength',
+            3: 'Strong password',
+            4: 'Very strong password'
+        },
+        terms: {
+            label: 'I agree to the',
+            terms: 'Terms of Service',
+            and: 'and',
+            privacy: 'Privacy Policy',
+            suffix: 'of the service'
+        },
+        submit: {
+            default: 'Sign Up',
+            loading: 'Processing...'
+        },
+        loginPrompt: {
+            text: 'Already have an account?',
+            link: 'Log In'
+        },
+        errorMessages: {
+            fullName: {
+                required: 'Full name is required'
+            },
+            email: {
+                required: 'Email is required',
+                invalid: 'Invalid email address'
+            },
+            password: {
+                required: 'Password is required',
+                minLength: 'Password must be at least 8 characters long'
+            },
+            confirmPassword: {
+                mismatch: 'Passwords do not match'
+            }
+        },
+        notification: {
+            success: "Registration successful!",
+            error: "Registration failed. Please try again later or check your input.",
+            existedEmail: "Registration failed. This email is already in use."
+        }
+    },
     navbar: {
         message1: "Supporting local farmers & sustainable harvesting.",
         message2: "Eco-friendly packaging for a better planet.",

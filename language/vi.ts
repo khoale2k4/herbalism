@@ -29,6 +29,105 @@ export default {
             gbp: "Vương quốc Anh (GBP £)"
         }
     },
+    loginPageText: {
+        title: "Chào mừng trở lại",
+        form: {
+            email: {
+                label: "Email",
+                placeholder: "email@example.com"
+            },
+            password: {
+                label: "Mật khẩu",
+                placeholder: "••••••••",
+                forgotPassword: "Quên mật khẩu?"
+            },
+            rememberMe: "Ghi nhớ đăng nhập",
+            submitButton: {
+                default: "Đăng nhập",
+                loading: "Đang xử lý..."
+            }
+        },
+        links: {
+            register: {
+                text: "Chưa có tài khoản?",
+                action: "Đăng ký ngay"
+            }
+        },
+        notifications: {
+            invalidCredentials: "Sai tài khoản hoặc mật khẩu"
+        },
+        loadingIndicator: {
+            ariaLabel: "Loading"
+        },
+        oauth: {
+            google: {
+                label: "Đăng nhập với Google",
+                divider: "Hoặc đăng nhập với Email"
+            }
+        },
+        logo: {
+            altText: "Company Logo"
+        },
+        loginSuccess: "Đăng nhập thành công",
+        loginError: "Lỗi đăng nhập"
+    },
+    registerPage: {
+        title: 'Tạo tài khoản mới',
+        subtitle: 'Đăng ký để trải nghiệm dịch vụ của chúng tôi',
+        fullName: 'Họ và tên',
+        email: 'Email',
+        password: 'Mật khẩu',
+        confirmPassword: 'Xác nhận mật khẩu',
+        placeholder: {
+            fullName: 'Nguyễn Văn A',
+            email: 'email@example.com',
+            password: '••••••••',
+            confirmPassword: '••••••••'
+        },
+        strength: {
+            0: 'Mật khẩu yếu',
+            1: 'Mật khẩu yếu',
+            2: 'Mật khẩu trung bình',
+            3: 'Mật khẩu mạnh',
+            4: 'Mật khẩu rất mạnh'
+        },
+        terms: {
+            label: 'Tôi đồng ý với',
+            terms: 'Điều khoản',
+            and: 'và',
+            privacy: 'Chính sách',
+            suffix: 'của dịch vụ'
+        },
+        submit: {
+            default: 'Đăng ký',
+            loading: 'Đang xử lý...'
+        },
+        loginPrompt: {
+            text: 'Đã có tài khoản?',
+            link: 'Đăng nhập'
+        },
+        errorMessages: {
+            fullName: {
+                required: 'Họ tên không được để trống'
+            },
+            email: {
+                required: 'Email không được để trống',
+                invalid: 'Email không hợp lệ'
+            },
+            password: {
+                required: 'Mật khẩu không được để trống',
+                minLength: 'Mật khẩu phải có ít nhất 8 ký tự'
+            },
+            confirmPassword: {
+                mismatch: 'Mật khẩu xác nhận không khớp'
+            }
+        },
+        notification: {
+            success: "Đăng ký thành công!",
+            error: "Đăng ký thất bại. Vui lòng thử lại sau hoặc kiểm tra thông tin đã nhập.",
+            existedEmail: "Đăng ký thất bại. Mail này đã được sử dụng."
+        }
+    },
     navbar: {
         message1: "Spagyric nơi tinh hoa thảo dược được tái sinh",
         message2: "Tinh hoa dược liệu châu Á, tinh khiết trong từng giọt",

@@ -35,6 +35,36 @@ export class AuthOperation {
             };
         }
     }
+
+    async register(mail: string, password: string, name: string) {
+        try {
+            const response = await fetch(this.baseUrl + '/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ mail, password, name })
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.message);
+            }
+            return {
+                success: true,
+                message: result.message,
+                data: result.data
+            };
+        } catch (error: any) {
+            console.log('in catch', error);
+            return {
+                success: false,
+                message: error?.message || 'Unknown error',
+                data: null
+            };
+        }
+    }
 }
 
 export class CustomerOperation {
