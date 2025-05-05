@@ -60,12 +60,10 @@ export default function ProductDetail({ productId }: { productId: string }) {
     const commentOp = new CommentOperation();
     const cartOp = new CartOperation();
     const [isCommented, setIsCommented] = useState(false);
-    const {
-        showSuccess,
-        showError,
-        showCartNotification,
-        NotificationComponent
-    } = useNotification();
+    const [notification, setNotification] = useState<{
+        type: 'success' | 'error';
+        message: string;
+    } | null>(null);
 
     const handleAddToCart = async () => {
         try {
@@ -76,14 +74,31 @@ export default function ProductDetail({ productId }: { productId: string }) {
                 num: quantity,
                 size: selectedSize
             }, token);
+            console.log(response);
 
             if (response.success) {
-                showSuccess(t.product.addedToCartSuccess);
+                setNotification({
+                    type: 'success',
+                    message: t.product.addedToCartSuccess
+                });
+                // showSuccess(t.product.addedToCartSuccess);
             } else {
-                showError(t.product.addToCartError);
+                setNotification({
+                    type: 'error',
+                    message: t.product.addToCartError
+                });
+                // showError(t.product.addToCartError);
             }
         } catch (error) {
-            showError(t.product.addToCartError);
+            setNotification({
+                type: 'error',
+                message: t.product.addToCartError
+            });
+            // showError(t.product.addToCartError);
+        } finally {
+            setTimeout(() => {
+                setNotification(null);
+            }, 5000);
         }
     };
 
@@ -191,6 +206,25 @@ export default function ProductDetail({ productId }: { productId: string }) {
     return (
         <div className="w-full bg-[#fdf8f7] min-h-screen"
         >
+
+
+            {notification && (
+                <div className={`fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg ${notification.type === 'success' ? 'bg-green-500' : 'bg-red-500'
+                    } text-white animate-fade-in-down`}>
+                    <div className="flex items-center">
+                        {notification.type === 'success' ? (
+                            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        ) : (
+                            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        )}
+                        <span>{notification.message}</span>
+                    </div>
+                </div>
+            )}
             <div className="max-w-7xl mx-auto px-4 py-10">
                 <nav className="text-sm text-gray-500 mb-6">
                     <ol className="flex space-x-2">

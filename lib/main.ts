@@ -567,7 +567,12 @@ export class CartOperation {
                     'Authorization': "Bearer " + token
                 },
             });
+            
             const result = await response.json();
+            console.log('result', result);
+            if(!response.ok) {
+                throw new Error(result.message);
+            }
             return {
                 success: true,
                 message: result.message,
@@ -593,6 +598,10 @@ export class CartOperation {
                 body: JSON.stringify(addToCartDto)
             });
             const result = await response.json();
+            console.log('result', result);
+            if(!response.ok) {
+                throw new Error(result.message);
+            }
             return {
                 success: true,
                 message: result.message,
