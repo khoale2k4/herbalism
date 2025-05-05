@@ -448,7 +448,7 @@ export class OrderOperation {
         }
     }
 
-    async createFromCart(token: string, addressId: string) {
+    async createFromCart(token: string, addressId: string, voucherId: string | null, paymentMethod: 'cod' | 'bank' | null) {
         try {
             const response = await fetch(this.baseUrl + '/createFromCart', {
                 method: 'POST',
@@ -458,7 +458,9 @@ export class OrderOperation {
                 },
                 body: JSON.stringify(
                     {
-                        addressId: addressId
+                        addressId: addressId,
+                        voucherId: voucherId,
+                        paymentMethod: paymentMethod
                     }
                 )
             });

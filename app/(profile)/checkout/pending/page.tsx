@@ -21,27 +21,28 @@ export default function OrderProcessingPage() {
     const [orderNumber, setOrderNumber] = useState<string | null>(null);
     const orderOp = new OrderOperation();
     const router = useRouter();
-    const [paymentMethod, setPaymentMethod] = useState<'creditCard' | 'paypal' | 'momo' | 'cod' | 'bank' | null>(null);
+    const [paymentMethod, setPaymentMethod] = useState<'cod' | 'bank' | null>(null);
     const [error, setError] = useState<string | null>(null);
     const { t } = useLanguage();
 
-    const createOrder = async (addressId: string) => {
+    const createOrder = async (addressId: string, voucherId: string | null, paymentMet: 'cod' | 'bank' | null) => {
         try {
             const token = getTokenFromCookie();
             if (!token) return;
-            const response = await orderOp.createFromCart(token, addressId);
+            const response = await orderOp.createFromCart(token, addressId, voucherId, paymentMet);
             if (response.success) {
                 return response.data.trackingNumber;
             }
         } catch (error) {
             console.error(error);
-            throw error; // Re-throw để bắt ở nơi gọi
+            throw error;
         }
     }
 
     useEffect(() => {
         const data = sessionStorage.getItem('paymentMethod');
         const addressId = sessionStorage.getItem('addressId');
+        const voucherId = sessionStorage.getItem('voucherId');
 
         if (data && addressId) {
             const params = JSON.parse(data);
@@ -51,7 +52,7 @@ export default function OrderProcessingPage() {
                 try {
                     setProgress(10);
 
-                    const orderId = await createOrder(addressId);
+                    const orderId = await createOrder(addressId, voucherId, params.id);
 
                     if (!orderId) {
                         throw new Error('Failed to create order');

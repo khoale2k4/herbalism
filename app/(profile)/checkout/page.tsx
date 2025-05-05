@@ -236,6 +236,9 @@ const CheckoutPage: React.FC = () => {
         }
         sessionStorage.setItem('addressId', formData.addressId);
         sessionStorage.setItem('paymentMethod', JSON.stringify(passValue));
+        if (selectedVoucher) {
+            sessionStorage.setItem('voucherId', selectedVoucher?.id);
+        }
         router.push('/checkout/pending');
 
         // const response = await orderOp.createFromCart(token);
