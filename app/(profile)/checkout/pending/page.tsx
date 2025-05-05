@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useRouter } from "next/navigation";
+import { OrderOperation } from "@/lib/main";
+import { getTokenFromCookie } from "@/app/utils/token";
+import { XCircle } from "lucide-react";
 
 const orderData = {
     orderNumber: "ORD-2025042501",
@@ -16,55 +19,81 @@ export default function OrderProcessingPage() {
     const [currentStep, setCurrentStep] = useState(0);
     const [isComplete, setIsComplete] = useState(false);
     const [orderNumber, setOrderNumber] = useState<string | null>(null);
+    const orderOp = new OrderOperation();
     const router = useRouter();
     const [paymentMethod, setPaymentMethod] = useState<'creditCard' | 'paypal' | 'momo' | 'cod' | 'bank' | null>(null);
+    const [error, setError] = useState<string | null>(null);
     const { t } = useLanguage();
 
     const createOrder = async (addressId: string) => {
-        return addressId;
+        try {
+            const token = getTokenFromCookie();
+            if (!token) return;
+            const response = await orderOp.createFromCart(token, addressId);
+            if (response.success) {
+                return response.data.trackingNumber;
+            }
+        } catch (error) {
+            console.error(error);
+            throw error; // Re-throw để bắt ở nơi gọi
+        }
     }
 
     useEffect(() => {
         const data = sessionStorage.getItem('paymentMethod');
         const addressId = sessionStorage.getItem('addressId');
-        
+
         if (data && addressId) {
             const params = JSON.parse(data);
             setPaymentMethod(params.id);
-            
+
             const processOrder = async () => {
-                setProgress(10);
-    
-                const orderId = await createOrder(addressId);
-                setOrderNumber(orderId);
-                setProgress(70);
-                setCurrentStep(1);
-    
-                if (params.id === 'cod') {
-                    setProgress(100);
-                    setCurrentStep(2);
-                    setIsComplete(true);
-                    return;
-                }
-    
-                const step2Timeout = setTimeout(() => {
-                    setProgress(80);
+                try {
+                    setProgress(10);
+
+                    const orderId = await createOrder(addressId);
+
+                    if (!orderId) {
+                        throw new Error('Failed to create order');
+                    }
+
+                    setOrderNumber(orderId);
+                    setProgress(70);
                     setCurrentStep(1);
-    
-                    const completeTimeout = setTimeout(() => {
+
+                    if (params.id === 'cod') {
                         setProgress(100);
                         setCurrentStep(2);
                         setIsComplete(true);
-                    }, 5000);
-    
-                    return () => clearTimeout(completeTimeout);
-                }, 2000);
-    
-                return () => clearTimeout(step2Timeout);
+                        return;
+                    }
+
+                    const step2Timeout = setTimeout(() => {
+                        setProgress(80);
+                        setCurrentStep(1);
+
+                        const completeTimeout = setTimeout(() => {
+                            setProgress(100);
+                            setCurrentStep(2);
+                            setIsComplete(true);
+                        }, 5000);
+
+                        return () => clearTimeout(completeTimeout);
+                    }, 2000);
+
+                    return () => clearTimeout(step2Timeout);
+                } catch (error) {
+                    console.error('Order creation failed:', error);
+                    setProgress(0);
+                    setIsComplete(false);
+                    setOrderNumber(null);
+                    setError(t.orderProcessingTranslations.errorMessages.createFailed || 'Tạo đơn hàng thất bại. Vui lòng thử lại.');
+                }
             };
-    
+
             const progressInterval = setInterval(() => {
                 setProgress((prev) => {
+                    if (error) return prev;
                     if (prev < (params.id === 'cod' ? 70 : 80)) {
                         return prev + 1;
                     }
@@ -72,12 +101,12 @@ export default function OrderProcessingPage() {
                     return prev;
                 });
             }, 60);
-    
+
             processOrder();
-    
+
             sessionStorage.removeItem('paymentMethod');
             sessionStorage.removeItem('addressId');
-            
+
             return () => {
                 clearInterval(progressInterval);
             };
@@ -91,6 +120,70 @@ export default function OrderProcessingPage() {
         animate: { opacity: 1, y: 0 },
         transition: { duration: 0.5 },
     };
+
+    if (error) {
+        return (
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                    className="w-full max-w-md bg-white rounded-2xl shadow-lg overflow-hidden relative"
+                >
+                    <div className="p-8 md:p-10 relative z-10 text-center">
+                        <motion.div
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{ delay: 0.2 }}
+                            className="flex justify-center mb-6"
+                        >
+                            <div className="w-20 h-20 rounded-full flex items-center justify-center bg-red-100">
+                                <XCircle className="h-10 w-10 text-red-500" />
+                            </div>
+                        </motion.div>
+
+                        <motion.h1
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.3 }}
+                            className="text-2xl md:text-3xl font-bold mb-4 text-red-600"
+                        >
+                            {t.orderProcessingTranslations.errorMessages.title || 'Đã xảy ra lỗi'}
+                        </motion.h1>
+
+                        <motion.p
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.4 }}
+                            className="text-gray-600 mb-6"
+                        >
+                            {error}
+                        </motion.p>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.5 }}
+                            className="flex flex-col sm:flex-row gap-3 justify-center"
+                        >
+                            <button
+                                onClick={() => router.push('/checkout')}
+                                className="px-6 py-3 rounded-lg bg-red-500 text-white hover:bg-red-600 transition-colors duration-300"
+                            >
+                                {t.orderProcessingTranslations.tryAgain || 'Thử lại'}
+                            </button>
+                            {/* <button
+                                onClick={() => router.push('/cart')}
+                                className="px-6 py-3 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors duration-300"
+                            >
+                                {t.orderProcessingTranslations.buttons.backToCart || 'Quay lại giỏ hàng'}
+                            </button> */}
+                        </motion.div>
+                    </div>
+                </motion.div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
@@ -250,9 +343,6 @@ export default function OrderProcessingPage() {
                         transition={{ delay: 0.6 }}
                         className="flex flex-col sm:flex-row gap-3"
                     >
-                        {/* <button className="px-4 py-2.5 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 transition-colors duration-300 flex-1 text-center">
-                            Hủy đơn hàng
-                        </button> */}
                         <button
                             onClick={() => { router.push('/shop') }}
                             className="px-4 py-2.5 rounded-lg bg-gradient-to-r from-green-600 to-green-500 text-white hover:shadow-lg transition-all duration-300 flex-[2] text-center font-medium"

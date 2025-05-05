@@ -675,6 +675,10 @@ export default {
             processing: "Chúng tôi đang xử lý đơn hàng của bạn. Quá trình này chỉ mất vài phút để hoàn tất.",
             complete: "Đơn hàng của bạn đã được tạo thành công và sẵn sàng để xử lý tiếp theo."
         },
+        errorMessages: {
+            title: "Lỗi xử lý đơn hàng",
+            createFailed: "Đã xảy ra lỗi khi tạo đơn hàng. Vui lòng thử lại hoặc liên hệ bộ phận hỗ trợ nếu vấn đề tiếp diễn."
+        },
         timeEstimation: {
             processing: "Thời gian xử lý ước tính: ",
             complete: "Đơn hàng đã được xử lý thành công!"
@@ -692,7 +696,8 @@ export default {
         buttons: {
             continueShopping: "Tiếp tục mua sắm"
         },
-        loadingIndicator: "10 - 15 giây"
+        loadingIndicator: "10 - 15 giây",
+        tryAgain: "Thử lại"
     },
     customLoadingTranslations: {
         loadingMessages: {

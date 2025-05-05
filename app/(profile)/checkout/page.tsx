@@ -234,7 +234,7 @@ const CheckoutPage: React.FC = () => {
                 name: (payment as CardPayment).name
             };
         }
-        sessionStorage.setItem('addressId', JSON.stringify(formData.addressId));
+        sessionStorage.setItem('addressId', formData.addressId);
         sessionStorage.setItem('paymentMethod', JSON.stringify(passValue));
         router.push('/checkout/pending');
 

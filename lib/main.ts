@@ -448,14 +448,19 @@ export class OrderOperation {
         }
     }
 
-    async createFromCart(token: string) {
+    async createFromCart(token: string, addressId: string) {
         try {
             const response = await fetch(this.baseUrl + '/createFromCart', {
-                method: 'GET',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + token
                 },
+                body: JSON.stringify(
+                    {
+                        addressId: addressId
+                    }
+                )
             });
 
             if (!response.ok) {

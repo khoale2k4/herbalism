@@ -576,6 +576,10 @@ export default {
             processing: "We are currently processing your order. This usually takes just a few minutes to complete.",
             complete: "Your order has been successfully created and is ready for the next steps."
         },
+        errorMessages: {
+            title: "Order Processing Error",
+            createFailed: "We encountered an issue while creating your order. Please try again or contact support if the problem persists."
+        },
         timeEstimation: {
             processing: "Estimated processing time: ",
             complete: "Your order has been processed successfully!"
@@ -591,10 +595,11 @@ export default {
             paymentMethod: "Payment Method"
         },
         buttons: {
-            continueShopping: "Continue Shopping"
+            continueShopping: "Continue Shopping",
         },
-        loadingIndicator: "10 - 15 seconds"
-    }, 
+        loadingIndicator: "10 - 15 seconds",
+        tryAgain: "Try again"
+    },
     customLoadingTranslations: {
         loadingMessages: {
             initializing: "Initializing...",
