@@ -14,6 +14,7 @@ import { getTokenFromCookie } from "@/app/utils/token";
 import RelatedProducts from "@/components/RelatedProducts";
 import { useCurrency } from "@/hooks/useCurrency";
 import { formatPrice } from "@/app/utils/format-currency";
+import { BlogContent } from "../../blog/components/BlogContent";
 
 interface Review {
     id: string;
@@ -295,9 +296,16 @@ export default function ProductDetail({ productId }: { productId: string }) {
                             {formatPrice(selectedSizeStock?.price || product.price)}
                         </div>
 
-                        <p className="text-gray-700 leading-relaxed">
+                        <BlogContent>
+                            <div
+                                className="prose max-w-none dark:prose-invert"
+                                dangerouslySetInnerHTML={{ __html: product.content }}
+                            />
+                        </BlogContent>
+                        {/* <p className="text-gray-700 leading-relaxed">
+                            
                             {product.content}
-                        </p>
+                        </p> */}
 
                         <hr className="my-6" />
 
@@ -420,7 +428,13 @@ export default function ProductDetail({ productId }: { productId: string }) {
                                 <div className={`duration-300 ease-in-out overflow-hidden ${expandedTabs.includes(tab.id) ? 'max-h-400' : 'max-h-0'}`}>
                                     <div
                                         className={`p-4 text-gray-700 border-t bg-gray-50 transition-max-height`}>
-                                        <p className="leading-relaxed whitespace-pre-line">{tab.content}</p>
+                                        {/* <p className="leading-relaxed whitespace-pre-line">{tab.content}</p> */}
+                                        <BlogContent>
+                                            <div
+                                                className="prose max-w-none dark:prose-invert"
+                                                dangerouslySetInnerHTML={{ __html: tab.content }}
+                                            />
+                                        </BlogContent>
                                     </div>
                                 </div>
                             </div>
