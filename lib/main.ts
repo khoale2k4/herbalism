@@ -524,7 +524,7 @@ export class VoucherOperation {
 
     async getVoucher(id: string) {
         try {
-            const response = await fetch(this.baseUrl + '/' + id, {
+            const response = await fetch(this.baseUrl + '/get_by_id/' + id, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
