@@ -40,15 +40,37 @@ export default function OrderProcessingPage() {
     }
 
     useEffect(() => {
-        const data = sessionStorage.getItem('paymentMethod');
-        const addressId = sessionStorage.getItem('addressId');
-        const voucherId = sessionStorage.getItem('voucherId');
+        let checkDataInterval: NodeJS.Timeout;
+        let timeout: NodeJS.Timeout;
 
-        if (data && addressId) {
+        // Hàm kiểm tra dữ liệu
+        const checkData = () => {
+            const data = sessionStorage.getItem('paymentMethod');
+            const addressId = sessionStorage.getItem('addressId');
+
+            if (data && addressId) {
+                clearInterval(checkDataInterval);
+                clearTimeout(timeout);
+                processOrder(data, addressId);
+            }
+        };
+
+        // Timeout sau 10 giây nếu không có dữ liệu
+        timeout = setTimeout(() => {
+            clearInterval(checkDataInterval);
+            setError(t.orderProcessingTranslations.errorMessages.timeout || 'Không nhận được dữ liệu thanh toán. Vui lòng thử lại.');
+        }, 10000);
+
+        // Kiểm tra dữ liệu mỗi 500ms
+        checkDataInterval = setInterval(checkData, 500);
+
+        // Hàm xử lý đơn hàng
+        const processOrder = (data: string, addressId: string) => {
+            const voucherId = sessionStorage.getItem('voucherId');
             const params = JSON.parse(data);
             setPaymentMethod(params.id);
 
-            const processOrder = async () => {
+            const orderProcessing = async () => {
                 try {
                     setProgress(10);
 
@@ -103,7 +125,7 @@ export default function OrderProcessingPage() {
                 });
             }, 60);
 
-            processOrder();
+            orderProcessing();
 
             sessionStorage.removeItem('paymentMethod');
             sessionStorage.removeItem('addressId');
@@ -111,7 +133,12 @@ export default function OrderProcessingPage() {
             return () => {
                 clearInterval(progressInterval);
             };
-        }
+        };
+
+        return () => {
+            clearInterval(checkDataInterval);
+            clearTimeout(timeout);
+        };
     }, []);
 
     const steps = t.orderProcessingTranslations.steps;

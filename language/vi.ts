@@ -776,7 +776,8 @@ export default {
         },
         errorMessages: {
             title: "Lỗi xử lý đơn hàng",
-            createFailed: "Đã xảy ra lỗi khi tạo đơn hàng. Vui lòng thử lại hoặc liên hệ bộ phận hỗ trợ nếu vấn đề tiếp diễn."
+            createFailed: "Đã xảy ra lỗi khi tạo đơn hàng. Vui lòng thử lại hoặc liên hệ bộ phận hỗ trợ nếu vấn đề tiếp diễn.",
+            timeout: "Không nhận được dữ liệu thanh toán, vui lòng thử lại."
         },
         timeEstimation: {
             processing: "Thời gian xử lý ước tính: ",

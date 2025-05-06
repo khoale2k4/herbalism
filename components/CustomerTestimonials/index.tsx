@@ -102,11 +102,6 @@ const CustomerTestimonials: React.FC = () => {
                         </div>
 
                         <div className="relative max-w-6xl mx-auto pb-4">
-                            {/* Decorative elements */}
-                            <div className="hidden md:block absolute -left-6 top-1/4 w-12 h-12 bg-blue-100 rounded-full opacity-60"></div>
-                            <div className="hidden md:block absolute -right-6 bottom-1/4 w-20 h-20 bg-blue-100 rounded-full opacity-60"></div>
-                            <div className="hidden md:block absolute left-1/4 bottom-0 w-8 h-8 bg-yellow-100 rounded-full opacity-60"></div>
-
                             <Swiper
                                 modules={[Autoplay, Pagination, EffectCoverflow]}
                                 effect="coverflow"

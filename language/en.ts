@@ -677,7 +677,8 @@ export default {
         },
         errorMessages: {
             title: "Order Processing Error",
-            createFailed: "We encountered an issue while creating your order. Please try again or contact support if the problem persists."
+            createFailed: "We encountered an issue while creating your order. Please try again or contact support if the problem persists.",
+            timeout: "Failed to receive payment data. Please try again."
         },
         timeEstimation: {
             processing: "Estimated processing time: ",
