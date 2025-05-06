@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import {
     Truck,
@@ -8,22 +10,25 @@ import {
     CheckSquare,
     PhoneCall
 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function DeliveryPolicy() {
+    const router = useRouter();
+
     return (
         <main className="max-w-4xl mx-auto px-4 py-16">
             <div className="bg-white shadow-lg rounded-2xl overflow-hidden">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-amber-500 to-amber-600 text-white px-8 py-10">
+                <div className="bg-gradient-to-r from-[#3e4f3d] to-[#2f3c2f] text-white px-8 py-10">
                     <div className="flex items-center justify-center mb-6">
                         <Truck size={48} className="mr-4" />
                         <h1 className="text-4xl font-bold">DELIVERY POLICY</h1>
                     </div>
-                    <p className="text-center text-amber-100">Last updated: April 26, 2017</p>
+                    <p className="text-center text-green-100">Last updated: April 26, 2017</p>
                 </div>
 
                 {/* Introduction */}
-                <div className="px-8 py-8 border-b border-gray-200 bg-amber-50">
+                <div className="px-8 py-8 border-b border-gray-200">
                     <p className="text-lg text-gray-700 text-center italic">
                         Herbalism is committed to providing reliable and efficient delivery services for all your herbal product needs.
                     </p>
@@ -35,8 +40,8 @@ export default function DeliveryPolicy() {
                         {/* Delivery Area Section */}
                         <section>
                             <div className="flex items-start mb-4">
-                                <div className="bg-amber-100 p-2 rounded-full mr-4 mt-1 flex-shrink-0">
-                                    <MapPin size={24} className="text-amber-600" />
+                                <div className="bg-[#e4ebe3] p-2 rounded-full mr-4">
+                                    <MapPin size={24} className="text-[#3e4f3d]" />
                                 </div>
                                 <div>
                                     <h2 className="text-2xl font-semibold text-gray-800 mb-3">Delivery Area</h2>
@@ -51,8 +56,8 @@ export default function DeliveryPolicy() {
                         {/* Delivery Timeframe Section */}
                         <section>
                             <div className="flex items-start mb-4">
-                                <div className="bg-amber-100 p-2 rounded-full mr-4 mt-1 flex-shrink-0">
-                                    <Clock size={24} className="text-amber-600" />
+                                <div className="bg-[#e4ebe3] p-2 rounded-full mr-4 mt-1 flex-shrink-0">
+                                    <Clock size={24} className="text-[#3e4f3d]" />
                                 </div>
                                 <div>
                                     <h2 className="text-2xl font-semibold text-gray-800 mb-3">Delivery Timeframe</h2>
@@ -68,8 +73,8 @@ export default function DeliveryPolicy() {
                         {/* Shipping Fee Section */}
                         <section>
                             <div className="flex items-start mb-4">
-                                <div className="bg-amber-100 p-2 rounded-full mr-4 mt-1 flex-shrink-0">
-                                    <DollarSign size={24} className="text-amber-600" />
+                                <div className="bg-[#e4ebe3] p-2 rounded-full mr-4 mt-1 flex-shrink-0">
+                                    <DollarSign size={24} className="text-[#3e4f3d]" />
                                 </div>
                                 <div>
                                     <h2 className="text-2xl font-semibold text-gray-800 mb-3">Shipping Fee</h2>
@@ -84,8 +89,8 @@ export default function DeliveryPolicy() {
                         {/* Payment Methods Section */}
                         <section>
                             <div className="flex items-start mb-4">
-                                <div className="bg-amber-100 p-2 rounded-full mr-4 mt-1 flex-shrink-0">
-                                    <CreditCard size={24} className="text-amber-600" />
+                                <div className="bg-[#e4ebe3] p-2 rounded-full mr-4 mt-1 flex-shrink-0">
+                                    <CreditCard size={24} className="text-[#3e4f3d]" />
                                 </div>
                                 <div>
                                     <h2 className="text-2xl font-semibold text-gray-800 mb-3">Payment Methods</h2>
@@ -95,8 +100,8 @@ export default function DeliveryPolicy() {
 
                                     <div className="bg-gray-50 rounded-xl p-6 space-y-4">
                                         <div className="flex items-center">
-                                            <div className="w-8 h-8 bg-amber-200 rounded-full flex items-center justify-center mr-3">
-                                                <span className="font-bold text-amber-800">1</span>
+                                            <div className="w-8 h-8 bg-[#d8dfd8] rounded-full flex items-center justify-center mr-3">
+                                                <span className="font-bold text-[#3e4f3d]">1</span>
                                             </div>
                                             <div>
                                                 <p className="text-gray-700">
@@ -107,8 +112,8 @@ export default function DeliveryPolicy() {
                                         </div>
 
                                         <div className="flex items-center">
-                                            <div className="w-8 h-8 bg-amber-200 rounded-full flex items-center justify-center mr-3">
-                                                <span className="font-bold text-amber-800">2</span>
+                                            <div className="w-8 h-8 bg-[#d8dfd8] rounded-full flex items-center justify-center mr-3">
+                                                <span className="font-bold text-[#3e4f3d]">2</span>
                                             </div>
                                             <div>
                                                 <p className="text-gray-700">
@@ -119,8 +124,8 @@ export default function DeliveryPolicy() {
                                         </div>
 
                                         <div className="flex items-center">
-                                            <div className="w-8 h-8 bg-amber-200 rounded-full flex items-center justify-center mr-3">
-                                                <span className="font-bold text-amber-800">3</span>
+                                            <div className="w-8 h-8 bg-[#d8dfd8] rounded-full flex items-center justify-center mr-3">
+                                                <span className="font-bold text-[#3e4f3d]">3</span>
                                             </div>
                                             <div>
                                                 <p className="text-gray-700">
@@ -137,8 +142,8 @@ export default function DeliveryPolicy() {
                         {/* Order Confirmation Section */}
                         <section>
                             <div className="flex items-start mb-4">
-                                <div className="bg-amber-100 p-2 rounded-full mr-4 mt-1 flex-shrink-0">
-                                    <CheckSquare size={24} className="text-amber-600" />
+                                <div className="bg-[#e4ebe3] p-2 rounded-full mr-4 mt-1 flex-shrink-0">
+                                    <CheckSquare size={24} className="text-[#3e4f3d]" />
                                 </div>
                                 <div>
                                     <h2 className="text-2xl font-semibold text-gray-800 mb-3">Order Confirmation</h2>
@@ -153,19 +158,19 @@ export default function DeliveryPolicy() {
                 </div>
 
                 {/* Contact Section */}
-                <div className="bg-amber-50 px-8 py-6 border-t border-gray-200">
+                <div className="bg-[#f5f7f5] px-8 py-6 border-t border-gray-200">
                     <div className="flex items-center justify-center">
                         <div className="bg-white p-6 rounded-xl shadow-sm max-w-lg text-center">
                             <div className="flex justify-center mb-4">
-                                <div className="bg-amber-100 p-3 rounded-full">
-                                    <PhoneCall size={24} className="text-amber-600" />
+                                <div className="bg-[#e8ece8] p-3 rounded-full">
+                                    <PhoneCall size={24} className="text-[#3e4f3d]" />
                                 </div>
                             </div>
                             <h3 className="text-xl font-semibold mb-2">Have questions about delivery?</h3>
                             <p className="text-gray-600 mb-4">
                                 Our customer service team is here to help you with any questions about your delivery.
                             </p>
-                            <button className="bg-amber-500 hover:bg-amber-600 text-white py-2 px-6 rounded-lg transition-colors duration-200">
+                            <button className="bg-[#3e4f3d] hover:bg-[#4d5f4c] text-white py-2 px-6 rounded-lg transition-colors duration-200">
                                 Contact Support
                             </button>
                         </div>
@@ -173,18 +178,24 @@ export default function DeliveryPolicy() {
                 </div>
 
                 {/* Footer */}
-                <div className="bg-gray-50 px-8 py-6 border-t border-gray-200">
+                <div className="bg-[#f5f7f5] px-8 py-6 border-t border-gray-200">
                     <div className="flex flex-col md:flex-row items-center justify-between">
                         <p className="text-gray-500 text-sm mb-4 md:mb-0">
                             © {new Date().getFullYear()} Herbalism. All rights reserved.
                         </p>
                         <div className="flex space-x-4">
-                            <button className="text-amber-600 hover:text-amber-800 transition-colors duration-200">
-                                Contact Us
+                            <button
+                                onClick={() => router.push('/privacy-policy')}
+                                className="text-[#3e4f3d] hover:text-[#2d3a2c] transition-colors duration-200"
+                            >
+                                Privacy Policy
                             </button>
                             <span className="text-gray-300">|</span>
-                            <button className="text-amber-600 hover:text-amber-800 transition-colors duration-200">
-                                Privacy Policy
+                            <button
+                                onClick={() => router.push('/terms')}
+                                className="text-[#3e4f3d] hover:text-[#2d3a2c] transition-colors duration-200"
+                            >
+                                Terms and Conditions
                             </button>
                         </div>
                     </div>

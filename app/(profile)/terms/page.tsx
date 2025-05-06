@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import {
     BookOpen,
@@ -10,8 +12,10 @@ import {
     AlertTriangle,
     PhoneCall
 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function TermsAndConditions() {
+    const router = useRouter();
     return (
         <main className="max-w-4xl mx-auto px-4 py-16">
             <div className="bg-white shadow-lg rounded-2xl overflow-hidden">
@@ -296,15 +300,17 @@ export default function TermsAndConditions() {
                             © {new Date().getFullYear()} Herbalism. All rights reserved.
                         </p>
                         <div className="flex space-x-4">
-                            <button className="text-[#3e4f3d] hover:text-[#2d3a2c] transition-colors duration-200">
-                                Contact Us
-                            </button>
-                            <span className="text-gray-300">|</span>
-                            <button className="text-[#3e4f3d] hover:text-[#2d3a2c] transition-colors duration-200">
+                            <button
+                                onClick={() => router.push('/privacy-policy')}
+                                className="text-[#3e4f3d] hover:text-[#2d3a2c] transition-colors duration-200"
+                            >
                                 Privacy Policy
                             </button>
                             <span className="text-gray-300">|</span>
-                            <button className="text-[#3e4f3d] hover:text-[#2d3a2c] transition-colors duration-200">
+                            <button
+                                onClick={() => router.push('/delivery-policy')}
+                                className="text-[#3e4f3d] hover:text-[#2d3a2c] transition-colors duration-200"
+                            >
                                 Delivery Policy
                             </button>
                         </div>

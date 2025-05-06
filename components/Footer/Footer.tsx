@@ -71,21 +71,21 @@ const Footer = () => {
                             <h3 className="text-lg font-semibold mb-4 text-[#cce2a3]">{t.footer.contact}</h3>
                             <div className="flex space-x-4">
                                 <a
-                                    href="https://www.facebook.com/ptcontact"
+                                    href="https://www.facebook.com/herbalismvietnam"
                                     className="text-[#e8f3d2] hover:text-white transition-colors"
                                     aria-label="Facebook"
                                 >
                                     <FaFacebookF />
                                 </a>
                                 <a
-                                    href="https://instagram.com"
+                                    href="https://www.instagram.com/herbalism.vietnam/"
                                     className="text-[#e8f3d2] hover:text-white transition-colors"
                                     aria-label="Instagram"
                                 >
                                     <FaInstagram />
                                 </a>
                                 <a
-                                    href="mailto:info@example.com"
+                                    href="mailto:herbalismspagyric@gmail.com"
                                     className="text-[#e8f3d2] hover:text-white transition-colors"
                                     aria-label="Email"
                                 >

@@ -42,9 +42,9 @@ const testimonials: Testimonial[] = [
     },
     {
         name: "Christine",
-        title: "Connect has been a game-changer!",
+        title: "Vietnam’s First Blue Lotus Spagyric",
         comment:
-            "Connect has been a game-changer for my meditation practice. On those days when I just can’t switch off the mental chatter after a hectic day, it helps me find my calm. It has also been a lifesaver on restless nights when my mind is racing with a million thoughts. I absolutely love this product!",
+            "This is a groundbreaking product — the first Spagyric extract of Blue Lotus made in Vietnam. The aroma is rich and floral, and the effect is soothing, almost meditative. It feels energetically complete, far beyond a typical herbal tincture. A beautiful step forward for Vietnamese herbal alchemy.",
         rating: 5
     },
     {

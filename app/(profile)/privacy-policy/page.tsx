@@ -1,17 +1,21 @@
+'use client';
+
 import React from 'react';
-import { Shield, User, Share2, Edit3, Lock, AlertTriangle } from 'lucide-react';
+import { Shield, User, Share2, Edit3, Lock, AlertTriangle, PhoneCall } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function PrivacyPolicy() {
+    const router = useRouter();
     return (
         <main className="max-w-4xl mx-auto px-4 py-16">
             <div className="bg-white shadow-lg rounded-2xl overflow-hidden">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 text-white px-8 py-10">
+                <div className="bg-gradient-to-r from-[#3e4f3d] to-[#2f3c2f] text-white px-8 py-10">
                     <div className="flex items-center justify-center mb-6">
                         <Shield size={48} className="mr-4" />
                         <h1 className="text-4xl font-bold">PRIVACY POLICY</h1>
                     </div>
-                    <p className="text-center text-emerald-100">Last updated: April 26, 2017</p>
+                    <p className="text-center text-green-100">Last updated: April 26, 2017</p>
                 </div>
 
                 {/* Introduction */}
@@ -28,8 +32,8 @@ export default function PrivacyPolicy() {
                         {/* Section 1 */}
                         <section>
                             <div className="flex items-center mb-4">
-                                <div className="bg-emerald-100 p-2 rounded-full mr-4">
-                                    <User size={24} className="text-emerald-600" />
+                                <div className="bg-[#e4ebe3] p-2 rounded-full mr-4">
+                                    <User size={24} className="text-[#3e4f3d]" />
                                 </div>
                                 <h2 className="text-2xl font-semibold text-gray-800">1. Purpose of Collecting Personal Information</h2>
                             </div>
@@ -45,7 +49,7 @@ export default function PrivacyPolicy() {
                         {/* Section 2 */}
                         <section>
                             <div className="flex items-center mb-4">
-                                <div className="bg-emerald-100 p-2 rounded-full mr-4">
+                                <div className="bg-[#e4ebe3] p-2 rounded-full mr-4">
                                     <Lock size={24} className="text-emerald-600" />
                                 </div>
                                 <h2 className="text-2xl font-semibold text-gray-800">2. Scope of Use of Personal Information</h2>
@@ -70,7 +74,7 @@ export default function PrivacyPolicy() {
                         {/* Section 3 */}
                         <section>
                             <div className="flex items-center mb-4">
-                                <div className="bg-emerald-100 p-2 rounded-full mr-4">
+                                <div className="bg-[#e4ebe3] p-2 rounded-full mr-4">
                                     <Share2 size={24} className="text-emerald-600" />
                                 </div>
                                 <h2 className="text-2xl font-semibold text-gray-800">3. Sharing of Personal Information</h2>
@@ -92,7 +96,7 @@ export default function PrivacyPolicy() {
                         {/* Section 4 */}
                         <section>
                             <div className="flex items-center mb-4">
-                                <div className="bg-emerald-100 p-2 rounded-full mr-4">
+                                <div className="bg-[#e4ebe3] p-2 rounded-full mr-4">
                                     <Edit3 size={24} className="text-emerald-600" />
                                 </div>
                                 <h2 className="text-2xl font-semibold text-gray-800">4. Access and Modification of Personal Information</h2>
@@ -106,7 +110,7 @@ export default function PrivacyPolicy() {
                         {/* Section 5 */}
                         <section>
                             <div className="flex items-center mb-4">
-                                <div className="bg-emerald-100 p-2 rounded-full mr-4">
+                                <div className="bg-[#e4ebe3] p-2 rounded-full mr-4">
                                     <Shield size={24} className="text-emerald-600" />
                                 </div>
                                 <h2 className="text-2xl font-semibold text-gray-800">5. Protection of Personal Information</h2>
@@ -122,7 +126,7 @@ export default function PrivacyPolicy() {
                         {/* Section 6 */}
                         <section>
                             <div className="flex items-center mb-4">
-                                <div className="bg-emerald-100 p-2 rounded-full mr-4">
+                                <div className="bg-[#e4ebe3] p-2 rounded-full mr-4">
                                     <AlertTriangle size={24} className="text-emerald-600" />
                                 </div>
                                 <h2 className="text-2xl font-semibold text-gray-800">6. Changes to This Policy</h2>
@@ -137,19 +141,44 @@ export default function PrivacyPolicy() {
                     </div>
                 </div>
 
+                <div className="bg-[#f5f7f5] px-8 py-6 border-t border-gray-200">
+                    <div className="flex items-center justify-center">
+                        <div className="bg-white p-6 rounded-xl shadow-sm max-w-lg text-center">
+                            <div className="flex justify-center mb-4">
+                                <div className="bg-[#e8ece8] p-3 rounded-full">
+                                    <PhoneCall size={24} className="text-[#3e4f3d]" />
+                                </div>
+                            </div>
+                            <h3 className="text-xl font-semibold mb-2">Have questions about private policy?</h3>
+                            <p className="text-gray-600 mb-4">
+                                Our customer service team is here to help you with any questions about private policy.
+                            </p>
+                            <button className="bg-[#3e4f3d] hover:bg-[#4d5f4c] text-white py-2 px-6 rounded-lg transition-colors duration-200">
+                                Contact Support
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 {/* Footer */}
-                <div className="bg-gray-50 px-8 py-6 border-t border-gray-200">
+                <div className="bg-[#f5f7f5] px-8 py-6 border-t border-gray-200">
                     <div className="flex flex-col md:flex-row items-center justify-between">
                         <p className="text-gray-500 text-sm mb-4 md:mb-0">
                             © {new Date().getFullYear()} Herbalism. All rights reserved.
                         </p>
                         <div className="flex space-x-4">
-                            <button className="text-emerald-600 hover:text-emerald-800 transition-colors duration-200">
-                                Contact Us
+                            <button
+                                onClick={() => router.push('/delivery-policy')}
+                                className="text-[#3e4f3d] hover:text-[#2d3a2c] transition-colors duration-200"
+                            >
+                                Delivery Policy
                             </button>
                             <span className="text-gray-300">|</span>
-                            <button className="text-emerald-600 hover:text-emerald-800 transition-colors duration-200">
-                                Terms of Service
+                            <button
+                                onClick={() => router.push('/terms')}
+                                className="text-[#3e4f3d] hover:text-[#2d3a2c] transition-colors duration-200"
+                            >
+                                Terms and Conditions
                             </button>
                         </div>
                     </div>
