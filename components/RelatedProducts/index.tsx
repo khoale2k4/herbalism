@@ -146,7 +146,7 @@ export default function RelatedProducts({
             >
                 {filteredProducts.map((product) => (
                     <Link
-                        href={`/product/${product.id}`}
+                        href={`/shop/${product.id}`}
                         key={product.id}
                         className={classes.productCard}
                     >

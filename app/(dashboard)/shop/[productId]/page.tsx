@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import ProductDetail from "../ProductDetail";
+import ProductDetail from "../components/ProductDetail";
 import { ProductOperation } from "@/lib/main";
 
 type Props = {

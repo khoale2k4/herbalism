@@ -48,7 +48,7 @@ export default function CartSidebar({
     const router = useRouter();
 
     const handleClickProduct = (id: string) => {
-        router.push(`/product/${id}`);
+        router.push(`/shop/${id}`);
     }
 
     const checkout = () => {
