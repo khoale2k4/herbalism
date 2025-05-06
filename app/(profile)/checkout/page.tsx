@@ -296,7 +296,7 @@ const CheckoutPage: React.FC = () => {
             if (selectedVoucher.type === 'amount') {
                 discountAmount = selectedVoucher.discount;
             } else if (selectedVoucher.type === 'percent') {
-                discountAmount = subtotal * (selectedVoucher.discount / 100);
+                discountAmount = subtotal * (selectedVoucher.discount);
             }
         }
 
