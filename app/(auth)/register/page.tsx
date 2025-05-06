@@ -321,8 +321,8 @@ const Register = () => {
                             className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                         />
                         <label htmlFor="terms" className="ml-2 block text-sm text-gray-700">
-                            {t.registerPage.terms.label} <a href="/terms" className="text-indigo-600 hover:text-indigo-800">{t.registerPage.terms.terms}</a> {t.registerPage.terms.and}{' '}
-                            <a href="/privacy" className="text-indigo-600 hover:text-indigo-800">{t.registerPage.terms.privacy}</a> {t.registerPage.terms.suffix}
+                            {t.registerPage.terms.label} <a href="/terms-of-service" className="text-indigo-600 hover:text-indigo-800">{t.registerPage.terms.terms}</a> {t.registerPage.terms.and}{' '}
+                            <a href="/privacy-policy" className="text-indigo-600 hover:text-indigo-800">{t.registerPage.terms.privacy}</a> {t.registerPage.terms.suffix}
                         </label>
                     </div>
 
