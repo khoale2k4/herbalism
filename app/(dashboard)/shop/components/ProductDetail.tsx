@@ -29,6 +29,13 @@ interface Tab {
     content: string;
 }
 
+interface FlyingItem {
+    id: string;
+    startX: number;
+    startY: number;
+    image: string;
+}
+
 export async function generateStaticParams() {
     const productOp = new ProductOperation();
     const products = await productOp.getAll();
@@ -41,6 +48,7 @@ export async function generateStaticParams() {
 export default function ProductDetail({ productId }: { productId: string }) {
     const { t } = useLanguage();
     const [loading, setLoading] = useState(true);
+    const [adding, setAdding] = useState(false);
     const [product, setProduct] = useState<Product | null>(null);
     const [suggestProducts, setSuggestProducts] = useState<Product[]>([]);
     const [tabs, setTabs] = useState<Tab[]>([]);
@@ -65,37 +73,35 @@ export default function ProductDetail({ productId }: { productId: string }) {
         message: string;
     } | null>(null);
 
-    const handleAddToCart = async () => {
+    const handleAddToCart = async (e: React.MouseEvent) => {
         try {
             const token = getTokenFromCookie();
             if (!token) return;
+            setAdding(true);
             const response = await cartOp.addToCart({
                 productId: productId || "",
                 num: quantity,
                 size: selectedSize
             }, token);
-            console.log(response);
 
             if (response.success) {
                 setNotification({
                     type: 'success',
                     message: t.product.addedToCartSuccess
                 });
-                // showSuccess(t.product.addedToCartSuccess);
             } else {
                 setNotification({
                     type: 'error',
                     message: t.product.addToCartError
                 });
-                // showError(t.product.addToCartError);
             }
         } catch (error) {
             setNotification({
                 type: 'error',
-                message: t.product.addToCartError
+                message: t.product.addToCartError + error
             });
-            // showError(t.product.addToCartError);
         } finally {
+            setAdding(false);
             setTimeout(() => {
                 setNotification(null);
             }, 5000);
@@ -206,10 +212,8 @@ export default function ProductDetail({ productId }: { productId: string }) {
     return (
         <div className="w-full bg-[#fdf8f7] min-h-screen"
         >
-
-
             {notification && (
-                <div className={`fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg ${notification.type === 'success' ? 'bg-green-500' : 'bg-red-500'
+                <div className={`fixed bottom-4 right-4 z-50 p-4 rounded-lg shadow-lg ${notification.type === 'success' ? 'bg-green-500' : 'bg-red-500'
                     } text-white animate-fade-in-down`}>
                     <div className="flex items-center">
                         {notification.type === 'success' ? (
@@ -356,10 +360,18 @@ export default function ProductDetail({ productId }: { productId: string }) {
 
                             <div className="flex items-center space-x-4">
                                 <button
-                                    className="flex-1 bg-[#3e4f3d] hover:bg-[#747c61] text-white py-3 rounded-md font-medium flex items-center justify-center"
-                                    onClick={handleAddToCart}
+                                    disabled={adding}
+                                    className={`flex-1 bg-[#3e4f3d] hover:bg-[#747c61] text-white py-3 rounded-md font-medium flex items-center justify-center ${adding ? 'opacity-70 cursor-not-allowed' : ''}`}
+                                    onClick={(e) => handleAddToCart(e)}
                                 >
-                                    <ShoppingCart size={18} className="mr-2" />
+                                    {
+                                        adding ?
+                                            <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                            </svg> :
+                                            <ShoppingCart size={18} className="mr-2" />
+                                    }
                                     {t.product.addCart}
                                 </button>
                                 {/* <button className="w-12 h-12 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-50">
