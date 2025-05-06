@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
-import { Star, Heart, ShoppingCart, Truck, Shield, RotateCcw, ChevronDown, ChevronUp, Minus, Plus } from "lucide-react";
+import { Star, Heart, ShoppingCart, Truck, Shield, RotateCcw, ChevronDown, ChevronUp, Minus, Plus, Leaf } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { CartOperation, CommentOperation, ProductOperation } from "@/lib/main";
 import { Product } from "@/types/product";
@@ -247,13 +247,15 @@ export default function ProductDetail({ productId }: { productId: string }) {
                         backgroundColor: "#fdf8f7",
                     }}>
                     <div className="space-y-6">
-                        <div className="bg-gray-50 rounded-xl overflow-hidden">
+                        {product.images && product.images.length > 0 ? <div className="bg-gray-50 rounded-xl overflow-hidden">
                             <img
                                 src={product.images[selectedImage]?.url || '/placeholder.jpg'}
                                 alt={product.name}
                                 className="w-full h-96 object-cover object-center transition-transform duration-300 hover:scale-105"
-                            />
-                        </div>
+                            /></div> : <div className="h-full w-full flex items-center justify-center text-gray-400">
+                            <Leaf className="h-40 w-40" />
+                        </div>}
+
                         <div className="flex space-x-4 overflow-x-auto pb-2">
                             {product.images.map((img, idx) => (
                                 <button

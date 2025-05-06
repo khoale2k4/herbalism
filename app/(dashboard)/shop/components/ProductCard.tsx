@@ -1,5 +1,6 @@
 import { formatPrice } from "@/app/utils/format-currency";
 import { Product } from "@/types/product";
+import { Leaf, Package } from "lucide-react";
 import { FiStar } from "react-icons/fi";
 
 type ProductCardProps = {
@@ -16,11 +17,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, viewMode, onClick })
                 onClick={() => onClick(product.id.toString())}
             >
                 <div className="w-24 h-24 flex-shrink-0">
-                    <img
+                    {product.images && product.images.length ? <img
                         src={product.images[0].url}
                         alt={product.name}
                         className="w-full h-full object-cover rounded-md transition-transform duration-300 hover:scale-105"
-                    />
+                    /> : <div className="h-full w-full flex items-center justify-center text-gray-400">
+                        <Package className="h-8 w-8" />
+                    </div>}
                 </div>
                 <div className="flex-grow">
                     <h3 className="font-medium text-gray-800 line-clamp-1">{product.name}</h3>
@@ -43,11 +46,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, viewMode, onClick })
             onClick={() => onClick(product.id.toString())}
         >
             <div className="aspect-square bg-gray-100">
-                <img
+                {product.images && product.images.length ? <img
                     src={product.images[0].url}
                     alt={product.name}
-                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                />
+                    className="w-full h-full object-cover rounded-md transition-transform duration-300 hover:scale-105"
+                /> : <div className="h-full w-full flex items-center justify-center text-gray-400">
+                    <Leaf className="h-40 w-40" />
+                </div>}
             </div>
             <div className="p-4">
                 <h3 className="font-medium text-gray-800 mb-1 line-clamp-1">{product.name}</h3>

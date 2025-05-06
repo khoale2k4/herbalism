@@ -28,7 +28,7 @@ export default function DeliveryPolicy() {
                 </div>
 
                 {/* Introduction */}
-                <div className="px-8 py-8 border-b border-gray-200">
+                <div className="px-8 py-8 border-b border-gray-200 bg-[#f5f7f5]">
                     <p className="text-lg text-gray-700 text-center italic">
                         Herbalism is committed to providing reliable and efficient delivery services for all your herbal product needs.
                     </p>
@@ -192,7 +192,7 @@ export default function DeliveryPolicy() {
                             </button>
                             <span className="text-gray-300">|</span>
                             <button
-                                onClick={() => router.push('/terms')}
+                                onClick={() => router.push('/terms-of-service')}
                                 className="text-[#3e4f3d] hover:text-[#2d3a2c] transition-colors duration-200"
                             >
                                 Terms and Conditions

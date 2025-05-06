@@ -40,7 +40,7 @@ export default function CustomLoadingElement() {
             style={{ animationDuration: '2s' }}></div>
           <div className="relative">
             <Image
-              src="/Logo.png"
+              src="/img/logo-image.png"
               alt="Logo"
               width={80}
               height={80}

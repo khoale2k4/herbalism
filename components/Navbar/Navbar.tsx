@@ -75,7 +75,7 @@ const Navbar = () => {
       const data = response.data.map((item: any) => ({
         id: item.product.id,
         name: item.product.name,
-        image: item.product.images[0].url,
+        image: (item.product.images && item.product.images.length > 0 ? item.product.images[0].url: '/img/placeholder.png'),
         price: item.product.price,
         size: item.size,
         num: item.num,
