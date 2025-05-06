@@ -567,10 +567,10 @@ export class CartOperation {
                     'Authorization': "Bearer " + token
                 },
             });
-            
+
             const result = await response.json();
             console.log('result', result);
-            if(!response.ok) {
+            if (!response.ok) {
                 throw new Error(result.message);
             }
             return {
@@ -599,7 +599,7 @@ export class CartOperation {
             });
             const result = await response.json();
             console.log('result', result);
-            if(!response.ok) {
+            if (!response.ok) {
                 throw new Error(result.message);
             }
             return {
@@ -663,6 +663,38 @@ export class CommentOperation {
                         productId: dto.productId
                     }
                 )
+            });
+            const result = await response.json();
+            return {
+                success: true,
+                message: result.message,
+                data: result.data
+            };
+        } catch (error: any) {
+            return {
+                success: false,
+                message: error?.message || 'Unknown error',
+                data: null
+            };
+        }
+    }
+}
+
+export class MailOperation {
+    private baseUrl: string;
+
+    constructor() {
+        this.baseUrl = (process.env.NEXT_PUBLIC_API_HOST || "http://localhost:3000") + '/mail';
+    }
+
+    async addMail(mail: string) {
+        try {
+            const response = await fetch(this.baseUrl + '/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ mail })
             });
             const result = await response.json();
             return {

@@ -818,6 +818,7 @@ export default {
         contact: "LIÊN HỆ",
         legal: "PHÁP LÝ",
         enterEmail: "Nhập địa chỉ email của bạn",
+        subscribeSuccess: "Đăng ký thành công. Chúng tôi sẽ gửi thông tin mới nhất đến bạn sớm nhất.",
         join: "Tham gia cộng đồng của chúng tôi",
         stayConnect: "Luôn kết nối với kiến thức thảo dược, thông tin sức khỏe và ưu đãi độc quyền.",
         description: "Các sản phẩm và thông tin được cung cấp qua trang web này chưa được Bộ Y tế Việt Nam (MoH), Cơ quan Quản lý Hàng hóa Trị liệu Úc (TGA), Cục Quản lý Thực phẩm và Dược phẩm Hoa Kỳ (FDA) hoặc Herbalism Ltd đánh giá, và không nhằm mục đích chẩn đoán, điều trị, chữa khỏi hoặc ngăn ngừa bất kỳ bệnh nào. Mọi thông tin trên trang web này, hoặc trên nhãn hay bao bì sản phẩm của chúng tôi, chỉ nhằm mục đích cung cấp thông tin và không thay thế cho lời khuyên từ chuyên gia chăm sóc sức khỏe chính của bạn. Vui lòng tham khảo ý kiến chuyên gia y tế trước khi sử dụng, cũng như khi cần chẩn đoán hoặc điều trị các vấn đề y tế. Các sản phẩm trên trang web này chứa nhiều chiết xuất thảo dược cô đặc. Hãy đảm bảo rằng bạn không bị dị ứng với bất kỳ thành phần nào trước khi sử dụng.",
@@ -827,6 +828,6 @@ export default {
             termsOfService: "Điều khoản dịch vụ"
         },
         copyright:
-            "© 2025 Herbalism. Cung cấp thảo dược với mục đích từ năm 2025.",
+            "© 2025 Herbalism đã được đăng kí bản quyền",
     }
 };

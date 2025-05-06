@@ -492,6 +492,7 @@ export default {
         contact: "CONTACT",
         legal: "LEGAL",
         enterEmail: "Enter your email address",
+        subscribeSuccess: "You're subscribed! We'll keep you updated.",
         join: "Join out community",
         stayConnect: "Stay connected with herbal education, wellness insights, and exclusive offers.",
         description: "The products and information provided through this website have not been evaluated by the Vietnam Ministry of Health (MoH), Therapeutic Goods Administration (TGA), Food and Drug Administration of the USA (FDA), or Herbalism Ltd, and are not intended to diagnose, treat, cure or prevent disease. Any information on this website, or on any of our product labels or packaging, is for informational purposes only and is not intended as a substitute for advice from your primary healthcare provider. Please consult a healthcare professional before use, and regarding any medical or health-related diagnosis or treatment options. The products available on this website contain a variety of concentrated plant extracts. Ensure you do not have any allergies to any ingredients before using.",
@@ -501,7 +502,7 @@ export default {
             termsOfService: "Terms of Service"
         },
         copyright:
-            "© 2025 Harmonic Arts. Providing plant medicine with purpose since 2025."
+            "© 2025 Herbalism Ltd all rights reserved."
     }, paymentPage: {
         common: {
             backButton: "Back",
