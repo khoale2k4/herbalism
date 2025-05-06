@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+/* @import url("//harmonicarts.ca/cdn/fonts/trade_gothic/tradegothic_n4.87425881f271d9e0f8b5f614cd8de558c7dea553.woff2?h1=aGFybW9uaWNhcnRzLmNh&h2=aGFybW9uaWNhcnRzLmNvbQ&h3=aGFybW9uaWMtYXJ0cy5hY2NvdW50Lm15c2hvcGlmeS5jb20&hmac=983ad5cda8c8dd4d76523ba77fa35305f2f8a3d3bc99f2a4e28bd86163fc7c11");
+@import url("//harmonicarts.ca/cdn/fonts/trade_gothic/tradegothic_n4.9046484b84e9d547f2568166c70f42465f6e8316.woff?h1=aGFybW9uaWNhcnRzLmNh&h2=aGFybW9uaWNhcnRzLmNvbQ&h3=aGFybW9uaWMtYXJ0cy5hY2NvdW50Lm15c2hvcGlmeS5jb20&hmac=ab7ebc175b7ee4f089f5bf24505975e9f76954e191db36b6f55d7099963523ac"); */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* @font-face {
+	font-family: 'Montserrat-VariableFont_wght';
+	src: url('/fonts/Montserrat-VariableFont_wght.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+body {
+  font-family: 'font-serif', sans-serif;
+} */
+
+@layer base {
+	html {
+		/* font-family: 'Trade Gothic', sans-serif !important; */
+		font-family: 'font-serif', font-serif !important;
+		font-feature-settings: 'kern' !important;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.5px;
+	}
+}
