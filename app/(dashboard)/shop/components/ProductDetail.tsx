@@ -295,7 +295,7 @@ export default function ProductDetail({ productId }: { productId: string }) {
                         </div>
 
                         <div className="text-2xl font-bold text-[#3e4f3d]">
-                            {formatPrice(selectedSizeStock?.price || product.price)}
+                            {formatPrice((selectedSizeStock?.price || product.price) * quantity)}
                         </div>
 
                         <BlogContent>
