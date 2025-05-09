@@ -513,6 +513,42 @@ export class OrderOperation {
             };
         }
     }
+
+    async create(address: any, voucherId: string | null, paymentMethod: 'cod' | 'bank' | null, products: { productId: string, quantity: number, size: string }[]) {
+        try {
+            const response = await fetch(this.baseUrl + '/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(
+                    {
+                        address: address,
+                        voucherId: voucherId,
+                        paymentMethod: paymentMethod,
+                        items: products
+                    }
+                )
+            });
+
+            if (!response.ok) {
+                throw new Error(`Get unpaid orders failed with status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            return {
+                success: true,
+                message: result.message,
+                data: result.data
+            };
+        } catch (error: any) {
+            return {
+                success: false,
+                message: error?.message || 'Unknown error',
+                data: null
+            };
+        }
+    }
 }
 
 export class VoucherOperation {

@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { AuthOperation } from '@/lib/main';
 import { useNotification } from '@/hooks/useNotification';
-import { setTokenInCookie } from '@/app/utils/token';
+import { removeTokenFromCookie, setTokenInCookie } from '@/app/utils/token';
 import { delay } from '@/app/utils/delay';
 import { useLanguage } from '@/hooks/useLanguage';
 
@@ -45,6 +45,10 @@ const Login = () => {
         // Xử lý đăng nhập bằng Google
         console.log('Đăng nhập với Google');
     };
+
+    useEffect(() => {
+        // removeTokenFromCookie();
+    }, [authOp])
 
     return (
         <div className="max-w-screen mx-auto">

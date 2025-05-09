@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { OrderOperation } from "@/lib/main";
 import { getTokenFromCookie } from "@/app/utils/token";
 import { XCircle } from "lucide-react";
+import { cleanCart, getLocalCart } from "@/app/utils/localCart";
 
 const orderData = {
     orderNumber: "ORD-2025042501",
@@ -25,17 +26,35 @@ export default function OrderProcessingPage() {
     const [error, setError] = useState<string | null>(null);
     const { t } = useLanguage();
 
-    const createOrder = async (addressId: string, voucherId: string | null, paymentMet: 'cod' | 'bank' | null) => {
+    const createOrder = async (addressId: string, voucherId: string | null, paymentMet: 'cod' | 'bank' | null, address: any) => {
         try {
             const token = getTokenFromCookie();
-            if (!token) return;
-            const response = await orderOp.createFromCart(token, addressId, voucherId, paymentMet);
-            if (response.success) {
-                return response.data.trackingNumber;
+            if (!token) {
+                const items = getLocalCart();
+                const products = items.map((item) => {
+                    return {
+                        productId: item.product.id,
+                        size: item.size,
+                        quantity: item.num,
+                    }
+                });
+                const response = await orderOp.create(address, voucherId, paymentMet, products);
+                if (response.success) {
+                    cleanCart();
+                    return response.data.trackingNumber;
+                } else {
+                    setError(t.orderProcessingTranslations.errorMessages.createFailed || 'Tạo đơn hàng thất bại. Vui lòng thử lại.');
+                }
+            } else {
+                const response = await orderOp.createFromCart(token, addressId, voucherId, paymentMet);
+                if (response.success) {
+                    return response.data.trackingNumber;
+                } else {
+                    setError(t.orderProcessingTranslations.errorMessages.createFailed || 'Tạo đơn hàng thất bại. Vui lòng thử lại.');
+                }
             }
         } catch (error) {
             console.error(error);
-            throw error;
         }
     }
 
@@ -43,41 +62,47 @@ export default function OrderProcessingPage() {
         let checkDataInterval: NodeJS.Timeout;
         let timeout: NodeJS.Timeout;
 
-        // Hàm kiểm tra dữ liệu
         const checkData = () => {
             const data = sessionStorage.getItem('paymentMethod');
             const addressId = sessionStorage.getItem('addressId');
+            const address = sessionStorage.getItem('address');
 
-            if (data && addressId) {
+            if (data && (addressId || address)) {
                 clearInterval(checkDataInterval);
                 clearTimeout(timeout);
-                processOrder(data, addressId);
+                processOrder({ data, addressId: addressId as string | undefined, address });
             }
         };
 
-        // Timeout sau 10 giây nếu không có dữ liệu
         timeout = setTimeout(() => {
             clearInterval(checkDataInterval);
             setError(t.orderProcessingTranslations.errorMessages.timeout || 'Không nhận được dữ liệu thanh toán. Vui lòng thử lại.');
         }, 10000);
 
-        // Kiểm tra dữ liệu mỗi 500ms
         checkDataInterval = setInterval(checkData, 500);
 
-        // Hàm xử lý đơn hàng
-        const processOrder = (data: string, addressId: string) => {
+        const processOrder = (data: { data: string, addressId?: string, address: any }) => {
             const voucherId = sessionStorage.getItem('voucherId');
-            const params = JSON.parse(data);
+            const params = JSON.parse(data.data);
+            const address = JSON.parse(data.address);
+            console.log(data.address, address);
             setPaymentMethod(params.id);
 
             const orderProcessing = async () => {
                 try {
                     setProgress(10);
 
-                    const orderId = await createOrder(addressId, voucherId, params.id);
+                    let orderId;
+                    if (data.addressId) {
+                        console.log('cart');
+                        orderId = await createOrder(data.addressId, voucherId, params.id, address);
+                    } else if (address) {
+                        console.log('no cart');
+                        orderId = await createOrder('', voucherId, params.id, address);
+                    }
 
                     if (!orderId) {
-                        throw new Error('Failed to create order');
+                        // throw new Error('Failed to create order');
                     }
 
                     setOrderNumber(orderId);
@@ -129,6 +154,7 @@ export default function OrderProcessingPage() {
 
             sessionStorage.removeItem('paymentMethod');
             sessionStorage.removeItem('addressId');
+            sessionStorage.removeItem('address');
 
             return () => {
                 clearInterval(progressInterval);

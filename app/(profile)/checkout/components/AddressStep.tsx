@@ -1,7 +1,7 @@
 'use client';
 import { useLanguage } from '@/hooks/useLanguage';
 import { Address, CheckoutFormData } from '@/types/checkout';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 type AddressStepProps = {
     formData: CheckoutFormData;
@@ -27,6 +27,12 @@ const AddressStep: React.FC<AddressStepProps> = ({
     formatFullAddress,
 }) => {
     const { t } = useLanguage();
+
+    useEffect(() => {
+        if (savedAddresses.length === 0) {
+            setNewAddress(true);
+        }
+    }, [savedAddresses])
     return (
         <div className="animate-fadeIn">
             <h2 className="text-xl font-semibold mb-6">{t.paymentPage.addressStep.title}</h2>
@@ -73,7 +79,7 @@ const AddressStep: React.FC<AddressStepProps> = ({
                     <label className="block text-sm font-medium text-gray-700 mb-1.5">{t.paymentPage.addressStep.addressLabel}</label>
 
                     <div className="space-y-4">
-                        <div className="space-y-3 mb-4">
+                        {savedAddresses.length > 0 && <div className="space-y-3 mb-4">
                             <div className="flex items-center">
                                 <input
                                     type="radio"
@@ -98,7 +104,7 @@ const AddressStep: React.FC<AddressStepProps> = ({
                                 <label htmlFor="saved-address" className="font-medium">{t.paymentPage.addressStep.savedAddressOption}</label>
                             </div>
 
-                        </div>
+                        </div>}
 
                         {!newAddress && <div>
                             <div className="relative">

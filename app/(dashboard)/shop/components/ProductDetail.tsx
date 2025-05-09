@@ -15,6 +15,7 @@ import RelatedProducts from "@/components/RelatedProducts";
 import { useCurrency } from "@/hooks/useCurrency";
 import { formatPrice } from "@/app/utils/format-currency";
 import { BlogContent } from "../../blog/components/BlogContent";
+import { addProductToLocalCart } from "@/app/utils/localCart";
 
 interface Review {
     id: string;
@@ -77,24 +78,41 @@ export default function ProductDetail({ productId }: { productId: string }) {
     const handleAddToCart = async (e: React.MouseEvent) => {
         try {
             const token = getTokenFromCookie();
-            if (!token) return;
-            setAdding(true);
-            const response = await cartOp.addToCart({
-                productId: productId || "",
-                num: quantity,
-                size: selectedSize
-            }, token);
-
-            if (response.success) {
+            if (!token) {
+                setAdding(true);
+                addProductToLocalCart({
+                    id: productId,
+                    num: quantity,
+                    size: selectedSize,
+                    product: {
+                        id: product?.id ?? "",
+                        images: product?.images ?? [],
+                        name: product?.name ?? "",
+                        price: product?.price ?? 0
+                    }
+                });
                 setNotification({
                     type: 'success',
                     message: t.product.addedToCartSuccess
                 });
             } else {
-                setNotification({
-                    type: 'error',
-                    message: t.product.addToCartError
-                });
+                const response = await cartOp.addToCart({
+                    productId: productId || "",
+                    num: quantity,
+                    size: selectedSize
+                }, token);
+
+                if (response.success) {
+                    setNotification({
+                        type: 'success',
+                        message: t.product.addedToCartSuccess
+                    });
+                } else {
+                    setNotification({
+                        type: 'error',
+                        message: t.product.addToCartError
+                    });
+                }
             }
         } catch (error) {
             setNotification({

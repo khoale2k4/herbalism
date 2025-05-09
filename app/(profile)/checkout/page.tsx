@@ -10,6 +10,8 @@ import { CartOperation, CustomerOperation, OrderOperation, VoucherOperation } fr
 import { getTokenFromCookie } from '@/app/utils/token';
 import { Address, BankPayment, CardPayment, CodPayment, ItemInCart, MomoPayment, PaypalPayment, Voucher } from '@/types/checkout';
 import { useLanguage } from '@/hooks/useLanguage';
+import { getLocalCart } from '@/app/utils/localCart';
+import { getLocalAddress, saveLocalAddress } from '@/app/utils/localAddress';
 
 const CheckoutPage: React.FC = () => {
     const { t } = useLanguage();
@@ -138,26 +140,37 @@ const CheckoutPage: React.FC = () => {
 
     const saveAddress = async () => {
         const token = getTokenFromCookie();
-        if (!token) return;
+        if (!token) {
+            saveLocalAddress({
+                address: formData.address,
+                city: formData.city,
+                country: formData.country,
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                province: formData.province,
+                zipCode: formData.zipCode,
+                apartment: formData.apartment
+            });
+        } else {
+            const response = await customerOp.addAddress(token, {
+                address: formData.address,
+                city: formData.city,
+                country: formData.country,
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                province: formData.province,
+                zipCode: formData.zipCode,
+                apartment: formData.apartment
+            });
 
-        const response = await customerOp.addAddress(token, {
-            address: formData.address,
-            city: formData.city,
-            country: formData.country,
-            firstName: formData.firstName,
-            lastName: formData.lastName,
-            province: formData.province,
-            zipCode: formData.zipCode,
-            apartment: formData.apartment
-        });
-
-        if (response.success) {
-            setFormData({
-                ...formData,
-                addressId: response.data.id
-            })
-            // implement notify later
-            console.log("Success", response.data);
+            if (response.success) {
+                setFormData({
+                    ...formData,
+                    addressId: response.data.id
+                })
+                // implement notify later
+                console.log("Success", response.data);
+            }
         }
     }
 
@@ -214,8 +227,6 @@ const CheckoutPage: React.FC = () => {
     }
 
     const handleSubmit = async () => {
-        const token = getTokenFromCookie();
-        if (!token) return;
         let passValue: {
             id: string;
             number?: string;
@@ -235,52 +246,82 @@ const CheckoutPage: React.FC = () => {
             };
         }
         sessionStorage.setItem('addressId', formData.addressId);
+        sessionStorage.setItem('address', JSON.stringify({
+            address: formData.address,
+            city: formData.city,
+            country: formData.country,
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            province: formData.province,
+            zipCode: formData.zipCode,
+            apartment: formData.apartment
+        }));
         sessionStorage.setItem('paymentMethod', JSON.stringify(passValue));
         if (selectedVoucher) {
             sessionStorage.setItem('voucherId', selectedVoucher?.id);
         }
         router.push('/checkout/pending');
-
         // const response = await orderOp.createFromCart(token);
     }
 
     const fetchProcessingOrder = async () => {
         const token = getTokenFromCookie();
-        if (!token) return;
-        const response = await cartOp.getMyCartItems(token);
-        if (response.success) {
-            setCartItems(response.data.map((product: any) => {
+        if (!token) {
+            const items = getLocalCart();
+            setCartItems(items.map((item) => {
                 return {
-                    id: product.id,
-                    image: product.product.images[0]?.url,
-                    name: product.product.name,
-                    num: product.num,
-                    price: product.product.price,
-                    size: product.size
-                } as ItemInCart;
-            }))
+                    id: item.product.id,
+                    name: item.product.name,
+                    image: (item.product.images && item.product.images.length > 0 ? item.product.images[0].url : '/img/placeholder.png'),
+                    price: item.product.price,
+                    size: item.size,
+                    num: item.num,
+                }
+            }));
+        } else {
+            const response = await cartOp.getMyCartItems(token);
+            if (response.success) {
+                setCartItems(response.data.map((product: any) => {
+                    return {
+                        id: product.id,
+                        image: product.product.images[0]?.url,
+                        name: product.product.name,
+                        num: product.num,
+                        price: product.product.price,
+                        size: product.size
+                    } as ItemInCart;
+                }))
+            }
         }
     }
 
     const fetchAddress = async () => {
         const token = getTokenFromCookie();
-        if (!token) return;
-
-        const response = await customerOp.getAddress(token);
-        if (response.success) {
-            setSavedAddresses(response.data.map((address: any) => {
+        if (!token) {
+            const addresses = getLocalAddress();
+            setSavedAddresses(addresses.map((add) => {
                 return {
-                    address: address.address,
-                    city: address.city,
-                    country: address.country,
-                    id: address.id,
-                    province: address.province,
-                    zipCode: address.zipCode,
-                    apartment: address.apartment,
-                    firstName: address.firstName,
-                    lastName: address.lastName
-                } as Address;
+                    ...add,
+                    id: (add.id ?? 0).toString()
+                } as Address
             }));
+        } else {
+            const response = await customerOp.getAddress(token);
+            if (response.success) {
+                setSavedAddresses(response.data.map((address: any) => {
+                    return {
+                        address: address.address,
+                        city: address.city,
+                        country: address.country,
+                        id: address.id,
+                        province: address.province,
+                        zipCode: address.zipCode,
+                        apartment: address.apartment,
+                        firstName: address.firstName,
+                        lastName: address.lastName
+                    } as Address;
+                }));
+            }
         }
     }
 

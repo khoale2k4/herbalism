@@ -6,6 +6,7 @@ import RelatedProducts from "../RelatedProducts";
 import { useEffect, useState } from "react";
 import { Product } from "@/types/product";
 import { useLanguage } from "@/hooks/useLanguage";
+import { addProductToLocalCart } from "@/app/utils/localCart";
 
 export type ItemInCart = {
     id: string;
@@ -58,13 +59,24 @@ export default function CartSidebar({
     const addItemQuantity = async (id: string, size: string, quantity: number) => {
         const token = getTokenFromCookie();
         if (!token) {
-            return;
+            addProductToLocalCart({
+                id: id,
+                num: quantity,
+                size: size,
+                product: {
+                    id: id,
+                    images: [],
+                    name: "",
+                    price: 0
+                }
+            });
+        } else {
+            const response = await cartOp.addToCart({
+                productId: id,
+                num: quantity,
+                size,
+            }, token);
         }
-        const response = await cartOp.addToCart({
-            productId: id,
-            num: quantity,
-            size,
-        }, token);
     }
 
     const handleQuantityChange = async (productid: string, size: string, num: number) => {
@@ -178,7 +190,7 @@ export default function CartSidebar({
                             </div>
                             <p className="text-gray-500 mb-2">{t.cartSidebar.emptyCart.title}</p>
                             <p className="text-gray-400 text-sm text-center mb-6">
-                            {t.cartSidebar.emptyCart.description}
+                                {t.cartSidebar.emptyCart.description}
                             </p>
                             <button
                                 onClick={() => setActiveMenu(null)}

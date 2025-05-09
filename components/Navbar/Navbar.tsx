@@ -11,11 +11,12 @@ import { useLanguage } from "@/hooks/useLanguage";
 import Image from "next/image";
 import { CartOperation, CustomerOperation, OrderOperation } from "@/lib/main";
 import { ChevronDown, LogOut, Menu, Package, Settings, ShoppingBag, UserCircle } from "lucide-react";
-import { getTokenFromCookie } from "@/app/utils/token";
+import { getTokenFromCookie, removeTokenFromCookie } from "@/app/utils/token";
 import { User } from "@/types/user";
 import Link from "next/link";
 import { useCurrency } from "@/hooks/useCurrency";
 import MenuSidebar from "./MenuForMobile";
+import { getLocalCart } from "@/app/utils/localCart";
 
 const Navbar = () => {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
@@ -38,9 +39,9 @@ const Navbar = () => {
   const defaultLang = languageOptions.find(l => l.value === currentLang)?.label || "English";
   const [language, setLanguage] = useState<string>(defaultLang);
   const defaultCurrency = currencyOptions.find(c => c.value === currentCurrency)?.value || 'USD';
-  console.log('currencyOptions.find(c => c.value === currentCurrency)?.value', currencyOptions.find(c => c.value === currentCurrency)?.value)
+  // console.log('currencyOptions.find(c => c.value === currentCurrency)?.value', currencyOptions.find(c => c.value === currentCurrency)?.value)
   const [currency, setCurrency] = useState<string>(defaultCurrency);
-  console.log(currency, defaultCurrency, currentCurrency);
+  // console.log(currency, defaultCurrency, currentCurrency);
   const [user, setUser] = useState<User | null>(null);
   const [searchBoxOpen, setSearchBoxOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
@@ -69,18 +70,32 @@ const Navbar = () => {
 
   const fetchItems = async () => {
     const token = getTokenFromCookie();
-    if (!token) return;
-    const response = await cartOp.getMyCartItems(token);
-    if (response.success) {
-      const data = response.data.map((item: any) => ({
-        id: item.product.id,
-        name: item.product.name,
-        image: (item.product.images && item.product.images.length > 0 ? item.product.images[0].url: '/img/placeholder.png'),
-        price: item.product.price,
-        size: item.size,
-        num: item.num,
-      }));
-      setCartItems(data);
+    if (!token) {
+      const items = getLocalCart();
+      setCartItems(items.map((item) => {
+        return {
+          id: item.product.id,
+          name: item.product.name,
+          image: (item.product.images && item.product.images.length > 0 ? item.product.images[0].url : '/img/placeholder.png'),
+          price: item.product.price,
+          size: item.size,
+          num: item.num,
+        }
+      })
+      );
+    } else {
+      const response = await cartOp.getMyCartItems(token);
+      if (response.success) {
+        const data = response.data.map((item: any) => ({
+          id: item.product.id,
+          name: item.product.name,
+          image: (item.product.images && item.product.images.length > 0 ? item.product.images[0].url : '/img/placeholder.png'),
+          price: item.product.price,
+          size: item.size,
+          num: item.num,
+        }));
+        setCartItems(data);
+      }
     }
     const feeResponse = await orderOp.getFee();
     if (feeResponse.success) {
@@ -330,7 +345,7 @@ const Navbar = () => {
 
                   <div
                     className={`absolute right-0 bg-white dark:bg-gray-900 shadow-lg w-48 mt-2 py-2 z-40 rounded-lg transform transition-all duration-200 origin-top-right border border-gray-100 dark:border-gray-800 ${activeMenu === "user" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}`}>
-                  
+
                     <div className="px-4 py-2 border-b border-gray-100 dark:border-gray-800">
                       <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{user.name}</p>
                       <p className="text-xs text-gray-500">{user.mail}</p>
@@ -365,6 +380,7 @@ const Navbar = () => {
                     <div className="border-t border-gray-100 dark:border-gray-800 py-1">
                       <a
                         href="/login"
+                        onClick={() => removeTokenFromCookie()}
                         className="flex items-center gap-3 px-4 py-2 text-sm text-red-600 dark:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 group"
                       >
                         <LogOut size={18} className="text-red-500" />
@@ -378,6 +394,7 @@ const Navbar = () => {
                 !user &&
                 <Link
                   className="group p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 focus:outline-none hidden md:flex items-center gap-2"
+                  onClick={() => removeTokenFromCookie()}
                   href={"/login"} >
                   <div className="relative">
                     <UserCircle size={24} className="text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-green-500 transition-colors" />
