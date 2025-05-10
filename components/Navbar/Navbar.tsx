@@ -30,7 +30,7 @@ const Navbar = () => {
   const languageOptions = [
     { value: "en", label: t.common.language.english },
     // { value: "fr", label: "French" },
-    // { value: "vi", label: t.common.language.vietnamese },
+    { value: "vi", label: t.common.language.vietnamese },
   ];
   const currencyOptions = [
     { value: "VND", label: t.common.currency.vnd },

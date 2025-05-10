@@ -5,6 +5,7 @@ import Footer from '@/components/Footer/Footer';
 import { useLanguage } from '@/hooks/useLanguage';
 import ClientOnly from '@/components/ClientOnly/ClientOnly';
 import { Suspense } from 'react';
+import FontWrapper from './Providers/fontWrapper';
 
 export const metadata: Metadata = {
   title: 'Herbalism - Home',
@@ -29,7 +30,9 @@ export default function RootLayout({
     <html lang="vi">
       <body className="min-h-screen flex flex-col">
         <ClientOnly>
-          <Suspense >{children}</Suspense>
+          <FontWrapper>
+            <Suspense >{children}</Suspense>
+          </FontWrapper>
         </ClientOnly>
       </body>
     </html>
