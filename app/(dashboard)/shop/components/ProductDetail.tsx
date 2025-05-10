@@ -74,7 +74,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
             if (!token) {
                 setAdding(true);
                 addProductToLocalCart({
-                    id: product?.id??"",
+                    id: product?.id ?? "",
                     num: quantity,
                     size: selectedSize,
                     product: {
@@ -82,7 +82,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
                         images: product?.images ?? [],
                         slug: product?.slug ?? "",
                         name: product?.name ?? "",
-                        price: product?.size_stock.find(st => st.size === selectedSize)?.price??0
+                        price: product?.size_stock.find(st => st.size === selectedSize)?.price ?? 0
                     }
                 });
                 setNotification({
@@ -91,7 +91,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
                 });
             } else {
                 const response = await cartOp.addToCart({
-                    productId: product?.id??"",
+                    productId: product?.id ?? "",
                     num: quantity,
                     size: selectedSize
                 }, token);
@@ -155,7 +155,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
         setShowReviewForm(false);
         const token = getTokenFromCookie();
         const resposne = await commentOp.createComment({
-            productId: product?.id??"",
+            productId: product?.id ?? "",
             content: newReview.comment,
             rate: newReview.rating
         }, token);
@@ -196,7 +196,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
                     setIsCommented(false);
                     return;
                 } else {
-                    const commentResponse = await commentOp.checkComment(response.data?.id??"", token);
+                    const commentResponse = await commentOp.checkComment(response.data?.id ?? "", token);
                     setIsCommented(commentResponse.data !== null);
                 }
             }
@@ -371,7 +371,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
                                         <Plus size={16} className={quantity >= (selectedSizeStock?.stock || 0) ? "text-gray-300" : "text-gray-600"} />
                                     </button>
                                     <span className="ml-4 text-sm text-gray-500">
-                                        {t.product.productLeft}: {selectedSizeStock?.stock || 0}
+                                        {t.product.productLeft}: {Number(selectedSizeStock?.stock || 0).toFixed(0)}
                                     </span>
                                 </div>
                             </div>

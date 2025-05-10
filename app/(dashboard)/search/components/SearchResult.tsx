@@ -100,7 +100,7 @@ export default function SearchPage() {
                 ) : (
                     <>
                         {/* Results */}
-                        {totalResults === 0 ? (
+                        {totalResults === 0 || (activeTab === 'articles' && articles.length === 0) || (activeTab === 'products' && products.length === 0) ? (
                             <div className="text-center py-16">
                                 <div className="mb-4">
                                     <svg
@@ -119,42 +119,9 @@ export default function SearchPage() {
                                 </div>
                                 <h3 className="text-xl font-medium text-gray-900 mb-1">{t.searchPage.noResult}</h3>
                                 <p className="text-gray-500 mb-6">{t.searchPage.retry}</p>
-                                <Link
-                                    href="/"
-                                    className="inline-flex items-center text-white bg-[#3e4f3d] hover:bg-blue-700 px-5 py-2 rounded-md text-sm font-medium transition-colors"
-                                >
-                                    {t.common.home}
-                                </Link>
                             </div>
                         ) : (
                             <>
-                                {/* Articles Section - show if activeTab is 'all' or 'articles' */}
-                                {(activeTab === 'all' || activeTab === 'articles') && articles.length > 0 && (
-                                    <section className="mb-12">
-                                        {activeTab === 'all' && (
-                                            <div className="flex justify-between items-center mb-6">
-                                                <h2 className="text-2xl font-semibold text-gray-800">{t.searchPage.article}</h2>
-                                                {articles.length > 3 && (
-                                                    <Link
-                                                        href="#"
-                                                        onClick={() => setActiveTab('articles')}
-                                                        className="text-[#3e4f3d] hover:text-blue-800 font-medium text-sm flex items-center"
-                                                    >
-                                                        {t.searchPage.seeAll}
-                                                        <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                                                        </svg>
-                                                    </Link>
-                                                )}
-                                            </div>
-                                        )}
-                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                            {(activeTab === 'all' ? articles.slice(0, 3) : articles).map((article) => (
-                                                <ArticleCard key={article.id} article={article} />
-                                            ))}
-                                        </div>
-                                    </section>
-                                )}
 
                                 {/* Products Section - show if activeTab is 'all' or 'products' */}
                                 {(activeTab === 'all' || activeTab === 'products') && products.length > 0 && (
@@ -179,6 +146,33 @@ export default function SearchPage() {
                                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                                             {(activeTab === 'all' ? products.slice(0, 4) : products).map((product) => (
                                                 <ProductCard key={product.id} product={product} />
+                                            ))}
+                                        </div>
+                                    </section>
+                                )}
+                                {/* Articles Section - show if activeTab is 'all' or 'articles' */}
+                                {(activeTab === 'all' || activeTab === 'articles') && articles.length > 0 && (
+                                    <section className="mb-12">
+                                        {activeTab === 'all' && (
+                                            <div className="flex justify-between items-center mb-6">
+                                                <h2 className="text-2xl font-semibold text-gray-800">{t.searchPage.article}</h2>
+                                                {articles.length > 3 && (
+                                                    <Link
+                                                        href="#"
+                                                        onClick={() => setActiveTab('articles')}
+                                                        className="text-[#3e4f3d] hover:text-blue-800 font-medium text-sm flex items-center"
+                                                    >
+                                                        {t.searchPage.seeAll}
+                                                        <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                                                        </svg>
+                                                    </Link>
+                                                )}
+                                            </div>
+                                        )}
+                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                            {(activeTab === 'all' ? articles.slice(0, 3) : articles).map((article) => (
+                                                <ArticleCard key={article.id} article={article} />
                                             ))}
                                         </div>
                                     </section>

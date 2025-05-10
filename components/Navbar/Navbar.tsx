@@ -30,7 +30,7 @@ const Navbar = () => {
   const languageOptions = [
     { value: "en", label: t.common.language.english },
     // { value: "fr", label: "French" },
-    { value: "vi", label: t.common.language.vietnamese },
+    // { value: "vi", label: t.common.language.vietnamese },
   ];
   const currencyOptions = [
     { value: "VND", label: t.common.currency.vnd },
@@ -327,83 +327,67 @@ const Navbar = () => {
           </div>
           <div ref={userMenuRef} className="flex items-center gap-4 flex-shrink-0">
             <div className="flex items-center space-x-4">
-              {/* User Menu */}
-              {
-                user && <div className="hidden md:flex ">
-                  <button
-                    className="group p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 focus:outline-none flex items-center gap-2"
-                    onClick={() => setActiveMenu(activeMenu === "user" ? null : "user")}
-                    aria-expanded={activeMenu === "user"}
-                    aria-haspopup="true"
-                  >
-                    <div className="relative">
-                      <UserCircle size={24} className="text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-[#6e7a34] transition-colors" />
-                      {/* <span className="ab÷solute -bottom-1 -right-1 w-3 h-3 bg-[#6e7a34] rounded-full border-2 border-white dark:border-gray-900"></span> */}
-                    </div>
-                    {/* <span className="hidden sm:inline text-sm font-medium text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-[#6e7a34] transition-colors">{t.common.account}</span>
+              <div className="hidden md:flex ">
+                <button
+                  className="group p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 focus:outline-none flex items-center gap-2"
+                  onClick={() => setActiveMenu(activeMenu === "user" ? null : "user")}
+                  aria-expanded={activeMenu === "user"}
+                  aria-haspopup="true"
+                >
+                  <div className="relative">
+                    <UserCircle size={24} className="text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-[#6e7a34] transition-colors" />
+                    {/* <span className="ab÷solute -bottom-1 -right-1 w-3 h-3 bg-[#6e7a34] rounded-full border-2 border-white dark:border-gray-900"></span> */}
+                  </div>
+                  {/* <span className="hidden sm:inline text-sm font-medium text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-[#6e7a34] transition-colors">{t.common.account}</span>
                     <ChevronDown size={16} className={`hidden sm:block text-gray-500 transition-transform duration-300 ${activeMenu === "user" ? "rotate-180" : ""}`} /> */}
-                  </button>
+                </button>
 
-                  <div
-                    className={`absolute right-0 bg-white dark:bg-gray-900 shadow-lg w-48 mt-2 py-2 z-40 rounded-lg transform transition-all duration-200 origin-top-right border border-gray-100 dark:border-gray-800 ${activeMenu === "user" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}`}>
+                <div
+                  className={`absolute right-0 bg-white dark:bg-gray-900 shadow-lg w-48 mt-2 py-2 z-40 rounded-lg transform transition-all duration-200 origin-top-right border border-gray-100 dark:border-gray-800 ${activeMenu === "user" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}`}>
 
-                    <div className="px-4 py-2 border-b border-gray-100 dark:border-gray-800">
-                      <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{user.name}</p>
-                      <p className="text-xs text-gray-500">{user.mail}</p>
-                    </div>
+                  <div className="px-4 py-2 border-b border-gray-100 dark:border-gray-800">
+                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{user?.name}</p>
+                    <p className="text-xs text-gray-500">{user?.mail}</p>
+                  </div>
 
-                    <div className="py-1">
-                      <a
-                        href="/orders"
-                        className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 group"
-                      >
-                        <Package size={18} className="text-gray-500 group-hover:text-[#6e7a34] dark:group-hover:text-green-500" />
-                        <span>{t.common.orders}</span>
-                      </a>
+                  <div className="py-1">
+                    <a
+                      href="/orders"
+                      className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+                    >
+                      <Package size={18} className="text-gray-500 group-hover:text-[#6e7a34] dark:group-hover:text-green-500" />
+                      <span>{t.common.orders}</span>
+                    </a>
 
-                      <a
-                        href="#"
-                        className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 group"
-                      >
-                        <UserCircle size={18} className="text-gray-500 group-hover:text-[#6e7a34] dark:group-hover:text-green-500" />
-                        <span>{t.common.info}</span>
-                      </a>
+                    <a
+                      href="#"
+                      className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+                    >
+                      <UserCircle size={18} className="text-gray-500 group-hover:text-[#6e7a34] dark:group-hover:text-green-500" />
+                      <span>{t.common.info}</span>
+                    </a>
 
-                      <a
-                        href="#"
-                        className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 group"
-                      >
-                        <Settings size={18} className="text-gray-500 group-hover:text-[#6e7a34] dark:group-hover:text-green-500" />
-                        <span>{t.common.setting}</span>
-                      </a>
-                    </div>
+                    <a
+                      href="#"
+                      className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+                    >
+                      <Settings size={18} className="text-gray-500 group-hover:text-[#6e7a34] dark:group-hover:text-green-500" />
+                      <span>{t.common.setting}</span>
+                    </a>
+                  </div>
 
-                    <div className="border-t border-gray-100 dark:border-gray-800 py-1">
-                      <a
-                        href="/login"
-                        onClick={() => removeTokenFromCookie()}
-                        className="flex items-center gap-3 px-4 py-2 text-sm text-red-600 dark:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 group"
-                      >
-                        <LogOut size={18} className="text-red-500" />
-                        <span>{t.common.logout}</span>
-                      </a>
-                    </div>
+                  <div className="border-t border-gray-100 dark:border-gray-800 py-1">
+                    <a
+                      href="/login"
+                      onClick={() => removeTokenFromCookie()}
+                      className="flex items-center gap-3 px-4 py-2 text-sm text-red-600 dark:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 group"
+                    >
+                      <LogOut size={18} className="text-red-500" />
+                      <span>{t.common.logout}</span>
+                    </a>
                   </div>
                 </div>
-              }
-              {
-                !user &&
-                <Link
-                  className="group p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 focus:outline-none hidden md:flex items-center gap-2"
-                  onClick={() => removeTokenFromCookie()}
-                  href={"/login"} >
-                  <div className="relative">
-                    <UserCircle size={24} className="text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-green-500 transition-colors" />
-                    {/* <span className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-gray-900"></span> */}
-                  </div>
-                  {/* <span className="hidden sm:inline text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-green-500 transition-colors">{t.common.login}</span> */}
-                </Link>
-              }
+              </div>
 
               <div className="relative">
                 <button
