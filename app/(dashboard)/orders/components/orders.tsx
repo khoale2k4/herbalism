@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { OrderOperation } from '@/lib/main';
 import { getTokenFromCookie } from '@/app/utils/token';
+import { getOrders } from '@/app/utils/localOrder';
 
 // Types
 type OrderStatus = 'pending' | 'processing' | 'shipped' | 'completed' | 'cancelled';
@@ -78,13 +79,28 @@ const OrdersPage = () => {
             try {
                 setLoading(true);
                 const token = getTokenFromCookie();
-                if (!token) return;
-                const response = await orderOp.getMy(token);
+                if (!token) {
+                    const orderIds = getOrders();
+                    const orders = await Promise.all(
+                        orderIds.map(async (id: string) => {
+                            const response = await orderOp.getById(id);
+                            if (response.success) {
+                                return response.data;
+                            }
+                            return null; 
+                        })
+                    );
 
-                if (response.success) {
-                    setOrders(response.data);
+                    const filteredOrders = orders.filter((order): order is Order => order !== null);
+                    setOrders(filteredOrders);
                 } else {
-                    setError(response.message || 'Failed to fetch orders');
+                    const response = await orderOp.getMy(token);
+
+                    if (response.success) {
+                        setOrders(response.data);
+                    } else {
+                        setError(response.message || 'Failed to fetch orders');
+                    }
                 }
             } catch (err) {
                 setError('An error occurred while fetching orders');

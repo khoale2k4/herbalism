@@ -8,6 +8,7 @@ import { OrderOperation } from "@/lib/main";
 import { getTokenFromCookie } from "@/app/utils/token";
 import { XCircle } from "lucide-react";
 import { cleanCart, getLocalCart } from "@/app/utils/localCart";
+import { addOrderToLocal } from "@/app/utils/localOrder";
 
 const orderData = {
     orderNumber: "ORD-2025042501",
@@ -103,7 +104,9 @@ export default function OrderProcessingPage() {
 
                     if (!orderId) {
                         // throw new Error('Failed to create order');
+                        setError(t.orderProcessingTranslations.errorMessages.createFailed || 'Tạo đơn hàng thất bại. Vui lòng thử lại.');
                     }
+                    addOrderToLocal(orderId);
 
                     setOrderNumber(orderId);
                     setProgress(70);
