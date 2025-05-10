@@ -11,7 +11,7 @@ import { ProductForms } from 'src/shared/database/models/product-form.model';
 import { WellnessNeeds } from 'src/shared/database/models/wellness-needs.model';
 import { AddStockDto } from '../dtos/add-stock.dto';
 import { CreateSizeStockDto } from '../dtos/create-sizestock.dto';
-import { Includeable, ModelStatic, where } from 'sequelize';
+import { Includeable, ModelStatic, Op, where } from 'sequelize';
 import { ProductTabs } from 'src/shared/database/models/product-tabs.model';
 import { ProductImages } from 'src/shared/database/models/product-image.dto';
 import { Customer } from 'src/shared/database/models/customer.model';
@@ -143,6 +143,44 @@ export class ProductService {
         );
         return product;
     }
+
+    async searchProductsByKeyword(keyword: string) {
+        if (!keyword || keyword.trim() === '') return [];
+
+        const lowerKeyword = `%${keyword.toLowerCase()}%`;
+
+        const products = await Product.findAll({
+            where: {
+                [Op.or]: [
+                    Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Product.name')), {
+                        [Op.like]: lowerKeyword
+                    }),
+                    Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Product.content')), {
+                        [Op.like]: lowerKeyword
+                    }),
+                ]
+            },
+            include: [
+                {
+                    model: ProductTabs,
+                    as: 'tabs',
+                    required: false,
+                    where: {
+                        [Op.or]: [
+                            Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('tabs.name')), {
+                                [Op.like]: lowerKeyword
+                            }),
+                            Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('tabs.description')), {
+                                [Op.like]: lowerKeyword
+                            }),
+                        ]
+                    }
+                }
+            ]
+        });
+
+        return products;
+    };
 
     async findProductBySlug(slug: string) {
         const product = await this.productModel.findOne(
@@ -345,19 +383,19 @@ export class ProductService {
                 this.tabModel.destroy({ where: { productId: id } }),
                 this.sizeStockModel.destroy({ where: { productId: id } }),
             ]);
-    
+
             const deletedCount = await this.productModel.destroy({ where: { id } });
-    
+
             if (deletedCount === 0) {
                 throw new Error('Product not found or already deleted');
             }
-    
+
             return true;
         } catch (error) {
             console.error(`Lỗi khi xoá sản phẩm ${id}:`, error);
             throw new Error('Failed to delete product');
         }
-    }    
+    }
 
     // need to modify more
     async searchProducts(filters: {

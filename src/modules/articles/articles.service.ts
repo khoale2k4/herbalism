@@ -5,7 +5,7 @@ import { Article } from 'src/shared/database/models/article.model';
 import { CreateArticleDto } from './dtos/createArticle.dto';
 import { Admin } from 'src/shared/database/models/admin.model';
 import { ArticleCategory } from 'src/shared/database/models/article-category.model';
-import { where } from 'sequelize';
+import { Op, Sequelize, where } from 'sequelize';
 
 @Injectable()
 export class ArticleService {
@@ -97,4 +97,42 @@ export class ArticleService {
         );
         return category;
     }
+
+    async searchArticlesByKeyword (keyword: string) {
+        if (!keyword || keyword.trim() === '') return [];
+    
+        const lowerKeyword = `%${keyword.toLowerCase()}%`;
+    
+        const articles = await Article.findAll({
+            where: {
+                [Op.or]: [
+                    Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Article.title')), {
+                        [Op.like]: lowerKeyword
+                    }),
+                    Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Article.shortDescription')), {
+                        [Op.like]: lowerKeyword
+                    }),
+                    Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Article.content')), {
+                        [Op.like]: lowerKeyword
+                    }),
+                ]
+            },
+            include: [
+                {
+                    model: ArticleCategory,
+                    as: 'category',
+                    required: false,
+                    where: {
+                        [Op.or]: [
+                            Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('category.name')), {
+                                [Op.like]: lowerKeyword
+                            }),
+                        ]
+                    }
+                }
+            ]
+        });
+    
+        return articles;
+    };
 }

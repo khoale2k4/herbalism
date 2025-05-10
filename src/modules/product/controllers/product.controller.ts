@@ -47,6 +47,19 @@ export class ProductController {
         return { url: result.secure_url };
     }
 
+    @Get('search/:keyword')
+    async searchProductsByKeyword(@Param('keyword') keyword: string, @Req() req, @Res() res) {
+        try {
+            const products = await this.productService.searchProductsByKeyword(keyword);
+            this.response.initResponse(true, 'Lấy danh sách sản phẩm thành công', products);
+            return res.status(HttpStatus.OK).json(this.response);
+        } catch (error) {
+            console.log(error);
+            this.response.initResponse(false, 'Đã xảy ra lỗi khi lấy danh sách sản phẩm', null);
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(this.response);
+        }
+    }
+
     @Get()
     async getAllProducts(@Req() req, @Res() res) {
         try {

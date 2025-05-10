@@ -59,6 +59,19 @@ export class ArticleController {
         }
     }
 
+    @Get('search/:keyword')
+    async searchProductsByKeyword(@Param('keyword') keyword: string, @Req() req, @Res() res) {
+        try {
+            const products = await this.articleService.searchArticlesByKeyword(keyword);
+            this.response.initResponse(true, 'Lấy danh sách bài viết thành công', products);
+            return res.status(HttpStatus.OK).json(this.response);
+        } catch (error) {
+            console.log(error);
+            this.response.initResponse(false, 'Đã xảy ra lỗi khi lấy danh sách bài viết', null);
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(this.response);
+        }
+    }
+
     @Put(':id')
     @UseGuards(JwtAuthGuard)
     async updatePost(@Body() dto: CreateArticleDto, @Param('id') id: string, @Res() res, @Req() req) {
