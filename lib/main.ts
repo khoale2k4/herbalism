@@ -533,9 +533,9 @@ export class OrderOperation {
         }
     }
 
-    async getFee() {
+    async getFee(price: number) {
         try {
-            const response = await fetch(this.baseUrl + '/fee', {
+            const response = await fetch(this.baseUrl + '/fee/' + price, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

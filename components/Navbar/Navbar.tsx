@@ -54,7 +54,6 @@ const Navbar = () => {
   ];
 
   const [cartItems, setCartItems] = useState<ItemInCart[]>([]);
-  const [fee, setFee] = useState<number>(0);
 
   useEffect(() => {
     const newCurrency = currencyOptions.find(c => c.value === currentCurrency)?.value || 'USD';
@@ -97,10 +96,6 @@ const Navbar = () => {
         }));
         setCartItems(data);
       }
-    }
-    const feeResponse = await orderOp.getFee();
-    if (feeResponse.success) {
-      setFee(feeResponse.data);
     }
   }
   const fetchUser = useCallback(async () => {
@@ -411,7 +406,6 @@ const Navbar = () => {
                   setActiveMenu={setActiveMenu}
                   cartItems={cartItems}
                   fetchData={fetchItems}
-                  fee={fee}
                 />
                 <MenuSidebar openMenu={mobileMenuOpen} setOpenMenu={(open: boolean) => setMobileMenuOpen(open)} onCartClick={handleOnCartClick} />
               </div>

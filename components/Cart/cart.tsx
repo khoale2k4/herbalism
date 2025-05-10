@@ -25,7 +25,6 @@ type Props = {
     addItemQuantity?: (id: string, size: string, quantity: number) => void;
     removeItem?: (id: string) => void;
     fetchData: () => void;
-    fee?: number;
 };
 
 export default function CartSidebar({
@@ -33,7 +32,6 @@ export default function CartSidebar({
     setActiveMenu,
     cartItems,
     fetchData = () => { },
-    fee
 }: Props) {
     const { t } = useLanguage();
     const formatter = new Intl.NumberFormat("vi-VN", {
@@ -42,12 +40,33 @@ export default function CartSidebar({
     });
     const cartOp = new CartOperation();
     const productOp = new ProductOperation();
+    const orderOp = new OrderOperation();
     const [suggestProducts, setSuggestProducts] = useState<Product[]>([]);
 
-    const subtotal = cartItems.reduce((total, item) => total + item.price * item.num, 0);
-    const shippingFee = fee ?? 30000;
-    const total = subtotal + shippingFee;
+    const [subtotal, setSubtotal] = useState<number>(0);
+    const [fee, setFee] = useState<number>(0);
+    const [total, setTotal] = useState<number>(0);
+
     const router = useRouter();
+
+    // Calculate subtotal, fee, and total whenever cart items change
+    useEffect(() => {
+        const calculateOrderSummary = async () => {
+            // Calculate new subtotal
+            const newSubtotal = cartItems.reduce((total, item) => total + item.price * item.num, 0);
+            setSubtotal(newSubtotal);
+
+            // Fetch fee based on new subtotal
+            const feeResponse = await orderOp.getFee(newSubtotal);
+            if (feeResponse.success) {
+                const newFee = feeResponse.data;
+                setFee(newFee);
+                setTotal(newSubtotal + newFee);
+            }
+        };
+
+        calculateOrderSummary();
+    }, [cartItems]);
 
     const handleClickProduct = (slug: string) => {
         router.push(`/shop/${slug}`);
@@ -204,11 +223,6 @@ export default function CartSidebar({
                     )}
                 </div>
 
-                {/* <div className="px-4">
-                    <h2 className="text-2xl font-bold">{t.product.relatedProducts}</h2>
-                    <RelatedProducts products={suggestProducts} variant="cart"/>
-                </div> */}
-
                 {/* Summary */}
                 {cartItems.length > 0 && (
                     <div className="border-t px-6 py-4 bg-gray-50">
@@ -220,9 +234,9 @@ export default function CartSidebar({
                             <div className="flex justify-between text-sm">
                                 <span className="text-gray-500">{t.cartSidebar.summary.shippingFee}</span>
                                 <span>
-                                    {shippingFee === 0
-                                        ? "Miễn phí"
-                                        : formatter.format(shippingFee)}
+                                    {fee === 0
+                                        ? 0
+                                        : formatter.format(fee)}
                                 </span>
                             </div>
                             <div className="pt-2 border-t mt-2">
@@ -242,7 +256,7 @@ export default function CartSidebar({
                             </button>
                             <button
                                 onClick={() => setActiveMenu(null)}
-                                className="w-full bg-white text-[#6e7a34] border border-[#6e7a34] py-2 rounded-md hover:bg-[#6e7a34] hover:text-white transition-colors text-sm"
+                                className="w-full bg-white text-[#6e7a34] border border-[#6e7a34] py-2 rounded-md hover:bg-[#6e7a34] hover:text-white transition-colors text-sm font-medium"
                             >
                                 {t.cartSidebar.summary.continueShoppingButton}
                             </button>

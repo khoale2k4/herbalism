@@ -152,7 +152,7 @@ export default function SearchPage() {
                                 )}
                                 {/* Articles Section - show if activeTab is 'all' or 'articles' */}
                                 {(activeTab === 'all' || activeTab === 'articles') && articles.length > 0 && (
-                                    <section className="mb-12">
+                                    <section className="my-12">
                                         {activeTab === 'all' && (
                                             <div className="flex justify-between items-center mb-6">
                                                 <h2 className="text-2xl font-semibold text-gray-800">{t.searchPage.article}</h2>
