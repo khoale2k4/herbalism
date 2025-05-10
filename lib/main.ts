@@ -175,6 +175,34 @@ export class ArticleOperation {
         this.baseUrl = (process.env.NEXT_PUBLIC_API_HOST || "http://localhost:3000") + '/article';
     }
 
+    async keywordSearch(keyword: string ){
+        try {
+            const response = await fetch(this.baseUrl + '/search/' + keyword, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Get article failed with status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            return {
+                success: true,
+                message: result.message,
+                data: result.data
+            };
+        } catch (error: any) {
+            return {
+                success: false,
+                message: error?.message || 'Unknown error',
+                data: null
+            };
+        }
+    }
+
     async getAll() {
         try {
             const response = await fetch(this.baseUrl, {
@@ -237,6 +265,34 @@ export class ProductOperation {
 
     constructor() {
         this.baseUrl = (process.env.NEXT_PUBLIC_API_HOST || "http://localhost:3000") + '/product';
+    }
+
+    async keywordSearch(keyword: string ){
+        try {
+            const response = await fetch(this.baseUrl + '/search/' + keyword, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Get products failed with status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            return {
+                success: true,
+                message: result.message,
+                data: result.data
+            };
+        } catch (error: any) {
+            return {
+                success: false,
+                message: error?.message || 'Unknown error',
+                data: null
+            };
+        }
     }
 
     async getAll() {

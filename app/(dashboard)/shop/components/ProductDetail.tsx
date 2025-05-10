@@ -168,7 +168,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
 
         setLoading(true);
         try {
-            const response = await productOp.getById(slug);
+            const response = await productOp.getBySlug(slug);
             if (response.success) {
                 setProduct(response.data);
 

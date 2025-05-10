@@ -17,8 +17,8 @@ const ProductsList = ({ showSidebar, filteredProducts, setSearchQuery, viewMode 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
   };
-  const handleClickProduct = (id: string) => {
-    router.push(`/shop/${id}`);
+  const handleClickProduct = (slug: string) => {
+    router.push(`/shop/${slug}`);
   }
 
   return (<div className="container mx-auto py-6 px-4">

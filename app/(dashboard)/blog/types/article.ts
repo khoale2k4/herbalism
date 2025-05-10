@@ -3,7 +3,7 @@ type Article = {
     imageUrl: string;
     title: string;
     categories: string;
-    description: string;
-    author: string;
-    date: string;
+    shortDescription: string;
+    author: { name: string };
+    createdAt: string;
 }

@@ -1,4 +1,7 @@
+'use client';
+
 import { useLanguage } from "@/hooks/useLanguage";
+import { useRouter } from 'next/navigation';
 import { useState, useEffect, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 
@@ -16,12 +19,16 @@ const SearchBar = ({
     const [typingEffect, setTypingEffect] = useState("");
     const [isDeleting, setIsDeleting] = useState(false);
     const { t } = useLanguage();
+    const router = useRouter();
 
     const inputRef = useRef(null);
 
     const searchPlaceholders = t.navbar.searchPlaceholders;
     const [currentPlaceholderIndex, setCurrentPlaceholderIndex] = useState(0);
     const [typingSpeed, setTypingSpeed] = useState(150);
+    const handleSearch = () => {
+        router.push(`/search?keyword=${query}`);
+    }
 
     useEffect(() => {
         if (isInputFocused) return;
@@ -60,17 +67,23 @@ const SearchBar = ({
                 <input
                     ref={inputRef}
                     type="text"
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                            handleSearch();
+                        }
+                    }}
                     placeholder={isInputFocused ? t.navbar.search : typingEffect}
-                    className={`w-full p-3 pl-3 outline-none border-none focus:ring-0 placeholder-[${textColor}] placeholder-opacity-80 text-[${textColor}]`}
+                    className="w-full p-3 pl-3 outline-none border-none focus:ring-0 placeholder-opacity-80"
                     style={{
                         backgroundColor,
                         color: textColor,
                         caretColor: textColor,
-                    }}
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                onFocus={() => setIsInputFocused(true)}
-                onBlur={() => setIsInputFocused(false)}
+                        '--placeholder-color': textColor,
+                    } as React.CSSProperties}
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    onFocus={() => setIsInputFocused(true)}
+                    onBlur={() => setIsInputFocused(false)}
                 />
 
                 {query && (

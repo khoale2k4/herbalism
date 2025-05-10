@@ -14,7 +14,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, viewMode, onClick })
         return (
             <div
                 className="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow hover:cursor-pointer"
-                onClick={() => onClick(product.id.toString())}
+                onClick={() => onClick(product.slug.toString())}
             >
                 <div className="w-24 h-24 flex-shrink-0">
                     {product.images && product.images.length ? <img
@@ -43,7 +43,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, viewMode, onClick })
     return (
         <div
             className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow hover:cursor-pointer"
-            onClick={() => onClick(product.id.toString())}
+            onClick={() => onClick(product.slug.toString())}
         >
             <div className="aspect-square bg-gray-100">
                 {product.images && product.images.length ? <img

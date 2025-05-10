@@ -17,6 +17,6 @@ module.exports = {
                 pathname: '/uploads/**',
             },
         ],
-        domains: ['sufficient-chrystal-khoale2k4-c17296fe.koyeb.app', 'merian-alchemie.ub.uni-frankfurt.de'],
+        domains: ['sufficient-chrystal-khoale2k4-c17296fe.koyeb.app', 'merian-alchemie.ub.uni-frankfurt.de', 'res.cloudinary.com'],
     },
 }

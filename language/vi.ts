@@ -814,6 +814,19 @@ export default {
             typingDots: "..."
         }
     },
+    searchPage: {
+        result: "Kết quả tìm kiếm cho",
+        found1: "Tìm thấy",
+        found2: "kết quả phù hợp",
+        all: "Tất cả",
+        article: "Bài viết",
+        product: "Sản phẩm",
+        read: "Xem tiếp",
+        see: "Xem",
+        seeAll: "See all",
+        noResult: "No results found",
+        retry: "Try searching with a different keyword"
+    },
     footer: {
         contact: "LIÊN HỆ",
         legal: "PHÁP LÝ",
