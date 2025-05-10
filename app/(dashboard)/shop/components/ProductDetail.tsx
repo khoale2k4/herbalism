@@ -252,11 +252,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
                     </ol>
                 </nav>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12"
-                    style={{
-                        backgroundImage: "url('/img/background.png')",
-                        backgroundColor: "#fdf8f7",
-                    }}>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                     <div className="space-y-6">
                         {product.images && product.images.length > 0 ? <div className="bg-gray-50 rounded-xl overflow-hidden">
                             <img
@@ -418,11 +414,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
                     </div>
                 </div>
 
-                <div className="mt-16 border-t pt-8"
-                    style={{
-                        backgroundImage: "url('/img/background.png')",
-                        backgroundColor: "#fdf8f7",
-                    }}>
+                <div className="mt-16 border-t pt-8">
                     <h2 className="text-2xl font-bold mb-6">{t.product.productDetail}</h2>
                     <div className="space-y-4">
                         {tabs.map((tab) => (
