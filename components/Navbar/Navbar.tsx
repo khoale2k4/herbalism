@@ -211,7 +211,7 @@ const Navbar = () => {
               transition={{ duration: 0.7, ease: "easeInOut" }}
               className="absolute w-full text-[#3e4f3d]"
             >
-              {messages[messageIndex]} {<a href={messageIndex === 2?"/process":"/blog"} className="underline ml-2 text-[#3e4f3d]">Learn more &gt;</a>}
+              {messages[messageIndex]} {<a href={messageIndex === 2 ? "/process" : messageIndex === 3 ? "/shop" : "/blog"} className="underline ml-2 text-[#3e4f3d]">Learn more &gt;</a >}
             </motion.div>
           </AnimatePresence>
         </div>
