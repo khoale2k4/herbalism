@@ -52,9 +52,9 @@ const BlogPage: FC = () => {
         const articleData: Article = {
           id: article.id,
           title: article.title,
-          description: article.shortDescription || '',
+          shortDescription: article.shortDescription || '',
           author: article.author?.name || 'Không rõ',
-          date: article.createdAt,
+          createdAt: article.createdAt,
           imageUrl: article.imageUrl,
           categories: categoryName
         };
@@ -68,11 +68,11 @@ const BlogPage: FC = () => {
       const titles: Title[] = [];
       categoryMap.forEach((articles, title) => {
         const sortedArticles = [...articles].sort((a, b) =>
-          new Date(b.date).getTime() - new Date(a.date).getTime()
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         );
         const formattedArticles = sortedArticles.map(article => ({
           ...article,
-          date: new Date(article.date).toLocaleDateString()
+          date: new Date(article.createdAt).toLocaleDateString()
         }));
         titles.push({ title, articles: formattedArticles });
       });

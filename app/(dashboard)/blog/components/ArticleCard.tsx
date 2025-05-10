@@ -19,13 +19,13 @@ const ArticleCard = ({ article }: { article: Article }) => {
             <div className="p-4">
                 <p className="text-sm text-gray-500 mb-2">{article.categories}</p>
                 <h3 className="text-lg font-semibold mb-2 line-clamp-2">{article.title}</h3>
-                <p className="text-gray-700 mt-2 line-clamp-3">{article.description}</p>
+                <p className="text-gray-700 mt-2 line-clamp-3">{article.shortDescription}</p>
                 <div className="flex justify-between items-center mt-4">
                     <p className="text-xs text-gray-400">
-                        {article.author}
+                        {article.author.name}
                     </p>
                     <p className="text-xs text-gray-400">
-                        {article.date}
+                        {article.createdAt}
                     </p>
                 </div>
             </div>
