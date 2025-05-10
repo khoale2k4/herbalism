@@ -200,6 +200,8 @@ export default function SearchPage() {
 }
 
 function ArticleCard({ article }: { article: Article }) {
+    const { t } = useLanguage();
+
     return (
         <div className="bg-white rounded-lg shadow overflow-hidden hover:shadow-md transition-shadow duration-300 flex flex-col h-full group">
             <div className="relative h-48 overflow-hidden">
@@ -239,7 +241,7 @@ function ArticleCard({ article }: { article: Article }) {
                         href={`/blog/${article.id}`}
                         className="hover:text-[#3e4f3d] text-[#7d8b40] text-sm font-medium flex items-center"
                     >
-                        Đọc tiếp
+                        {t.searchPage.read}
                         <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                         </svg>
@@ -251,6 +253,7 @@ function ArticleCard({ article }: { article: Article }) {
 }
 
 function ProductCard({ product }: { product: Product }) {
+    const { t } = useLanguage();
     const mainImage = product.images && product.images.length > 0 ? product.images[0]?.url : '/img/placeholder.png';
 
     return (
@@ -298,7 +301,7 @@ function ProductCard({ product }: { product: Product }) {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                         </svg>
-                        Xem
+                        {t.searchPage.see}
                     </Link>
                 </div>
             </div>
