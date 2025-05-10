@@ -98,11 +98,11 @@ export class ArticleService {
         return category;
     }
 
-    async searchArticlesByKeyword (keyword: string) {
+    async searchArticlesByKeyword(keyword: string) {
         if (!keyword || keyword.trim() === '') return [];
-    
+
         const lowerKeyword = `%${keyword.toLowerCase()}%`;
-    
+
         const articles = await Article.findAll({
             where: {
                 [Op.or]: [
@@ -119,6 +119,12 @@ export class ArticleService {
             },
             include: [
                 {
+                    model: Admin,
+                    as: 'author',
+                    attributes: ['name'],
+                    required: false
+                },
+                {
                     model: ArticleCategory,
                     as: 'category',
                     required: false,
@@ -132,7 +138,7 @@ export class ArticleService {
                 }
             ]
         });
-    
+
         return articles;
     };
 }
