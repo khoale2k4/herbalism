@@ -81,7 +81,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
                         id: product?.id ?? "",
                         images: product?.images ?? [],
                         name: product?.name ?? "",
-                        price: product?.price ?? 0
+                        price: product?.size_stock.find(st => st.size === selectedSize)?.price??0
                     }
                 });
                 setNotification({
