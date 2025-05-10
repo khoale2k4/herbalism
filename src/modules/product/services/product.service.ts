@@ -451,7 +451,7 @@ export class ProductService {
 
     async getSuggestedProducts() {
         const products = await this.productModel.findAll({
-            attributes: ['id', 'name', 'rate', 'createdAt'],
+            attributes: ['id', 'name', 'slug', 'rate', 'createdAt'],
             include: [
                 {
                     model: ProductImages,
