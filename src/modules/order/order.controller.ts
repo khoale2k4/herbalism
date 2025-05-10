@@ -144,7 +144,7 @@ export class OrderController {
                     customerId: req.user.id,
                     addressId: dto.addressId,
                     voucherId: dto.voucherId,
-                    paymentMethod: dto.paymentMethod?? 'cod'
+                    paymentMethod: dto.paymentMethod ?? 'cod'
                 });
             if (!order) {
                 this.response.initResponse(false, "Tạo đơn hàng không thành công", order);
@@ -164,13 +164,9 @@ export class OrderController {
     async getFee(@Param('price') price: number, @Res() res) {
         try {
             const order = await this.feeService.calculateFee(price);
-            if (!order) {
-                this.response.initResponse(false, "Tính phí không thành công", order);
-                return res.status(HttpStatus.NOT_FOUND).json(this.response);
-            } else {
-                this.response.initResponse(true, "Tính phí thành công", order);
-                return res.status(HttpStatus.OK).json(this.response);
-            }
+            this.response.initResponse(true, "Tính phí thành công", order);
+            return res.status(HttpStatus.OK).json(this.response);
+
         } catch (error) {
             console.log(error);
             this.response.initResponse(false, "Đã xảy ra lỗi. Vui lòng thử lại", null);
