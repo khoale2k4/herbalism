@@ -115,7 +115,7 @@ const CheckoutPage: React.FC = () => {
         const newSubtotal = cartItems.reduce((sum, item) => sum + (item.price * item.num), 0);
         setSubtotal(newSubtotal);
 
-        const feeResponse = await orderOp.getFee();
+        const feeResponse = await orderOp.getFee(newSubtotal);
         if (feeResponse.success) {
             setShippingFee(feeResponse.data);
         } else {
