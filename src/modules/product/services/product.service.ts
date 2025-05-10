@@ -182,6 +182,12 @@ export class ProductService {
                     attributes: ['url'],
                     required: false
                 },
+                {
+                    model: SizeStock,
+                    as: 'size_stock',
+                    attributes: ['size', 'price', 'stock'],
+                    required: false
+                }
             ]
         });
 
