@@ -175,7 +175,13 @@ export class ProductService {
                             }),
                         ]
                     }
-                }
+                },
+                {
+                    model: ProductImages,
+                    as: 'images',
+                    attributes: ['url'],
+                    required: false
+                },
             ]
         });
 
