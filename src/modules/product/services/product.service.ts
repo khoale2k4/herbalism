@@ -185,7 +185,28 @@ export class ProductService {
             ]
         });
 
-        return products;
+        return products.map((product) => {
+            const plainProduct = product.get({ plain: true });
+
+            const prices = plainProduct.size_stock?.map((s) => s.price) || [];
+            const minPrice = prices.length > 0 ? Math.min(...prices) : 0;
+            const totalStock = (plainProduct.size_stock || []).reduce((acc, s) => acc + Number(s.stock), 0);
+
+            return {
+                id: plainProduct.id,
+                name: plainProduct.name,
+                rate: plainProduct.rate,
+                type: plainProduct.type,
+                form: plainProduct.form,
+                slug: plainProduct.slug,
+                need: plainProduct.need,
+                size_stock: plainProduct.size_stock,
+                totalStock: totalStock,
+                price: minPrice,
+                images: plainProduct.images,
+                createdAt: plainProduct.createdAt,
+            };
+        });
     };
 
     async findProductBySlug(slug: string) {
