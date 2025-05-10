@@ -295,6 +295,34 @@ export class ProductOperation {
         }
     }
 
+    async getBySlug(slug: string) {
+        try {
+            const response = await fetch(this.baseUrl + '/slug/' + slug, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Get products failed with status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            return {
+                success: true,
+                message: result.message,
+                data: result.data
+            };
+        } catch (error: any) {
+            return {
+                success: false,
+                message: error?.message || 'Unknown error',
+                data: null
+            };
+        }
+    }
+
     async uploadImage(image: File) {
         const api = `${this.baseUrl}/upload-image`;
 

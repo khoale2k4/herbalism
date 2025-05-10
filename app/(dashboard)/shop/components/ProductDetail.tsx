@@ -31,23 +31,16 @@ interface Tab {
     content: string;
 }
 
-interface FlyingItem {
-    id: string;
-    startX: number;
-    startY: number;
-    image: string;
-}
-
 export async function generateStaticParams() {
     const productOp = new ProductOperation();
     const products = await productOp.getAll();
 
     return products.data.map((product: Product) => ({
-        productId: product.id,
+        slug: product.slug,
     }));
 }
 
-export default function ProductDetail({ productId }: { productId: string }) {
+export default function ProductDetail({ slug }: { slug: string }) {
     const { t } = useLanguage();
     const [loading, setLoading] = useState(true);
     const [adding, setAdding] = useState(false);
@@ -81,7 +74,7 @@ export default function ProductDetail({ productId }: { productId: string }) {
             if (!token) {
                 setAdding(true);
                 addProductToLocalCart({
-                    id: productId,
+                    id: product?.id??"",
                     num: quantity,
                     size: selectedSize,
                     product: {
@@ -97,7 +90,7 @@ export default function ProductDetail({ productId }: { productId: string }) {
                 });
             } else {
                 const response = await cartOp.addToCart({
-                    productId: productId || "",
+                    productId: product?.id??"",
                     num: quantity,
                     size: selectedSize
                 }, token);
@@ -161,7 +154,7 @@ export default function ProductDetail({ productId }: { productId: string }) {
         setShowReviewForm(false);
         const token = getTokenFromCookie();
         const resposne = await commentOp.createComment({
-            productId: productId || "",
+            productId: product?.id??"",
             content: newReview.comment,
             rate: newReview.rating
         }, token);
@@ -171,11 +164,11 @@ export default function ProductDetail({ productId }: { productId: string }) {
     };
 
     const fetchProduct = async () => {
-        if (!productId) return;
+        if (!slug) return;
 
         setLoading(true);
         try {
-            const response = await productOp.getById(productId);
+            const response = await productOp.getById(slug);
             if (response.success) {
                 setProduct(response.data);
 
@@ -203,7 +196,7 @@ export default function ProductDetail({ productId }: { productId: string }) {
                 setIsCommented(false);
                 return;
             } else {
-                const commentResponse = await commentOp.checkComment(productId, token);
+                const commentResponse = await commentOp.checkComment(product?.id??"", token);
                 setIsCommented(commentResponse.data !== null);
             }
         } catch (error) {
@@ -223,7 +216,7 @@ export default function ProductDetail({ productId }: { productId: string }) {
     useEffect(() => {
         fetchProduct();
         fetchSuggested();
-    }, [productId]);
+    }, [slug]);
 
     if (loading) return <CustomLoadingElement />;
     if (!product) return <NotFoundPage />;

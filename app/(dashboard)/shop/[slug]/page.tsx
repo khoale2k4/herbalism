@@ -3,13 +3,13 @@ import ProductDetail from "../components/ProductDetail";
 import { ProductOperation } from "@/lib/main";
 
 type Props = {
-    params: Promise<{ productId: string }>;
+    params: Promise<{ slug: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const productOp = new ProductOperation();
     const param = await params;
-    const response = await productOp.getById(param.productId);
+    const response = await productOp.getById(param.slug);
     
     if (response.success) {
         const product = response.data;
@@ -26,6 +26,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Main({ params }: Props) {
     const param = await params;
-    console.log(param.productId);
-    return <ProductDetail productId={param.productId} />;
+    // console.log(param.productId);
+    return <ProductDetail slug={param.slug} />;
 }
