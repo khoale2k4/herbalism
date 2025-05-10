@@ -80,6 +80,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
                     product: {
                         id: product?.id ?? "",
                         images: product?.images ?? [],
+                        slug: product?.slug ?? "",
                         name: product?.name ?? "",
                         price: product?.size_stock.find(st => st.size === selectedSize)?.price??0
                     }
