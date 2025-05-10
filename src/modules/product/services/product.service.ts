@@ -481,6 +481,7 @@ export class ProductService {
                 id: plainProduct.id,
                 name: plainProduct.name,
                 rate: plainProduct.rate,
+                slug: plainProduct.slug,
                 totalStock: totalStock,
                 price: minPrice,
                 images: plainProduct.images,
