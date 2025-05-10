@@ -9,6 +9,8 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { ConfigService } from '@nestjs/config';
+import { Readable } from 'stream';
+import { cloudinary } from 'src/shared/cdn/cloudinary.config';
 
 @Controller('product')
 export class ProductController {
@@ -19,21 +21,30 @@ export class ProductController {
     ) { }
 
     @Post('upload-image')
-    @UseInterceptors(FileInterceptor('image', {
-        storage: diskStorage({
-            destination: 'public/uploads',
-            filename: (req, file, callback) => {
-                const uniqueName = `${Date.now()}-${Math.random().toString(36).substring(2)}${extname(file.originalname)}`;
-                callback(null, uniqueName);
-            }
-        }),
-        limits: {
-            fileSize: 5 * 1024 * 1024
-        }
-    }))
-    uploadImage(@UploadedFile() file: Express.Multer.File) {
-        const url = `${this.configService.get<string>('MY_HOST') || 'http://localhost:3000'}/uploads/${file.filename}`;
-        return { url };
+    @UseInterceptors(FileInterceptor('image'))
+    async uploadImage(@UploadedFile() file: Express.Multer.File) {
+        const streamUpload = (fileBuffer: Buffer): Promise<any> => {
+            return new Promise((resolve, reject) => {
+                const stream = cloudinary.uploader.upload_stream(
+                    {
+                        folder: 'herbalism-images',
+                        resource_type: 'image',
+                    },
+                    (error, result) => {
+                        if (result) {
+                            resolve(result);
+                        } else {
+                            reject(error);
+                        }
+                    }
+                );
+
+                Readable.from(fileBuffer).pipe(stream);
+            });
+        };
+
+        const result = await streamUpload(file.buffer);
+        return { url: result.secure_url };
     }
 
     @Get()
