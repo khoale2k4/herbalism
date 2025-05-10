@@ -39,7 +39,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
 
             <div className="border-b border-gray-100 pb-4 mb-4">
                 {cartItems.map((item, index) => (
-                    <div key={item.id} className={`flex justify-between py-3 ${index !== 0 ? 'border-t border-gray-50' : ''}`}>
+                    <div key={item.id + item.size} className={`flex justify-between py-3 ${index !== 0 ? 'border-t border-gray-50' : ''}`}>
                         <div className="flex items-start">
                             <div className="w-14 h-14 bg-gray-100 rounded flex items-center justify-center text-gray-500 mr-3 overflow-hidden">
                                 <img
