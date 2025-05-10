@@ -24,7 +24,7 @@ export class CommentService {
     }
 
     async createComment(dto: CreateCommentDto, userId?: string) {
-        if (!userId) {
+        if (userId === undefined) {
             const comment = await this.commentModel.create({
                 customerId: null,
                 content: dto.content,
