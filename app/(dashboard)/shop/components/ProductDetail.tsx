@@ -262,7 +262,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
                             <img
                                 src={product.images[selectedImage]?.url || '/placeholder.jpg'}
                                 alt={product.name}
-                                className="w-full h-96 object-cover object-center transition-transform duration-300 hover:scale-105"
+                                className="w-full h-full object-cover object-center transition-transform duration-300 hover:scale-105"
                             /></div> : <div className="h-full w-full flex items-center justify-center text-gray-400">
                             <Leaf className="h-40 w-40" />
                         </div>}
