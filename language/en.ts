@@ -130,8 +130,8 @@ export default {
     navbar: {
         message1: "Supporting local farmers & sustainable harvesting.",
         message2: "Eco-friendly packaging for a better planet.",
-        message3: "Herbalist formulated for optimal wellness.",
-        message4: "Quality assurance with every purchase.",
+        message3: "Explore the Spagyric process.",
+        message4: "Free shipping on orders over 1,000,000 VND.",
         shop: "Shop",
         learn: "Learn",
         blog: "Blog",
