@@ -740,9 +740,9 @@ export class CommentOperation {
         }
     }
 
-    async createComment(dto: CreateCommentDto, token: string | null) {
+    async createComment(dto: CreateCommentDto, token?: string | null) {
         try {
-            const response = await fetch(this.baseUrl + '/create', {
+            const response = await fetch(this.baseUrl + (token ? '/create' : '/createByGuest'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
