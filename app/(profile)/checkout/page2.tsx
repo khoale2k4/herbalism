@@ -168,12 +168,12 @@ export default function CheckoutPage() {
         const newSubtotal = cartItems.reduce((sum, item) => sum + (item.price * item.num), 0);
         setSubtotal(newSubtotal);
     
-        const feeResponse = await orderOp.getFee();
-        if (feeResponse.success) {
-            setShippingFee(feeResponse.data);
-        } else {
-            setShippingFee(0);
-        }
+        // const feeResponse = await orderOp.getFee();
+        // if (feeResponse.success) {
+        //     setShippingFee(feeResponse.data);
+        // } else {
+        //     setShippingFee(0);
+        // }
     };    
 
     const handleInputChange = (e: any) => {
