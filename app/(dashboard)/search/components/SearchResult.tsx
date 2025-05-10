@@ -49,143 +49,152 @@ export default function SearchPage() {
     const totalResults = articles.length + products.length;
 
     return (
-        <div className="container mx-auto px-4 py-8 max-w-7xl">
-            {/* Header */}
-            <div className="bg-[#f2f2f2] rounded-xl p-8 mb-8 shadow-sm">
-                <h1 className="text-3xl font-bold text-gray-800 mb-2">
-                    {t.searchPage.result} "{keyword}"
-                </h1>
-                <p className="text-gray-600">
-                    {t.searchPage.found1} {totalResults} {t.searchPage.found2}
-                </p>
-            </div>
-
-            {/* Tabs */}
-            <div className="flex border-b border-gray-200 mb-6">
-                <button
-                    onClick={() => setActiveTab('all')}
-                    className={`py-3 px-6 font-medium text-sm ${activeTab === 'all'
-                        ? 'border-b-2 border-[#3e4f3d] text-[#3e4f3d]'
-                        : 'text-gray-500 hover:text-gray-700'
-                        }`}
-                >
-                    {t.searchPage.all} ({totalResults})
-                </button>
-                <button
-                    onClick={() => setActiveTab('articles')}
-                    className={`py-3 px-6 font-medium text-sm ${activeTab === 'articles'
-                        ? 'border-b-2 border-[#3e4f3d] text-[#3e4f3d]'
-                        : 'text-gray-500 hover:text-gray-700'
-                        }`}
-                >
-                    {t.searchPage.article} ({articles.length})
-                </button>
-                <button
-                    onClick={() => setActiveTab('products')}
-                    className={`py-3 px-6 font-medium text-sm ${activeTab === 'products'
-                        ? 'border-b-2 border-[#3e4f3d] text-[#3e4f3d]'
-                        : 'text-gray-500 hover:text-gray-700'
-                        }`}
-                >
-                    {t.searchPage.product} ({products.length})
-                </button>
-            </div>
-
-            {/* Loading state */}
-            {loading ? (
-                <div className="flex justify-center items-center py-20">
-                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#3e4f3d]"></div>
+        <div className="bg-[#fdf8f7] w-full px-0 pt-8">
+            <div className="max-w-7xl mx-auto px-4">
+                {/* Header */}
+                <div className="bg-[#f2f2f2] rounded-xl p-8 mb-8 shadow-sm w-full">
+                    <h1 className="text-3xl font-bold text-gray-800 mb-2">
+                        {t.searchPage.result} "{keyword}"
+                    </h1>
+                    <p className="text-gray-600">
+                        {t.searchPage.found1} {totalResults} {t.searchPage.found2}
+                    </p>
                 </div>
-            ) : (
-                <>
-                    {/* Results */}
-                    {totalResults === 0 ? (
-                        <div className="text-center py-16">
-                            <div className="mb-4">
-                                <svg
-                                    className="mx-auto h-16 w-16 text-gray-400"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="1.5"
-                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                    />
-                                </svg>
-                            </div>
-                            <h3 className="text-xl font-medium text-gray-900 mb-1">{t.searchPage.noResult}</h3>
-                            <p className="text-gray-500 mb-6">{t.searchPage.retry}</p>
-                            <Link
-                                href="/"
-                                className="inline-flex items-center text-white bg-[#3e4f3d] hover:bg-blue-700 px-5 py-2 rounded-md text-sm font-medium transition-colors"
-                            >
-                                {t.common.home}
-                            </Link>
-                        </div>
-                    ) : (
-                        <>
-                            {/* Articles Section - show if activeTab is 'all' or 'articles' */}
-                            {(activeTab === 'all' || activeTab === 'articles') && articles.length > 0 && (
-                                <section className="mb-12">
-                                    {activeTab === 'all' && (
-                                        <div className="flex justify-between items-center mb-6">
-                                            <h2 className="text-2xl font-semibold text-gray-800">{t.searchPage.article}</h2>
-                                            {articles.length > 3 && (
-                                                <Link
-                                                    href="#"
-                                                    onClick={() => setActiveTab('articles')}
-                                                    className="text-[#3e4f3d] hover:text-blue-800 font-medium text-sm flex items-center"
-                                                >
-                                                    {t.searchPage.seeAll}
-                                                    <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                                                    </svg>
-                                                </Link>
-                                            )}
-                                        </div>
-                                    )}
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                        {(activeTab === 'all' ? articles.slice(0, 3) : articles).map((article) => (
-                                            <ArticleCard key={article.id} article={article} />
-                                        ))}
-                                    </div>
-                                </section>
-                            )}
 
-                            {/* Products Section - show if activeTab is 'all' or 'products' */}
-                            {(activeTab === 'all' || activeTab === 'products') && products.length > 0 && (
-                                <section>
-                                    {activeTab === 'all' && (
-                                        <div className="flex justify-between items-center mb-6">
-                                            <h2 className="text-2xl font-semibold text-gray-800">{t.searchPage.product}</h2>
-                                            {products.length > 4 && (
-                                                <Link
-                                                    href="#"
-                                                    onClick={() => setActiveTab('products')}
-                                                    className="text-[#3e4f3d] hover:text-blue-800 font-medium text-sm flex items-center"
-                                                >
-                                                    {t.searchPage.seeAll}
-                                                    <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                                                    </svg>
-                                                </Link>
-                                            )}
+                {/* Tabs */}
+                <div className="flex border-b border-gray-200 mb-6">
+                    <button
+                        onClick={() => setActiveTab('all')}
+                        className={`py-3 px-6 font-medium text-sm ${activeTab === 'all'
+                            ? 'border-b-2 border-[#3e4f3d] text-[#3e4f3d]'
+                            : 'text-gray-500 hover:text-gray-700'
+                            }`}
+                    >
+                        {t.searchPage.all} ({totalResults})
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('articles')}
+                        className={`py-3 px-6 font-medium text-sm ${activeTab === 'articles'
+                            ? 'border-b-2 border-[#3e4f3d] text-[#3e4f3d]'
+                            : 'text-gray-500 hover:text-gray-700'
+                            }`}
+                    >
+                        {t.searchPage.article} ({articles.length})
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('products')}
+                        className={`py-3 px-6 font-medium text-sm ${activeTab === 'products'
+                            ? 'border-b-2 border-[#3e4f3d] text-[#3e4f3d]'
+                            : 'text-gray-500 hover:text-gray-700'
+                            }`}
+                    >
+                        {t.searchPage.product} ({products.length})
+                    </button>
+                </div>
+
+                {/* Loading state */}
+                {loading ? (
+                    <div className="flex justify-center items-center py-20">
+                        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#3e4f3d]"></div>
+                    </div>
+                ) : (
+                    <>
+                        {/* Results */}
+                        {totalResults === 0 ? (
+                            <div className="text-center py-16">
+                                <div className="mb-4">
+                                    <svg
+                                        className="mx-auto h-16 w-16 text-gray-400"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="1.5"
+                                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                        />
+                                    </svg>
+                                </div>
+                                <h3 className="text-xl font-medium text-gray-900 mb-1">{t.searchPage.noResult}</h3>
+                                <p className="text-gray-500 mb-6">{t.searchPage.retry}</p>
+                                <Link
+                                    href="/"
+                                    className="inline-flex items-center text-white bg-[#3e4f3d] hover:bg-blue-700 px-5 py-2 rounded-md text-sm font-medium transition-colors"
+                                >
+                                    {t.common.home}
+                                </Link>
+                            </div>
+                        ) : (
+                            <>
+                                {/* Articles Section - show if activeTab is 'all' or 'articles' */}
+                                {(activeTab === 'all' || activeTab === 'articles') && articles.length > 0 && (
+                                    <section className="mb-12">
+                                        {activeTab === 'all' && (
+                                            <div className="flex justify-between items-center mb-6">
+                                                <h2 className="text-2xl font-semibold text-gray-800">{t.searchPage.article}</h2>
+                                                {articles.length > 3 && (
+                                                    <Link
+                                                        href="#"
+                                                        onClick={() => setActiveTab('articles')}
+                                                        className="text-[#3e4f3d] hover:text-blue-800 font-medium text-sm flex items-center"
+                                                    >
+                                                        {t.searchPage.seeAll}
+                                                        <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                                                        </svg>
+                                                    </Link>
+                                                )}
+                                            </div>
+                                        )}
+                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                            {(activeTab === 'all' ? articles.slice(0, 3) : articles).map((article) => (
+                                                <ArticleCard key={article.id} article={article} />
+                                            ))}
                                         </div>
-                                    )}
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                                        {(activeTab === 'all' ? products.slice(0, 4) : products).map((product) => (
-                                            <ProductCard key={product.id} product={product} />
-                                        ))}
-                                    </div>
-                                </section>
-                            )}
-                        </>
-                    )}
-                </>
-            )}
+                                    </section>
+                                )}
+
+                                {/* Products Section - show if activeTab is 'all' or 'products' */}
+                                {(activeTab === 'all' || activeTab === 'products') && products.length > 0 && (
+                                    <section>
+                                        {activeTab === 'all' && (
+                                            <div className="flex justify-between items-center mb-6">
+                                                <h2 className="text-2xl font-semibold text-gray-800">{t.searchPage.product}</h2>
+                                                {products.length > 4 && (
+                                                    <Link
+                                                        href="#"
+                                                        onClick={() => setActiveTab('products')}
+                                                        className="text-[#3e4f3d] hover:text-blue-800 font-medium text-sm flex items-center"
+                                                    >
+                                                        {t.searchPage.seeAll}
+                                                        <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                                                        </svg>
+                                                    </Link>
+                                                )}
+                                            </div>
+                                        )}
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                                            {(activeTab === 'all' ? products.slice(0, 4) : products).map((product) => (
+                                                <ProductCard key={product.id} product={product} />
+                                            ))}
+                                        </div>
+                                    </section>
+                                )}
+                            </>
+                        )}
+                    </>
+                )}
+            </div>
+            <Image
+                src="/img/footer-image.png"
+                alt="Footer Image"
+                width={1920}
+                height={400}
+                className="w-full h-auto object-cover"
+            />
         </div>
     );
 }
