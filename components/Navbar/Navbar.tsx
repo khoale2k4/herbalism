@@ -75,6 +75,7 @@ const Navbar = () => {
       setCartItems(items.map((item) => {
         return {
           id: item.product.id,
+          slug: item.product.slug,
           name: item.product.name,
           image: (item.product.images && item.product.images.length > 0 ? item.product.images[0].url : '/img/placeholder.png'),
           price: item.product.price,

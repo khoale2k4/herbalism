@@ -10,6 +10,7 @@ import { addProductToLocalCart } from "@/app/utils/localCart";
 
 export type ItemInCart = {
     id: string;
+    slug: string;
     name: string;
     image: string;
     price: number;
@@ -48,15 +49,15 @@ export default function CartSidebar({
     const total = subtotal + shippingFee;
     const router = useRouter();
 
-    const handleClickProduct = (id: string) => {
-        router.push(`/shop/${id}`);
+    const handleClickProduct = (slug: string) => {
+        router.push(`/shop/${slug}`);
     }
 
     const checkout = () => {
         router.push(`/checkout`);
     }
 
-    const addItemQuantity = async (id: string, size: string, quantity: number) => {
+    const addItemQuantity = async (id: string, size: string, quantity: number, slug: string) => {
         const token = getTokenFromCookie();
         if (!token) {
             addProductToLocalCart({
@@ -65,6 +66,7 @@ export default function CartSidebar({
                 size: size,
                 product: {
                     id: id,
+                    slug: slug,
                     images: [],
                     name: "",
                     price: 0
@@ -79,18 +81,18 @@ export default function CartSidebar({
         }
     }
 
-    const handleQuantityChange = async (productid: string, size: string, num: number) => {
+    const handleQuantityChange = async (productid: string, size: string, num: number, slug: string) => {
         const item = cartItems.find(item => item.id === productid);
         if (item) {
-            await addItemQuantity(productid, size, num);
+            await addItemQuantity(productid, size, num, slug);
         }
         fetchData();
     };
 
-    const handleRemoveItem = async (id: string, size: string) => {
+    const handleRemoveItem = async (id: string, size: string, slug: string) => {
         const item = cartItems.find(item => item.id === id);
         if (item) {
-            await addItemQuantity(id, size, -1000000);
+            await addItemQuantity(id, size, -1000000, slug);
         }
         fetchData();
     };
@@ -135,7 +137,7 @@ export default function CartSidebar({
                         <ul className="space-y-6">
                             {cartItems.map((item) => (
                                 <li key={item.id + item.size} className="flex gap-4 relative">
-                                    <div className="w-20 h-20 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0" onClick={() => handleClickProduct(item.id)}>
+                                    <div className="w-20 h-20 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0" onClick={() => handleClickProduct(item.slug)}>
                                         <img
                                             src={item.image}
                                             alt={item.name}
@@ -146,7 +148,7 @@ export default function CartSidebar({
                                         <div className="flex justify-between">
                                             <h4 className="text-sm font-medium line-clamp-1" onClick={() => handleClickProduct(item.id)}>{item.name}</h4>
                                             <button
-                                                onClick={() => handleRemoveItem(item.id, item.size)}
+                                                onClick={() => handleRemoveItem(item.id, item.size, item.slug)}
                                                 className="text-gray-400 hover:text-red-500 transition-colors"
                                             >
                                                 <Trash size={16} />
@@ -162,14 +164,14 @@ export default function CartSidebar({
                                         <div className="flex items-center justify-between mt-2">
                                             <div className="flex items-center border rounded-md">
                                                 <button
-                                                    onClick={() => handleQuantityChange(item.id, item.size, -1)}
+                                                    onClick={() => handleQuantityChange(item.id, item.size, -1, item.slug)}
                                                     className="px-2 py-1 text-gray-500 hover:text-[#9da962] transition-colors"
                                                 >
                                                     <Minus size={14} />
                                                 </button>
                                                 <span className="px-2 text-sm">{item.num}</span>
                                                 <button
-                                                    onClick={() => handleQuantityChange(item.id, item.size, 1)}
+                                                    onClick={() => handleQuantityChange(item.id, item.size, 1, item.slug)}
                                                     className="px-2 py-1 text-gray-500 hover:text-[#9da962] transition-colors"
                                                 >
                                                     <Plus size={14} />

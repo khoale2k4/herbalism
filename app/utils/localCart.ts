@@ -1,6 +1,7 @@
 export type ProductInLocalstorage = {
     product: {
         id: string;
+        slug: string;
         name: string;
         price: number;
         images: {
