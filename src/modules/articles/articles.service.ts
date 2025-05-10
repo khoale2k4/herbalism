@@ -104,6 +104,7 @@ export class ArticleService {
         const lowerKeyword = `%${keyword.toLowerCase()}%`;
 
         const articles = await Article.findAll({
+            attributes: ['id', 'title', 'imageUrl', 'shortDescription', 'createdAt'],
             where: {
                 [Op.or]: [
                     Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Article.title')), {
