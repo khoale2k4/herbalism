@@ -191,14 +191,14 @@ export default function ProductDetail({ slug }: { slug: string }) {
                     date: new Date(review.createdAt).toLocaleDateString('vi-VN')
                 }));
                 setReviews(transformedReviews);
-            }
-            const token = getTokenFromCookie();
-            if (!token) {
-                setIsCommented(false);
-                return;
-            } else {
-                const commentResponse = await commentOp.checkComment(product?.id??"", token);
-                setIsCommented(commentResponse.data !== null);
+                const token = getTokenFromCookie();
+                if (!token) {
+                    setIsCommented(false);
+                    return;
+                } else {
+                    const commentResponse = await commentOp.checkComment(response.data?.id??"", token);
+                    setIsCommented(commentResponse.data !== null);
+                }
             }
         } catch (error) {
             console.error('Error fetching product:', error);
