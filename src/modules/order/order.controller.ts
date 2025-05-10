@@ -160,10 +160,10 @@ export class OrderController {
         }
     }
 
-    @Get('fee')
-    async getFee(@Res() res) {
+    @Get('fee/:price')
+    async getFee(@Param('price') price: number, @Res() res) {
         try {
-            const order = await this.feeService.calculateFee(0);
+            const order = await this.feeService.calculateFee(price);
             if (!order) {
                 this.response.initResponse(false, "Tính phí không thành công", order);
                 return res.status(HttpStatus.NOT_FOUND).json(this.response);

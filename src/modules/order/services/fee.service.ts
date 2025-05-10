@@ -9,6 +9,7 @@ export class FeeService {
   }
 
   calculateFee(amount: number): number {
+    if(amount >= 1000000) return 0;
     return this.fee;
   }
 }
