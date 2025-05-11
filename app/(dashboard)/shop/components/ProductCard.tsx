@@ -49,7 +49,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, viewMode, onClick })
                 {product.images && product.images.length ? <img
                     src={product.images[0].url}
                     alt={product.name}
-                    className="w-full h-full object-cover rounded-md transition-transform duration-300 hover:scale-105"
+                    className="object-cover rounded-md transition-transform duration-300 hover:scale-105"
                 /> : <div className="h-full w-full flex items-center justify-center text-gray-400">
                     <Leaf className="h-40 w-40" />
                 </div>}
