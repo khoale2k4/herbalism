@@ -53,7 +53,6 @@ export class OrderController {
     }
 
     @Get('confirmCancelled/:id')
-    @UseGuards(JwtAuthGuard)
     async confirmCancel(@Param('id') id: string, @Req() req, @Res() res) {
         try {
             const order = await this.orderService.cancel(id);
@@ -72,7 +71,6 @@ export class OrderController {
     }
 
     @Get('confirmDelivered/:id')
-    @UseGuards(JwtAuthGuard)
     async confirmDeliver(@Param('id') id: string, @Req() req, @Res() res) {
         try {
             if (req.user.role === 'admin') {
@@ -95,7 +93,6 @@ export class OrderController {
     }
 
     @Get('confirmShipped/:id')
-    @UseGuards(JwtAuthGuard)
     async confirmShipped(@Param('id') id: string, @Req() req, @Res() res) {
         try {
             if (req.user.role === 'user') {
