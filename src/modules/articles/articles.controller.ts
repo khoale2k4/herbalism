@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Param, Post, Put, Req, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Req, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -68,6 +68,24 @@ export class ArticleController {
         } catch (error) {
             console.log(error);
             this.response.initResponse(false, 'Đã xảy ra lỗi khi lấy danh sách bài viết', null);
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(this.response);
+        }
+    }
+
+    @Delete(':id')
+    @UseGuards(JwtAuthGuard)
+    async deletePost(@Param('id') id: string, @Res() res, @Req() req) {
+        try {
+            if (req.user.role === 'user') {
+                this.response.initResponse(false, 'Người dùng không có quyền truy cập tài nguyên này', null);
+                return res.status(HttpStatus.FORBIDDEN).json(this.response);
+            }
+            const login = await this.articleService.delete(id);
+            this.response.initResponse(true, "Xoá article thành công", login);
+            return res.status(HttpStatus.OK).json(this.response);
+        } catch (error) {
+            console.log(error);
+            this.response.initResponse(false, "Đã xảy ra lỗi. Vui lòng thử lại", null);
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(this.response);
         }
     }

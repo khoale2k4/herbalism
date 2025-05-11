@@ -45,6 +45,19 @@ export class ArticleService {
         return await this.getArticleById(articleId);
     }
 
+    async delete(articleId: string) {
+        const article = await this.articleModel.findByPk(articleId);
+        if(article) {
+            await this.articleModel.destroy({
+                where: {
+                    id: articleId
+                }
+            })
+            return article;
+        }
+        return null;
+    }
+
     async getAllArticles() {
         return this.articleModel.findAll({
             attributes: ['id', 'title', 'imageUrl', 'shortDescription', 'createdAt'],
