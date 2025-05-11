@@ -135,7 +135,6 @@ export default {
         message2: "Eco-friendly packaging for a better planet.",
         message3: "Explore the Spagyric process.",
         message4: "Free shipping on orders over 1,000,000 VND.",
-        shop: "Shop",
         learn: "Learn",
         blog: "Blog",
         about: "Our process",
@@ -146,7 +145,11 @@ export default {
             message2: "The essence of Vietnam's botanicals, pure in every drop",
             message3: "Proudly Vietnamese Owned & Operated",
             message4: "Thank you for visiting!",
-        }
+        },
+        shop: "Shop",
+        shopNow: "Shop now",
+        seeMore: 'See more',
+        learnMore: 'Learn more',
     },
     banner: {
         welcome1: "Welcome to Herbalism",

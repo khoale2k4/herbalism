@@ -134,7 +134,6 @@ export default {
         message2: "Tinh hoa dược liệu châu Á, tinh khiết trong từng giọt",
         message3: "Công thức thầy thuốc thảo dược cho sức khỏe tối ưu.",
         message4: "Đảm bảo chất lượng trong mỗi đơn hàng.",
-        shop: "Cửa hàng",
         learn: "Tìm hiểu",
         blog: "Blog",
         about: "Hành trình chiết xuất",
@@ -145,7 +144,11 @@ export default {
             message2: "Tinh hoa dược liệu châu Á, tinh khiết trong từng giọt",
             message3: "Khám phá các sản phẩm tuyệt vời của chúng tôi!",
             message4: "Cảm ơn bạn đã ghé thăm!"
-        }
+        },
+        shop: "Cửa hành",
+        shopNow: "Mua ngay",
+        seeMore: 'Xem thêm',
+        learnMore: 'Xem thêm',
     },
     banner: {
         welcome1: "Chào mừng bạn đến với Herbalism",

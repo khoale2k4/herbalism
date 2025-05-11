@@ -19,6 +19,14 @@ import MenuSidebar from "./MenuForMobile";
 import { getLocalCart } from "@/app/utils/localCart";
 import { useRouter } from 'next/navigation';
 
+type Message = {
+  message: string;
+  link: {
+    title: string;
+    link: string;
+  }
+}
+
 const Navbar = () => {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [messageIndex, setMessageIndex] = useState(0);
@@ -48,11 +56,35 @@ const Navbar = () => {
   const [searchBoxOpen, setSearchBoxOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
-  const messages = [
-    t.navbar.message1,
-    t.navbar.message2,
-    t.navbar.message3,
-    t.navbar.message4,
+  const messages: Message[] = [
+    {
+      message: t.navbar.message1,
+      link: {
+        link: '/learn',
+        title: t.navbar.seeMore
+      }
+    },
+    {
+      message: t.navbar.message2,
+      link: {
+        link: '/blog',
+        title: t.navbar.seeMore
+      }
+    },
+    {
+      message: t.navbar.message3,
+      link: {
+        link: '/process',
+        title: t.navbar.learnMore
+      }
+    },
+    {
+      message: t.navbar.message4,
+      link: {
+        link: '/shop',
+        title: t.navbar.shopNow
+      }
+    },
   ];
 
   const [cartItems, setCartItems] = useState<ItemInCart[]>([]);
@@ -207,7 +239,7 @@ const Navbar = () => {
               transition={{ duration: 0.7, ease: "easeInOut" }}
               className="absolute w-full text-[#3e4f3d]"
             >
-              {messages[messageIndex]} {<a href={messageIndex === 2 ? "/process" : messageIndex === 3 ? "/shop" : "/blog"} className="underline ml-2 text-[#3e4f3d]">Learn more &gt;</a >}
+              {messages[messageIndex].message} {<a href={messages[messageIndex].link.link} className="underline ml-2 text-[#3e4f3d]">{messages[messageIndex].link.title} &gt;</a >}
             </motion.div>
           </AnimatePresence>
         </div>
