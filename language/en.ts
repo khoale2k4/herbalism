@@ -1,7 +1,10 @@
+import OrderSummary from "@/app/(profile)/checkout/components/OrderSummary";
+
 export default {
     common: {
         home: "Home",
         about: "About",
+        guest: "Guest",
         products: "Products",
         blogs: "Blogs",
         contact: "Contact",
@@ -343,6 +346,53 @@ export default {
         title: "About us",
         description: "Who We Are & What We Do"
     },
+    orders: {
+        loadingOrders: 'Loading orders...',
+        errorLoadOrders: 'Error loading orders',
+        processing: 'Processing...',
+        cancelOrder: {
+            title: "Cancel Order",
+            message: "Are you sure you want to cancel this order? This action cannot be undone.",
+            confirm: 'Yes, Cancel Order',
+            cancel: "No, Keep Order",
+        },
+        receiveOrder: {
+            title: "Confirm Order Received",
+            message: "Have you received this order? Please confirm to complete the order.",
+            confirm: 'Yes, I Received It',
+            cancel: "Not Yet",
+        },
+        title: 'My Orders',
+        description: 'View and manage your orders',
+        orderHistory: 'Order History',
+        searchPlaceholder: "Search orders or products...",
+        status: {
+            all: "All Statuses",
+            pending: 'Pending',
+            processing: 'Processing',
+            shipped: 'Shipped',
+            completed: 'Completed',
+            cancelled: 'Cancelled'
+        },
+        newest: 'Newest First',
+        oldest: 'Oldest First',
+        noOrders: 'No orders found',
+        clearFilter: 'Clear filters',
+        items: 'Order Items',
+        size: 'Size:',
+        quantity: 'Qty:',
+        orderSummary: 'Order Summary',
+        subtotal: 'Subtotal',
+        shipping: 'Shipping',
+        customerInfo: 'Customer infomation',
+        name: 'Name:',
+        email: 'Email:',
+        shippingAddress: 'Shipping Address',
+        orderTracking: 'Order #',
+        tracking: 'Tracking:',
+        cancel: 'Cancel',
+        received: 'Confirm received'
+    },
     blog: {
         title: "Harmonic Arts Blog",
         description: "Recipes, tips, ideas, and sharing wellness with our community. Come visit our blog and see what the Harmonic Arts team has been up to.",
@@ -630,7 +680,7 @@ export default {
                 address: "Address:",
                 paymentMethod: "Method:",
                 size: "Size:",
-                amount: "Qty:"
+                amount: "Quantity:"
             },
             missingInfo: "Not entered",
             notSelected: "Not selected",

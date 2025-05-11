@@ -17,6 +17,7 @@ import Link from "next/link";
 import { useCurrency } from "@/hooks/useCurrency";
 import MenuSidebar from "./MenuForMobile";
 import { getLocalCart } from "@/app/utils/localCart";
+import { useRouter } from 'next/navigation';
 
 const Navbar = () => {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
@@ -24,6 +25,7 @@ const Navbar = () => {
   const { t, currentLang, changeLanguage } = useLanguage();
   const { changeCurrency, currentCurrency } = useCurrency();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const router = useRouter();
   const cartOp = new CartOperation();
   const orderOp = new OrderOperation();
   const cusOp = new CustomerOperation();
@@ -117,12 +119,10 @@ const Navbar = () => {
   useEffect(() => {
     if (activeMenu === 'cart') {
       fetchItems();
+    } else if (activeMenu === 'user') {
+      fetchUser();
     }
   }, [activeMenu]);
-
-  useEffect(() => {
-    fetchUser();
-  }, [fetchUser]);
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -340,10 +340,25 @@ const Navbar = () => {
                 <div
                   className={`absolute right-0 bg-white dark:bg-gray-900 shadow-lg w-48 mt-2 py-2 z-40 rounded-lg transform transition-all duration-200 origin-top-right border border-gray-100 dark:border-gray-800 ${activeMenu === "user" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}`}>
 
-                  <div className="px-4 py-2 border-b border-gray-100 dark:border-gray-800">
-                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{user?.name}</p>
-                    <p className="text-xs text-gray-500">{user?.mail}</p>
-                  </div>
+                  {user ? (
+                    <div
+                      onClick={() => router.push('/info')}
+                      className="px-4 py-2 border-b border-gray-100 dark:border-gray-800"
+                    >
+                      <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{user?.name}</p>
+                      <p className="text-xs text-gray-500">{user?.mail}</p>
+                    </div>
+                  ) : (
+                    <div className="py-1 border-b border-gray-100 dark:border-gray-800">
+                      <a
+                        href="/login"
+                        className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+                      >
+                        <UserCircle size={18} className="text-gray-500 group-hover:text-[#6e7a34] dark:group-hover:text-green-500" />
+                        <span>{t.common.guest}</span>
+                      </a>
+                    </div>
+                  )}
 
                   <div className="py-1">
                     <a
@@ -358,20 +373,12 @@ const Navbar = () => {
                       href="#"
                       className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 group"
                     >
-                      <UserCircle size={18} className="text-gray-500 group-hover:text-[#6e7a34] dark:group-hover:text-green-500" />
-                      <span>{t.common.info}</span>
-                    </a>
-
-                    <a
-                      href="#"
-                      className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 group"
-                    >
                       <Settings size={18} className="text-gray-500 group-hover:text-[#6e7a34] dark:group-hover:text-green-500" />
                       <span>{t.common.setting}</span>
                     </a>
                   </div>
 
-                  <div className="border-t border-gray-100 dark:border-gray-800 py-1">
+                  {user && <div className="border-t border-gray-100 dark:border-gray-800 py-1">
                     <a
                       href="/login"
                       onClick={() => removeTokenFromCookie()}
@@ -380,7 +387,7 @@ const Navbar = () => {
                       <LogOut size={18} className="text-red-500" />
                       <span>{t.common.logout}</span>
                     </a>
-                  </div>
+                  </div>}
                 </div>
               </div>
 

@@ -590,6 +590,34 @@ export class OrderOperation {
         }
     }
 
+    async updateStatus(status: string, id: string) {
+        try {
+            const response = await fetch(this.baseUrl + "/" + status + '/' + id, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Get article failed with status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            return {
+                success: true,
+                message: result.message,
+                data: result.data
+            };
+        } catch (error) {
+            return {
+                success: false,
+                message: error,
+                data: null
+            };
+        }
+    }
+
     async createFromCart(token: string, addressId: string, voucherId: string | null, paymentMethod: 'cod' | 'bank' | null) {
         try {
             const response = await fetch(this.baseUrl + '/createFromCart', {

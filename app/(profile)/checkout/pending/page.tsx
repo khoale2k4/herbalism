@@ -41,6 +41,7 @@ export default function OrderProcessingPage() {
                 });
                 const response = await orderOp.create(address, voucherId, paymentMet, products);
                 if (response.success) {
+                    addOrderToLocal(response.data.id);
                     cleanCart();
                     return response.data.trackingNumber;
                 } else {
@@ -106,7 +107,6 @@ export default function OrderProcessingPage() {
                         // throw new Error('Failed to create order');
                         setError(t.orderProcessingTranslations.errorMessages.createFailed || 'Tạo đơn hàng thất bại. Vui lòng thử lại.');
                     }
-                    addOrderToLocal(orderId);
 
                     setOrderNumber(orderId);
                     setProgress(70);
@@ -402,7 +402,12 @@ export default function OrderProcessingPage() {
                     >
                         <button
                             onClick={() => { router.push('/shop') }}
-                            className="px-4 py-2.5 rounded-lg bg-gradient-to-r from-green-600 to-green-500 text-white hover:shadow-lg transition-all duration-300 flex-[2] text-center font-medium"
+                            disabled={!isComplete}
+                            className={`px-4 py-2.5 rounded-lg text-white font-medium flex-[2] text-center transition-all duration-300
+                            ${isComplete
+                                    ? 'bg-gradient-to-r from-green-600 to-green-500 hover:shadow-lg'
+                                    : 'bg-gray-300 cursor-not-allowed'}
+                            `}
                         >
                             {t.orderProcessingTranslations.buttons.continueShopping}
                         </button>

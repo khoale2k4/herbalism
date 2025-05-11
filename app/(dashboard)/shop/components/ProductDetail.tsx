@@ -378,8 +378,8 @@ export default function ProductDetail({ slug }: { slug: string }) {
 
                             <div className="flex items-center space-x-4">
                                 <button
-                                    disabled={adding}
-                                    className={`flex-1 bg-[#3e4f3d] hover:bg-[#747c61] text-white py-3 rounded-md font-medium flex items-center justify-center ${adding ? 'opacity-70 cursor-not-allowed' : ''}`}
+                                    disabled={adding || quantity > (selectedSizeStock?.stock || 0)}
+                                    className={`flex-1 bg-[#3e4f3d] hover:bg-[#747c61] text-white py-3 rounded-md font-medium flex items-center justify-center ${adding || quantity > (selectedSizeStock?.stock || 0) ? 'opacity-70 cursor-not-allowed' : ''}`}
                                     onClick={(e) => handleAddToCart(e)}
                                 >
                                     {

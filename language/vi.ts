@@ -4,6 +4,7 @@ export default {
         home: "Trang chủ",
         about: "Giới thiệu",
         products: "Sản phẩm",
+        guest: "Khách",
         blogs: "Bài viết",
         contact: "Liên hệ",
         cart: "Giỏ hàng",
@@ -313,6 +314,53 @@ export default {
         shopOurProducts: "Khám phá sản phẩm",
         noProductsFound: "Không tìm thấy sản phẩm nào phù hợp với tiêu chí của bạn.",
     },
+    orders: {
+        loadingOrders: 'Đang tải đơn hàng...',
+        errorLoadOrders: 'Lỗi khi tải đơn hàng',
+        processing: 'Đang xử lý...',
+        cancelOrder: {
+            title: "Huỷ đơn hàng",
+            message: "Bạn có chắc muốn huỷ đơn hàng này không? Hành động này sẽ không thể hoàn tác.",
+            confirm: 'Đúng, huỷ đơn hàng',
+            cancel: "Không, giữ lại đơn hàng",
+        },
+        receiveOrder: {
+            title: "Xác nhận đã nhận hàng",
+            message: "Bạn đã nhận được đơn hàng này chưa? Vui lòng xác nhận để hoàn tất đơn hàng.",
+            confirm: 'Đã nhận hàng',
+            cancel: "Chưa nhận",
+        },
+        title: 'Đơn hàng của tôi',
+        description: 'Xem và quản lý các đơn hàng của bạn',
+        orderHistory: 'Lịch sử đơn hàng',
+        searchPlaceholder: "Tìm kiếm đơn hàng hoặc sản phẩm...",
+        status: {
+            all: "Tất cả trạng thái",
+            pending: 'Chờ xác nhận',
+            processing: 'Đang xử lý',
+            shipped: 'Đã giao',
+            completed: 'Hoàn tất',
+            cancelled: 'Đã huỷ'
+        },
+        newest: 'Mới nhất trước',
+        oldest: 'Cũ nhất trước',
+        noOrders: 'Không tìm thấy đơn hàng nào',
+        clearFilter: 'Xoá bộ lọc',
+        items: 'Sản phẩm trong đơn',
+        size: 'Kích cỡ:',
+        quantity: 'Số lượng:',
+        orderSummary: 'Tóm tắt đơn hàng',
+        subtotal: 'Tạm tính',
+        shipping: 'Phí vận chuyển',
+        customerInfo: 'Thông tin khách hàng',
+        name: 'Tên:',
+        email: 'Email:',
+        shippingAddress: 'Địa chỉ giao hàng',
+        orderTracking: 'Đơn hàng #',
+        tracking: 'Mã vận đơn:',
+        cancel: 'Huỷ đơn',
+        received: 'Xác nhận đã nhận hàng'
+    },
     about: {
         title: "Về chúng tôi",
         description: "Chúng tôi là ai và làm gì để tạo ra sự khác biệt.",
@@ -331,7 +379,6 @@ export default {
             excerpt: "Tại Herbalism, chúng tôi luôn nỗ lực cân bằng giữa chất lượng, tính bền vững và khả năng tiếp cận. Khám phá điều gì tạo nên một doanh nghiệp dựa trên giá trị.",
             readMore: "XEM THÊM"
         },
-
         articles: {
             1: {
                 title: "5 loại thảo mộc thích nghi giúp chống lại căng thẳng",
