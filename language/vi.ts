@@ -257,7 +257,7 @@ export default {
     },
     shipping: {
         title: "MIỄN PHÍ VẬN CHUYỂN",
-        description: "Đơn hàng từ 1.000.000 VNĐ trở lên được miễn phí vận chuyển trong Canada."
+        description: "Đơn hàng từ 1.000.000 VNĐ trở lên được miễn phí vận chuyển."
     },
     customerService: {
         title: "DỊCH VỤ KHÁCH HÀNG",

@@ -285,7 +285,7 @@ export default {
     },
     shipping: {
         title: "FREE SHIPPING",
-        description: "Orders over $75 qualify for free shipping within Canada."
+        description: "Orders over 1.000.000 VNĐ qualify for free shipping within Canada."
     },
     customerService: {
         title: "CUSTOMER SERVICE",
@@ -522,7 +522,7 @@ export default {
         productLeft: "Stock Left",
         addCart: "Add to cart",
         addToCartSuccess: "Added to cart successfully",
-        freeShipping: "Free shipping on orders over $75",
+        freeShipping: "Free shipping on orders over 1.000.000 VNĐ",
         quality: "Quality Assurance",
         refundIn30Days: "Refund in 30 days",
         productDetail: "Product Details",

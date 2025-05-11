@@ -57,20 +57,20 @@ const Navbar = () => {
   const [isMobile, setIsMobile] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
   const messages: Message[] = [
-    {
-      message: t.navbar.message1,
-      link: {
-        link: '/learn',
-        title: t.navbar.seeMore
-      }
-    },
-    {
-      message: t.navbar.message2,
-      link: {
-        link: '/blog',
-        title: t.navbar.seeMore
-      }
-    },
+    // {
+    //   message: t.navbar.message1,
+    //   link: {
+    //     link: '/learn',
+    //     title: t.navbar.seeMore
+    //   }
+    // },
+    // {
+    //   message: t.navbar.message2,
+    //   link: {
+    //     link: '/blog',
+    //     title: t.navbar.seeMore
+    //   }
+    // },
     {
       message: t.navbar.message3,
       link: {
