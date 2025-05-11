@@ -214,7 +214,7 @@ export class OrderService {
             }
 
             products.push(productPlain);
-            itemPrices.push( sizeStock.price * item.quantity);
+            itemPrices.push(sizeStock.price * item.quantity);
         }
 
         return { itemPrices, products };
@@ -259,7 +259,7 @@ export class OrderService {
             })
         );
         const totalPrice = itemPrices.reduce((total, price) => total + price, 0);
-        let finalPrice = totalPrice;
+        let finalPrice = totalPrice + this.feeService.calculateFee(totalPrice);
         console.log(finalPrice);
         if (dto.voucherId !== undefined) {
             const voucher = await this.voucherService.findById(dto.voucherId);
@@ -279,7 +279,7 @@ export class OrderService {
         const order = await this.orderModel.create({
             customerId: dto.customerId,
             addressId: dto.addressId,
-            totalPrice: finalPrice + this.feeService.calculateFee(0),
+            totalPrice: finalPrice,
             status: 'pending',
             trackingNumber: trackingNumber,
             paymentMethod: dto.paymentMethod
@@ -347,7 +347,25 @@ export class OrderService {
         return await this.orderModel.findOne({
             where: {
                 id
-            }
+            },
+            include: [
+                {
+                    model: Customer,
+                    attributes: ['id', 'name', 'mail'],
+                },
+                {
+                    model: OrderDetail,
+                    include: [
+                        {
+                            model: Product,
+                            attributes: ['id', 'name', 'price'],
+                        },
+                    ],
+                },
+                {
+                    model: Address,
+                }
+            ],
         })
     }
 }
