@@ -153,21 +153,21 @@ export default function PrivacyPolicy() {
                         <div className="flex space-x-4">
                             <button
                                 onClick={() => router.push('/')}
-                                className="text-[#3e4f3d] hover:text-[#2d3a2c] transition-colors duration-200"
+                                className="text-[#3e4f3d] hover:text-[#d4b642] transition-colors duration-200"
                             >
                                 Continue Shopping
                             </button>
                             <span className="text-gray-300">|</span>
                             <button
                                 onClick={() => router.push('/delivery-policy')}
-                                className="text-[#3e4f3d] hover:text-[#2d3a2c] transition-colors duration-200"
+                                className="text-[#3e4f3d] hover:text-[#d4b642] transition-colors duration-200"
                             >
                                 Delivery Policy
                             </button>
                             <span className="text-gray-300">|</span>
                             <button
                                 onClick={() => router.push('/terms-of-service')}
-                                className="text-[#3e4f3d] hover:text-[#2d3a2c] transition-colors duration-200"
+                                className="text-[#3e4f3d] hover:text-[#d4b642] transition-colors duration-200"
                             >
                                 Terms and Conditions
                             </button>
