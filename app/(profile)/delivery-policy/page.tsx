@@ -11,6 +11,7 @@ import {
     PhoneCall
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import ContactSection from '../components/Contact';
 
 export default function DeliveryPolicy() {
     const router = useRouter();
@@ -157,25 +158,7 @@ export default function DeliveryPolicy() {
                     </div>
                 </div>
 
-                {/* Contact Section */}
-                <div className="bg-[#f5f7f5] px-8 py-6 border-t border-gray-200">
-                    <div className="flex items-center justify-center">
-                        <div className="bg-white p-6 rounded-xl shadow-sm max-w-lg text-center">
-                            <div className="flex justify-center mb-4">
-                                <div className="bg-[#e8ece8] p-3 rounded-full">
-                                    <PhoneCall size={24} className="text-[#3e4f3d]" />
-                                </div>
-                            </div>
-                            <h3 className="text-xl font-semibold mb-2">Have questions about delivery?</h3>
-                            <p className="text-gray-600 mb-4">
-                                Our customer service team is here to help you with any questions about your delivery.
-                            </p>
-                            <button className="bg-[#3e4f3d] hover:bg-[#4d5f4c] text-white py-2 px-6 rounded-lg transition-colors duration-200">
-                                Contact Support
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <ContactSection />
 
                 {/* Footer */}
                 <div className="bg-[#f5f7f5] px-8 py-6 border-t border-gray-200">
@@ -184,6 +167,13 @@ export default function DeliveryPolicy() {
                             © {new Date().getFullYear()} Herbalism. All rights reserved.
                         </p>
                         <div className="flex space-x-4">
+                            <button
+                                onClick={() => router.push('/')}
+                                className="text-[#3e4f3d] hover:text-[#2d3a2c] transition-colors duration-200"
+                            >
+                                Continue Shopping
+                            </button>
+                            <span className="text-gray-300">|</span>
                             <button
                                 onClick={() => router.push('/privacy-policy')}
                                 className="text-[#3e4f3d] hover:text-[#2d3a2c] transition-colors duration-200"
