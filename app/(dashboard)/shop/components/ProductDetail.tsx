@@ -7,7 +7,6 @@ import { CartOperation, CommentOperation, ProductOperation } from "@/lib/main";
 import { Product } from "@/types/product";
 import Image from "next/image";
 import { comment } from "postcss";
-import { useNotification } from "@/hooks/useNotification";
 import NotFoundPage from "@/app/not-found";
 import CustomLoadingElement from "@/app/loading";
 import { getTokenFromCookie } from "@/app/utils/token";
@@ -16,6 +15,7 @@ import { useCurrency } from "@/hooks/useCurrency";
 import { formatPrice } from "@/app/utils/format-currency";
 import { BlogContent } from "../../blog/components/BlogContent";
 import { addProductToLocalCart } from "@/app/utils/localCart";
+import { useNotification } from "@/app/Providers/Notification";
 
 interface Review {
     id: string;
@@ -63,10 +63,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
     const commentOp = new CommentOperation();
     const cartOp = new CartOperation();
     const [isCommented, setIsCommented] = useState(false);
-    const [notification, setNotification] = useState<{
-        type: 'success' | 'error';
-        message: string;
-    } | null>(null);
+    const { showNotification } = useNotification();
 
     const handleAddToCart = async (e: React.MouseEvent) => {
         try {
@@ -85,7 +82,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
                         price: product?.size_stock.find(st => st.size === selectedSize)?.price ?? 0
                     }
                 });
-                setNotification({
+                showNotification({
                     type: 'success',
                     message: t.product.addedToCartSuccess
                 });
@@ -97,27 +94,24 @@ export default function ProductDetail({ slug }: { slug: string }) {
                 }, token);
 
                 if (response.success) {
-                    setNotification({
+                    showNotification({
                         type: 'success',
                         message: t.product.addedToCartSuccess
                     });
                 } else {
-                    setNotification({
+                    showNotification({
                         type: 'error',
                         message: t.product.addToCartError
                     });
                 }
             }
         } catch (error) {
-            setNotification({
+            showNotification({
                 type: 'error',
                 message: t.product.addToCartError + error
             });
         } finally {
             setAdding(false);
-            setTimeout(() => {
-                setNotification(null);
-            }, 5000);
         }
     };
 
@@ -225,23 +219,6 @@ export default function ProductDetail({ slug }: { slug: string }) {
     return (
         <div className="w-full bg-[#fdf8f7] min-h-screen"
         >
-            {notification && (
-                <div className={`fixed bottom-4 right-4 z-50 p-4 rounded-lg shadow-lg ${notification.type === 'success' ? 'bg-green-500' : 'bg-red-500'
-                    } text-white animate-fade-in-down`}>
-                    <div className="flex items-center">
-                        {notification.type === 'success' ? (
-                            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                        ) : (
-                            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        )}
-                        <span>{notification.message}</span>
-                    </div>
-                </div>
-            )}
             <div className="max-w-7xl mx-auto px-4 py-10">
                 <nav className="text-sm text-gray-500 mb-6">
                     <ol className="flex space-x-2">

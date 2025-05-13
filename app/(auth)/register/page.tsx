@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useLanguage } from '@/hooks/useLanguage';
 import { AuthOperation } from '@/lib/main';
 import { useRouter } from 'next/navigation';
+import { useNotification } from '@/app/Providers/Notification';
 
 const Register = () => {
     const { t } = useLanguage();
@@ -19,10 +20,7 @@ const Register = () => {
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [isLoading, setIsLoading] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
-    const [notification, setNotification] = useState<{
-        type: 'success' | 'error';
-        message: string;
-    } | null>(null);
+    const { showNotification } = useNotification();
 
     const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setIsChecked(event.target.checked);
@@ -98,7 +96,7 @@ const Register = () => {
         try {
             const response = await authOp.register(formData.email, formData.password, formData.fullName);
             if (response.success) {
-                setNotification({
+                showNotification({
                     type: 'success',
                     message: t.registerPage.notification.success
                 });
@@ -114,12 +112,12 @@ const Register = () => {
             } else {
                 console.log(response.message,  response.message === "Tài khoản đã tồn tại")
                 if (response.message === "Tài khoản đã tồn tại") {
-                    setNotification({
+                    showNotification({
                         type: 'error',
                         message: t.registerPage.notification.existedEmail
                     });
                 } else {
-                    setNotification({
+                    showNotification({
                         type: 'error',
                         message: t.registerPage.notification.error
                     });
@@ -127,15 +125,12 @@ const Register = () => {
             }
         } catch (error) {
             console.error('Lỗi đăng ký:', error);
-            setNotification({
+            showNotification({
                 type: 'error',
                 message: t.registerPage.notification.error
             });
         } finally {
             setIsLoading(false);
-            setTimeout(() => {
-                setNotification(null);
-            }, 5000);
         }
     };
 
@@ -152,25 +147,6 @@ const Register = () => {
                 <div className="absolute top-40 right-10 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
                 <div className="absolute bottom-20 left-1/4 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
             </div>
-
-            {notification && (
-                <div className={`fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg ${notification.type === 'success' ? 'bg-green-500' : 'bg-red-500'
-                    } text-white animate-fade-in-down`}>
-                    <div className="flex items-center">
-                        {notification.type === 'success' ? (
-                            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                        ) : (
-                            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        )}
-                        <span>{notification.message}</span>
-                    </div>
-                </div>
-            )}
-
             <div className="w-full max-w-md px-6 py-8 bg-white rounded-xl shadow-lg z-10">
                 {/* Logo */}
                 <div className="flex justify-center mb-6">
