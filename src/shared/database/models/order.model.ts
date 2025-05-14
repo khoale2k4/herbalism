@@ -24,6 +24,10 @@ export class Order extends Model {
     @Column({ type: DataType.DECIMAL(10, 2), allowNull: false })
     totalPrice: number;
 
+    @Default(0)
+    @Column({ type: DataType.DECIMAL(10, 2), allowNull: false })
+    shippingFee: number;
+
     @Column({type: DataType.TEXT})
     trackingNumber: string;
 

@@ -147,13 +147,15 @@ export class OrderService {
             const { itemPrices, products } = await this.validateItemsAndCalculateTotal(dto.items, t);
 
             const subtotal = itemPrices.reduce((total, price) => total + price, 0);
-            const totalPrice = subtotal + this.feeService.calculateFee(subtotal);
+            const totalPrice = subtotal
+            const fee = this.feeService.calculateFee(subtotal);
 
             const trackingNumber = await this.getTrackingNumber();
             const order = await this.orderModel.create({
                 customerId: 'guest-id',
                 status: 'pending',
                 totalPrice: totalPrice,
+                shippingFee: fee,
                 addressId: address.id,
                 trackingNumber: trackingNumber,
                 paymentMethod: dto.paymentMethod
@@ -259,7 +261,8 @@ export class OrderService {
             })
         );
         const totalPrice = itemPrices.reduce((total, price) => total + price, 0);
-        let finalPrice = totalPrice + this.feeService.calculateFee(totalPrice);
+        let finalPrice = totalPrice;
+        const fee = this.feeService.calculateFee(totalPrice);
         console.log(finalPrice);
         if (dto.voucherId !== undefined) {
             const voucher = await this.voucherService.findById(dto.voucherId);
@@ -280,6 +283,7 @@ export class OrderService {
             customerId: dto.customerId,
             addressId: dto.addressId,
             totalPrice: finalPrice,
+            shippingFee: fee,
             status: 'pending',
             trackingNumber: trackingNumber,
             paymentMethod: dto.paymentMethod
