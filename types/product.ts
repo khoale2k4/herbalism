@@ -24,7 +24,7 @@ export type Tab = {
     description: string
 }
 
-type Size_Stock = {
+export type Size_Stock = {
     size: string,
     stock: number,
     price: number

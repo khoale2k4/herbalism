@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo } from "react";
 import { Star, Heart, ShoppingCart, Truck, Shield, RotateCcw, ChevronDown, ChevronUp, Minus, Plus, Leaf } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { CartOperation, CommentOperation, ProductOperation } from "@/lib/main";
-import { Product } from "@/types/product";
+import { Product, Size_Stock } from "@/types/product";
 import Image from "next/image";
 import { comment } from "postcss";
 import NotFoundPage from "@/app/not-found";
@@ -67,6 +67,33 @@ export default function ProductDetail({ slug }: { slug: string }) {
     const cartOp = new CartOperation();
     const [isCommented, setIsCommented] = useState(false);
     const { showNotification } = useNotification();
+
+    function sortSizeStock(sizeStockArray: Size_Stock[]): Size_Stock[] {
+        const sizeOrder = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+
+        return sizeStockArray.sort((a, b) => {
+            const aSize = a.size.toUpperCase();
+            const bSize = b.size.toUpperCase();
+
+            const aIndex = sizeOrder.indexOf(aSize);
+            const bIndex = sizeOrder.indexOf(bSize);
+
+            if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
+            if (aIndex !== -1) return -1;
+            if (bIndex !== -1) return 1;
+
+            const aNum = parseFloat(aSize);
+            const bNum = parseFloat(bSize);
+
+            if (!isNaN(aNum) && !isNaN(bNum)) {
+                return aNum - bNum;
+            }
+
+            // Fallback theo chữ cái
+            return aSize.localeCompare(bSize);
+        });
+    }
+
 
     const handleAddToCart = async (e: React.MouseEvent) => {
         try {
@@ -182,7 +209,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
                 setProduct(response.data);
 
                 if (response.data.size_stock.length > 0) {
-                    setSelectedSize(response.data.size_stock[0].size);
+                    setSelectedSize(sortSizeStock(response.data.size_stock)[0].size);
                 }
 
                 const transformedTabs = response.data.tabs.map((tab: any, index: any) => ({
@@ -322,11 +349,11 @@ export default function ProductDetail({ slug }: { slug: string }) {
                                 </div>
 
                                 <div className="flex flex-wrap gap-3">
-                                    {product.size_stock.map((sizeStock) => (
+                                    {sortSizeStock(product.size_stock).map((sizeStock) => (
                                         <button
                                             key={sizeStock.size}
                                             className={`h-10 px-4 border rounded-md flex items-center justify-center font-medium 
-                      ${selectedSize === sizeStock.size
+      ${selectedSize === sizeStock.size
                                                     ? 'border-[#3e4f3d] bg-white text-[#3e4f3d]'
                                                     : 'border-gray-300 text-gray-700 hover:border-gray-400'}`}
                                             onClick={() => setSelectedSize(sizeStock.size)}
