@@ -147,7 +147,20 @@ export class OrderService {
             const { itemPrices, products } = await this.validateItemsAndCalculateTotal(dto.items, t);
 
             const subtotal = itemPrices.reduce((total, price) => total + price, 0);
-            const totalPrice = subtotal
+            let totalPrice = subtotal;
+            if (dto.voucherId !== undefined) {
+                const voucher = await this.voucherService.findById(dto.voucherId);
+                console.log(voucher)
+                if (voucher) {
+                    console.log(voucher.discount)
+                    if (voucher.type === 'amount') {
+                        totalPrice -= voucher.discount;
+                    } else if (voucher.type === 'percent') {
+                        totalPrice -= (voucher.discount * totalPrice);
+                    }
+                    totalPrice = (totalPrice < 0 ? 0 : totalPrice);
+                }
+            }
             const fee = this.feeService.calculateFee(subtotal);
 
             const trackingNumber = await this.getTrackingNumber();
