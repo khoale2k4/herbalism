@@ -200,4 +200,23 @@ export class OrderController {
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(this.response);
         }
     }
+
+    @Get('tracking/:number')
+    // @UseGuards(JwtAuthGuard)
+    async getByTrackingNumber(@Param('number') number: string, @Res() res, @Req() req) {
+        try {
+            const order = await this.orderService.getByTrackingNumber(number);
+            if (!order) {
+                this.response.initResponse(false, "Lấy đơn hàng không thành công", order);
+                return res.status(HttpStatus.NOT_FOUND).json(this.response);
+            } else {
+                this.response.initResponse(true, "Lấy đơn hàng thành công", order);
+                return res.status(HttpStatus.OK).json(this.response);
+            }
+        } catch (error) {
+            console.log(error);
+            this.response.initResponse(false, "Đã xảy ra lỗi. Vui lòng thử lại", null);
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(this.response);
+        }
+    }
 }

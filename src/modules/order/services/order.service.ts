@@ -507,4 +507,12 @@ export class OrderService {
             ],
         })
     }
+
+    async getByTrackingNumber(number: string) {
+        return await this.orderModel.findOne({
+            where: {
+                trackingNumber: number
+            }
+        });
+    }
 }
