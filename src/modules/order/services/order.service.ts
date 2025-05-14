@@ -171,6 +171,8 @@ export class OrderService {
                 shippingFee: fee,
                 addressId: address.id,
                 note: dto.note,
+                phone: dto.address.phone,
+                email: dto.address.email,
                 trackingNumber: trackingNumber,
                 paymentMethod: dto.paymentMethod
             }, { transaction: t });

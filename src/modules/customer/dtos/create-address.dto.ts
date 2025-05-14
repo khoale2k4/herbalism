@@ -17,4 +17,8 @@ export class CreateAddressDto {
     province: string;
     @IsOptional()
     zipCode: string;
+    @IsOptional()
+    phone?: string;
+    @IsOptional()
+    email?: string;
 }

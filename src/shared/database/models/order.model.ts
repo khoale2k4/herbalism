@@ -32,6 +32,12 @@ export class Order extends Model {
     note: string;
 
     @Column({type: DataType.TEXT})
+    phone: string;
+
+    @Column({type: DataType.TEXT})
+    email: string;
+
+    @Column({type: DataType.TEXT})
     trackingNumber: string;
 
     @Column({
