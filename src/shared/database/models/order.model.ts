@@ -29,6 +29,9 @@ export class Order extends Model {
     shippingFee: number;
 
     @Column({type: DataType.TEXT})
+    note: string;
+
+    @Column({type: DataType.TEXT})
     trackingNumber: string;
 
     @Column({

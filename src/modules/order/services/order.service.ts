@@ -170,6 +170,7 @@ export class OrderService {
                 totalPrice: totalPrice,
                 shippingFee: fee,
                 addressId: address.id,
+                note: dto.note,
                 trackingNumber: trackingNumber,
                 paymentMethod: dto.paymentMethod
             }, { transaction: t });
@@ -296,6 +297,7 @@ export class OrderService {
             customerId: dto.customerId,
             addressId: dto.addressId,
             totalPrice: finalPrice,
+            note: dto.note,
             shippingFee: fee,
             status: 'pending',
             trackingNumber: trackingNumber,

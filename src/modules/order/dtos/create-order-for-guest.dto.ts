@@ -7,6 +7,8 @@ export class CreateOrderForGuestDto {
     @IsOptional()
     voucherId?: string;
     @IsOptional()
+    note?: string;
+    @IsOptional()
     paymentMethod: 'cod' | 'bank';
     @IsOptional()
     address: CreateAddressDto
