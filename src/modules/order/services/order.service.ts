@@ -20,6 +20,7 @@ import { ProductImages } from 'src/shared/database/models/product-image.dto';
 import { Address } from 'src/shared/database/models/address.model';
 import { VoucherService } from 'src/modules/voucher/voucher.service';
 import { MailService } from 'src/modules/mail/mail.service';
+import { Transaction } from 'sequelize';
 
 @Injectable()
 export class OrderService {
@@ -140,7 +141,7 @@ export class OrderService {
         });
     }
 
-    async formatAddress(address: Address) {
+    formatAddress(address: Address) {
         const parts = [
             address.apartment,
             address.address,
@@ -153,15 +154,16 @@ export class OrderService {
         return parts.filter(Boolean).join(', ');
     }
 
-    async getMailBody(order: Order) {
-        console.log(order);
+    async getMailBody(order: Order, isGuest = false, transaction?: Transaction) {
         const orderDate = new Date(order.createdAt).toLocaleDateString("vi-VN");
         const address = await this.addressModel.findOne({
             where: {
-                id: order.addressId
-            }
+                id: order?.get('addressId')
+            },
+            transaction
         });
-        const shippingAddress = address ? this.formatAddress(address) : 'Không có địa chỉ';
+        console.log(address?.dataValues);
+        const shippingAddress = address ? this.formatAddress(address?.dataValues) : 'Không có địa chỉ';
 
 
         return `
@@ -229,14 +231,14 @@ export class OrderService {
     
         <div class="order-info">
           <h3>Thông tin đơn hàng</h3>
-          <p><strong>Mã đơn hàng:</strong> #${order.trackingNumber}</p>
+          <p><strong>Mã đơn hàng:</strong> #${order?.get('trackingNumber')?? "Không có thông tin"}</p>
           <p><strong>Ngày đặt:</strong> ${orderDate}</p>
-          <p><strong>Tên khách hàng:</strong> ${order.customer}</p>
-          <p><strong>Số điện thoại:</strong> ${order.phone}</p>
+          <p><strong>Tên khách hàng:</strong> ${order?.get('firstName')?? "" + order?.get('lastName')?? ""}</p>
+          <p><strong>Số điện thoại:</strong> ${order?.get('phone')?? "Không có thông tin"}</p>
           <p><strong>Địa chỉ giao hàng:</strong> ${shippingAddress}</p>
-          <p><strong>Phương thức thanh toán:</strong> ${order.paymentMethod}</p>
-          <p><strong>Tổng sản phẩm:</strong> ${order.totalPrice}₫</p>
-          <p><strong>Tiền ship:</strong> ${order.shippingFee}₫</p>
+          <p><strong>Phương thức thanh toán:</strong> ${order?.get('paymentMethod')?? "Không có thông tin"}</p>
+          <p><strong>Tổng sản phẩm:</strong> ${order?.get('totalPrice')?? "Không có thông tin"}₫</p>
+          <p><strong>Tiền ship:</strong> ${order?.get('shippingFee')?? "Không có thông tin"}₫</p>
         </div>
     
         <div class="footer">
@@ -251,7 +253,7 @@ export class OrderService {
     async createOrderForGuest(dto: CreateOrderForGuestDto) {
         return await this.sequelize.transaction(async (t) => {
             const address = await this.addressModel.create({
-                ...dto.address, // hoặc dto.address.firstName, dto.address.lastName, ...
+                ...dto.address, 
                 customerId: 'guest-id',
                 city: ''
             }, { transaction: t });
@@ -288,7 +290,7 @@ export class OrderService {
                 paymentMethod: dto.paymentMethod
             }, { transaction: t });
             if (dto.address && dto.address.email) {
-                // await this.mailService.sendMail(dto.address.email, "Order #" + trackingNumber, await this.getMailBody(order));
+                await this.mailService.sendMail(dto.address.email, "Order #" + trackingNumber, await this.getMailBody(order, true, t));
             }
 
             await Promise.all(dto.items.map(async (item) => {
