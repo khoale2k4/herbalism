@@ -40,6 +40,7 @@ const Navbar = () => {
   const cusOp = new CustomerOperation();
   const languageOptions = [
     { value: "en", label: t.common.language.english },
+    // { value: "fr", label: "French" },
     { value: "vi", label: t.common.language.vietnamese },
   ];
   const currencyOptions = [
@@ -49,13 +50,30 @@ const Navbar = () => {
   const defaultLang = languageOptions.find(l => l.value === currentLang)?.label || "English";
   const [language, setLanguage] = useState<string>(defaultLang);
   const defaultCurrency = currencyOptions.find(c => c.value === currentCurrency)?.value || 'USD';
+  // console.log('currencyOptions.find(c => c.value === currentCurrency)?.value', currencyOptions.find(c => c.value === currentCurrency)?.value)
   const [currency, setCurrency] = useState<string>(defaultCurrency);
+  // console.log(currency, defaultCurrency, currentCurrency);
   const [user, setUser] = useState<User | null>(null);
   const [searchBoxOpen, setSearchBoxOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
+  // const cartItems = useCartStore((state) => state.cartItems);
   const animateCart = useCartStore((state) => state.animateCart);
   const messages: Message[] = [
+    // {
+    //   message: t.navbar.message1,
+    //   link: {
+    //     link: '/learn',
+    //     title: t.navbar.seeMore
+    //   }
+    // },
+    // {
+    //   message: t.navbar.message2,
+    //   link: {
+    //     link: '/blog',
+    //     title: t.navbar.seeMore
+    //   }
+    // },
     {
       message: t.navbar.message3,
       link: {
@@ -73,8 +91,6 @@ const Navbar = () => {
   ];
 
   const [cartItems, setCartItems] = useState<ItemInCart[]>([]);
-  const [lastFetchTime, setLastFetchTime] = useState<number>(0);
-  const fetchIntervalRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
     const newCurrency = currencyOptions.find(c => c.value === currentCurrency)?.value || 'USD';
@@ -88,23 +104,22 @@ const Navbar = () => {
     return () => clearInterval(interval);
   }, [messages]);
 
-  const fetchItems = useCallback(async () => {
-    const now = Date.now();
-    // Only fetch if more than 30 seconds have passed since last fetch
-    if (now - lastFetchTime < 30000) return;
-
+  const fetchItems = async () => {
     const token = getTokenFromCookie();
     if (!token) {
       const items = getLocalCart();
-      setCartItems(items.map((item) => ({
-        id: item.product.id,
-        slug: item.product.slug,
-        name: item.product.name,
-        image: (item.product.images && item.product.images.length > 0 ? item.product.images[0].url : '/img/placeholder.png'),
-        price: item.product.price,
-        size: item.size,
-        num: item.num,
-      })));
+      setCartItems(items.map((item) => {
+        return {
+          id: item.product.id,
+          slug: item.product.slug,
+          name: item.product.name,
+          image: (item.product.images && item.product.images.length > 0 ? item.product.images[0].url : '/img/placeholder.png'),
+          price: item.product.price,
+          size: item.size,
+          num: item.num,
+        }
+      })
+      );
     } else {
       const response = await cartOp.getMyCartItems(token);
       if (response.success) {
@@ -119,9 +134,7 @@ const Navbar = () => {
         setCartItems(data);
       }
     }
-    setLastFetchTime(now);
-  }, [lastFetchTime]);
-
+  }
   const fetchUser = useCallback(async () => {
     const token = getTokenFromCookie();
     if (!token) return;
@@ -139,35 +152,21 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    // Initial fetch when component mounts
-    fetchItems();
-
-    // Set up periodic fetching (every 1 minute)
-    fetchIntervalRef.current = setInterval(fetchItems, 60000);
-
-    return () => {
-      if (fetchIntervalRef.current) {
-        clearInterval(fetchIntervalRef.current);
-      }
-    };
-  }, [fetchItems]);
-
-  useEffect(() => {
     if (activeMenu === 'cart') {
-      fetchItems(); // Fetch when cart is opened
+      fetchItems();
     } else if (activeMenu === 'user') {
       fetchUser();
     }
-  }, [activeMenu, fetchItems, fetchUser]);
+  }, [activeMenu]);
 
   useEffect(() => {
     const checkScreenSize = () => {
-      const isMobileScreen = window.innerWidth <= 768;
+      const isMobileScreen = window.innerWidth <= 768; // hoặc Tailwind md breakpoint
       setIsMobile(isMobileScreen);
       if (isMobileScreen) {
-        setSearchBoxOpen(false);
+        setSearchBoxOpen(false); // ẩn searchbar ở mobile
       } else {
-        setSearchBoxOpen(true);
+        setSearchBoxOpen(true); // hiện searchbar ở desktop
       }
     };
 
@@ -200,12 +199,14 @@ const Navbar = () => {
     } else if (value === 'VND') {
       changeCurrency("VND");
     }
+    console.log(value);
   };
 
   const wordsList = [
     t.navbar.marquee.message1,
     t.navbar.marquee.message2,
     t.navbar.marquee.message3,
+    // t.navbar.marquee.message4,
   ];
 
   useEffect(() => {
@@ -214,6 +215,7 @@ const Navbar = () => {
         userMenuRef.current &&
         !userMenuRef.current.contains(event.target as Node)
       ) {
+        // Nếu click ra ngoài, đóng dropdown
         if (activeMenu === "user") {
           setActiveMenu(null);
         }
@@ -255,6 +257,17 @@ const Navbar = () => {
               variant="filled" size="sm"
             />
           </div>
+          {/* <span>|</span>
+          <div className="w-52">
+            <Dropdown
+              options={currencyOptions}
+              selectedValue={currencyOptions.find(c => c.value === currency)?.value || "usd"}
+              onSelect={handleCurrencySelect(setCurrency, currencyOptions)}
+              placeholder={t.common.chooseCurrency}
+              buttonClassName="!bg-[#3e4f3d] !text-white hover:!bg-green-700 border-none py-1"
+              variant="filled" size="sm"
+            />
+          </div> */}
         </div>
       </div>
 
@@ -292,12 +305,31 @@ const Navbar = () => {
                 </div>
               </a>
 
+              {/* Shop Dropdown */}
               <div className="relative group">
                 <span className="cursor-pointer flex items-center gap-1 py-2 border-b-2 border-transparent group-hover:border-[#6e7a34] transition-all duration-300">
-                  <a href="/shop">
+                  <a
+                    href="/shop"
+                  >
                     {t.navbar.shop}
                   </a>
+                  {/* <svg className="w-4 h-4 transform group-hover:rotate-180 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                  </svg> */}
                 </span>
+                {/* <div className="absolute top-full left-0 overflow-hidden max-h-0 group-hover:max-h-60 transition-all duration-300 w-48 bg-white shadow-lg rounded-b-lg">
+                  <div className="p-1">
+                    {["Herbs", "Teas", "Supplements"].map(label => (
+                      <a
+                        key={label}
+                        href="#"
+                        className="block p-3 hover:bg-gray-50 transition-colors rounded my-1 border-l-2 border-transparent hover:border-[#6e7a34]"
+                      >
+                        {label}
+                      </a>
+                    ))}
+                  </div>
+                </div> */}
               </div>
               <a
                 href="/blog"
@@ -334,7 +366,10 @@ const Navbar = () => {
                 >
                   <div className="relative">
                     <UserCircle size={24} className="text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-[#6e7a34] transition-colors" />
+                    {/* <span className="ab÷solute -bottom-1 -right-1 w-3 h-3 bg-[#6e7a34] rounded-full border-2 border-white dark:border-gray-900"></span> */}
                   </div>
+                  {/* <span className="hidden sm:inline text-sm font-medium text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-[#6e7a34] transition-colors">{t.common.account}</span>
+                    <ChevronDown size={16} className={`hidden sm:block text-gray-500 transition-transform duration-300 ${activeMenu === "user" ? "rotate-180" : ""}`} /> */}
                 </button>
 
                 <div
@@ -408,12 +443,14 @@ const Navbar = () => {
                       <span className="absolute top-1 left-1 w-5 h-5 bg-[#6e7a34] rounded-full animate-ping-slow opacity-60"></span>
                     )}
 
+
                     {cartItems.length > 0 && (
                       <span className="absolute -top-2 -right-2 flex items-center justify-center min-w-[18px] h-[18px] text-xs font-medium text-white bg-[#6e7a34] rounded-full px-1">
                         {cartItems.length > 9 ? '9+' : cartItems.length}
                       </span>
                     )}
                   </div>
+                  {/* <span className="hidden sm:inline text-sm font-medium text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-green-500 transition-colors">{t.common.cart}</span> */}
                 </button>
                 <CartSidebar
                   activeMenu={activeMenu}
@@ -427,6 +464,7 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
+      {/* <MarqueeText words={wordsList} speed={50} /> */}
     </>
   );
 };
