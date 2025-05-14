@@ -288,7 +288,7 @@ export class OrderService {
                 paymentMethod: dto.paymentMethod
             }, { transaction: t });
             if (dto.address && dto.address.email) {
-                await this.mailService.sendMail(dto.address.email, "Order #" + trackingNumber, await this.getMailBody(order));
+                // await this.mailService.sendMail(dto.address.email, "Order #" + trackingNumber, await this.getMailBody(order));
             }
 
             await Promise.all(dto.items.map(async (item) => {
