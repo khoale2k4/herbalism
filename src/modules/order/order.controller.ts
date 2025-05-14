@@ -73,7 +73,7 @@ export class OrderController {
     @Get('confirmDelivered/:id')
     async confirmDeliver(@Param('id') id: string, @Req() req, @Res() res) {
         try {
-            if (req.user.role === 'admin') {
+            if (req.user === undefined || req.user.role === 'admin') {
                 this.response.initResponse(false, 'Người dùng không có quyền truy cập tài nguyên này', null);
                 return res.status(HttpStatus.FORBIDDEN).json(this.response);
             }
@@ -95,7 +95,7 @@ export class OrderController {
     @Get('confirmShipped/:id')
     async confirmShipped(@Param('id') id: string, @Req() req, @Res() res) {
         try {
-            if (req.user.role === 'user') {
+            if (req.user === undefined || req.user.role === 'user') {
                 this.response.initResponse(false, 'Người dùng không có quyền truy cập tài nguyên này', null);
                 return res.status(HttpStatus.FORBIDDEN).json(this.response);
             }
