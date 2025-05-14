@@ -19,11 +19,13 @@ import { Sequelize } from 'sequelize-typescript';
 import { ProductImages } from 'src/shared/database/models/product-image.dto';
 import { Address } from 'src/shared/database/models/address.model';
 import { VoucherService } from 'src/modules/voucher/voucher.service';
+import { MailService } from 'src/modules/mail/mail.service';
 
 @Injectable()
 export class OrderService {
     constructor(
         @InjectModel(Order) private readonly orderModel: typeof Order,
+        @InjectModel(Customer) private readonly customerModel: typeof Customer,
         @InjectModel(Product) private readonly productModel: typeof Product,
         @InjectModel(CartItem) private readonly cartItemModel: typeof CartItem,
         @InjectModel(Address) private addressModel: typeof Address,
@@ -33,7 +35,8 @@ export class OrderService {
         private readonly cartService: CartService,
         private readonly feeService: FeeService,
         private readonly productService: ProductService,
-        private readonly voucherService: VoucherService
+        private readonly voucherService: VoucherService,
+        private readonly mailService: MailService
     ) {
     }
 
@@ -137,6 +140,113 @@ export class OrderService {
         });
     }
 
+    async formatAddress(address: Address) {
+        const parts = [
+            address.apartment,
+            address.address,
+            address.city,
+            address.province,
+            address.zipCode,
+            address.country
+        ];
+
+        return parts.filter(Boolean).join(', ');
+    }
+
+    async getMailBody(order: Order) {
+        const orderDate = new Date(order.createdAt).toLocaleDateString("vi-VN");
+        const address = await this.addressModel.findOne({
+            where: {
+                id: order.addressId
+            }
+        });
+        const shippingAddress = address ? this.formatAddress(address) : 'Không có địa chỉ';
+
+
+        return `
+    <!DOCTYPE html>
+    <html lang="vi">
+    <head>
+      <meta charset="UTF-8" />
+      <title>Thông báo đơn hàng</title>
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f6f9fc;
+          margin: 0;
+          padding: 0;
+        }
+        .container {
+          max-width: 600px;
+          margin: 40px auto;
+          background-color: #ffffff;
+          border-radius: 8px;
+          padding: 24px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .header {
+          text-align: center;
+          border-bottom: 1px solid #ddd;
+          padding-bottom: 16px;
+        }
+        .header h2 {
+          color: #1e40af;
+        }
+        .order-info {
+          margin-top: 20px;
+        }
+        .order-info h3 {
+          color: #111827;
+        }
+        .order-info p {
+          color: #4b5563;
+          margin: 6px 0;
+        }
+        .footer {
+          text-align: center;
+          font-size: 13px;
+          color: #9ca3af;
+          margin-top: 30px;
+        }
+        .btn {
+          display: inline-block;
+          margin-top: 20px;
+          background-color: #1d4ed8;
+          color: #ffffff;
+          padding: 10px 20px;
+          text-decoration: none;
+          border-radius: 6px;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <h2>Cảm ơn bạn đã đặt hàng!</h2>
+          <p>Đơn hàng của bạn đã được tạo thành công.</p>
+        </div>
+    
+        <div class="order-info">
+          <h3>Thông tin đơn hàng</h3>
+          <p><strong>Mã đơn hàng:</strong> #${order.trackingNumber}</p>
+          <p><strong>Ngày đặt:</strong> ${orderDate}</p>
+          <p><strong>Tên khách hàng:</strong> ${order.customer}</p>
+          <p><strong>Số điện thoại:</strong> ${order.phone}</p>
+          <p><strong>Địa chỉ giao hàng:</strong> ${shippingAddress}</p>
+          <p><strong>Phương thức thanh toán:</strong> ${order.paymentMethod}</p>
+          <p><strong>Tổng sản phẩm:</strong> ${order.totalPrice}₫</p>
+          <p><strong>Tiền ship:</strong> ${order.shippingFee}₫</p>
+        </div>
+    
+        <div class="footer">
+          © 2025 Herbalism. Mọi thắc mắc xin liên hệ hỗ trợ khách hàng.
+        </div>
+      </div>
+    </body>
+    </html>
+        `;
+    }
+
     async createOrderForGuest(dto: CreateOrderForGuestDto) {
         return await this.sequelize.transaction(async (t) => {
             const address = await this.addressModel.create({
@@ -176,6 +286,9 @@ export class OrderService {
                 trackingNumber: trackingNumber,
                 paymentMethod: dto.paymentMethod
             }, { transaction: t });
+            if (dto.address && dto.address.email) {
+                await this.mailService.sendMail(dto.address.email, "Order #" + trackingNumber, await this.getMailBody(order));
+            }
 
             await Promise.all(dto.items.map(async (item) => {
                 const product = products.find(p => p.id === item.productId);
@@ -305,6 +418,8 @@ export class OrderService {
             trackingNumber: trackingNumber,
             paymentMethod: dto.paymentMethod
         });
+        const cus = await this.customerModel.findByPk(dto.customerId);
+        await this.mailService.sendMail(cus?.mail ?? "", "Order #" + trackingNumber, await this.getMailBody(order));
         items.map(async item => {
             const product = item.get('product');
             const num = item.get('num');

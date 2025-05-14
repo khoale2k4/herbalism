@@ -18,15 +18,19 @@ import { SizeStock } from 'src/shared/database/models/size_stock.model';
 import { VoucherService } from '../voucher/voucher.service';
 import { VoucherModule } from '../voucher/voucher.module';
 import { Address } from 'src/shared/database/models/address.model';
+import { MailModule } from '../mail/mail.module';
+import { CustomerModule } from '../customer/customer.module';
 
 @Module({
     imports: [
-        SequelizeModule.forFeature([Order, CartItem, Product, OrderDetail, SizeStock, Address]), 
+        SequelizeModule.forFeature([Order, CartItem, Product, OrderDetail, SizeStock, Address, Customer]), 
         ResponseModule,
         AuthModule,
         ProductModule,
         CartModule,
-        VoucherModule
+        VoucherModule,
+        MailModule,
+        CustomerModule
     ],
     providers: [OrderService, OrderRepository, FeeService],
     controllers: [OrderController],
