@@ -154,6 +154,7 @@ export class OrderService {
     }
 
     async getMailBody(order: Order) {
+        console.log(order);
         const orderDate = new Date(order.createdAt).toLocaleDateString("vi-VN");
         const address = await this.addressModel.findOne({
             where: {
@@ -250,10 +251,10 @@ export class OrderService {
     async createOrderForGuest(dto: CreateOrderForGuestDto) {
         return await this.sequelize.transaction(async (t) => {
             const address = await this.addressModel.create({
-                ...dto.address,
+                ...dto.address, // hoặc dto.address.firstName, dto.address.lastName, ...
                 customerId: 'guest-id',
                 city: ''
-            });
+            }, { transaction: t });
             const { itemPrices, products } = await this.validateItemsAndCalculateTotal(dto.items, t);
 
             const subtotal = itemPrices.reduce((total, price) => total + price, 0);
