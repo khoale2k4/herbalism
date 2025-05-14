@@ -1,4 +1,5 @@
 'use client';
+import { formatPrice } from "@/app/utils/format-currency";
 import { OrderOperation } from "@/lib/main";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
@@ -20,7 +21,7 @@ export default function PaymentQR() {
     // "shippingFee": "30000.00",
     // "trackingNumber": "ORDER_0000035_20250514",
     const fetchOrder = async () => {
-        const response = await orderOp.getById(orderId ?? "");
+        const response = await orderOp.getByTrackingNumber(orderId ?? "");
         if (response.success) {
             const order = response.data;
             setFormData({
@@ -58,7 +59,7 @@ export default function PaymentQR() {
                     <p><strong>Receiver:</strong> LE PHUC THINH</p>
                     <p><strong>Bank:</strong> Vietcombank (VCB)</p>
                     <p><strong>Account:</strong> 0501000166665</p>
-                    <p><strong>Amount:</strong> {formData.price ?? ". . ."}</p>
+                    <p><strong>Amount:</strong> {formData.price ? formatPrice(formData.price) : ". . ."}</p>
                     <p><strong>Content:</strong> Thanh toan don hang #{formData.trackingNumber}</p>
                 </div>
 

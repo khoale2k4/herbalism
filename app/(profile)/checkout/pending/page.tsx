@@ -119,7 +119,7 @@ export default function OrderProcessingPage() {
                         setIsComplete(true);
                         return;
                     }
-                    const url = `/checkout/payment?orderId=${orderId}`;
+                    const url = `/payment?orderId=${orderId}`;
                     window.open(url, '_blank');
 
                     const step2Timeout = setTimeout(() => {
