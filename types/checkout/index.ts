@@ -5,7 +5,7 @@ export type Address = {
     province: string;
     firstName: string;
     lastName: string;
-    city: string;
+    // city: string;
     country: string;
     zipCode: string;
 }
@@ -52,7 +52,7 @@ export type CheckoutFormData = {
     address: string;
     apartment: string;
     province: string;
-    city: string;
+    // city: string;
     country: string;
     zipCode: string;
     paymentMethod: string;

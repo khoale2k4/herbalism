@@ -27,7 +27,7 @@ export default function OrderProcessingPage() {
     const [error, setError] = useState<string | null>(null);
     const { t } = useLanguage();
 
-    const createOrder = async (addressId: string, voucherId: string | null, paymentMet: 'cod' | 'bank' | null, address: any) => {
+    const createOrder = async (addressId: string, voucherId: string | null, paymentMet: 'cod' | 'bank' | null, address: any, note: string | null) => {
         try {
             const token = getTokenFromCookie();
             if (!token) {
@@ -39,7 +39,7 @@ export default function OrderProcessingPage() {
                         quantity: item.num,
                     }
                 });
-                const response = await orderOp.create(address, voucherId, paymentMet, products);
+                const response = await orderOp.create(address, voucherId, paymentMet, products, note);
                 if (response.success) {
                     addOrderToLocal(response.data.id);
                     cleanCart();
@@ -48,7 +48,7 @@ export default function OrderProcessingPage() {
                     setError(t.orderProcessingTranslations.errorMessages.createFailed || 'Tạo đơn hàng thất bại. Vui lòng thử lại.');
                 }
             } else {
-                const response = await orderOp.createFromCart(token, addressId, voucherId, paymentMet);
+                const response = await orderOp.createFromCart(token, addressId, voucherId, paymentMet, note);
                 if (response.success) {
                     return response.data.trackingNumber;
                 } else {
@@ -85,6 +85,7 @@ export default function OrderProcessingPage() {
 
         const processOrder = (data: { data: string, addressId?: string, address: any }) => {
             const voucherId = sessionStorage.getItem('voucherId');
+            const note = sessionStorage.getItem('note');
             const params = JSON.parse(data.data);
             const address = JSON.parse(data.address);
             console.log(data.address, address);
@@ -97,10 +98,10 @@ export default function OrderProcessingPage() {
                     let orderId;
                     if (data.addressId) {
                         console.log('cart');
-                        orderId = await createOrder(data.addressId, voucherId, params.id, address);
+                        orderId = await createOrder(data.addressId, voucherId, params.id, address, note);
                     } else if (address) {
                         console.log('no cart');
-                        orderId = await createOrder('', voucherId, params.id, address);
+                        orderId = await createOrder('', voucherId, params.id, address, note);
                     }
 
                     if (!orderId) {
@@ -118,6 +119,8 @@ export default function OrderProcessingPage() {
                         setIsComplete(true);
                         return;
                     }
+                    const url = `/checkout/payment?orderId=${orderId}`;
+                    window.open(url, '_blank');
 
                     const step2Timeout = setTimeout(() => {
                         setProgress(80);
@@ -130,7 +133,7 @@ export default function OrderProcessingPage() {
                         }, 5000);
 
                         return () => clearTimeout(completeTimeout);
-                    }, 2000);
+                    }, 10000);
 
                     return () => clearTimeout(step2Timeout);
                 } catch (error) {

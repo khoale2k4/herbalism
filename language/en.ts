@@ -521,6 +521,7 @@ export default {
             extraLarge: "Extra Large"
         },
         productLeft: "Stock Left",
+        outOfOrder: "Out of order",
         addCart: "Add to cart",
         addToCartSuccess: "Added to cart successfully",
         freeShipping: "Free shipping on orders over 1.000.000 VNĐ",
@@ -605,15 +606,19 @@ export default {
             countryLabel: "Country",
             countryPlaceholder: "Select country",
             firstNameLabel: "First Name",
+            firstNamePlaceholder: "First Name",
             lastNameLabel: "Last Name",
+            lastNamePlaceholder: "Last Name",
             addressPlaceholder: "Enter address",
-            apartmentLabel: "Apartment, building (optional)",
+            apartmentLabel: "Apartment, building",
             cityLabel: "City",
             cityPlaceholder: "Enter city",
             provinceLabel: "Province/City",
             provincePlaceholder: "Select province/city",
             zipCodeLabel: "Postal Code",
             zipCodePlaceholder: "Enter postal code",
+            noteLabel: "Note",
+            notePlaceholder: "Enter some note"
         },
 
         paymentStep: {

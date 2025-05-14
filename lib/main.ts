@@ -618,7 +618,7 @@ export class OrderOperation {
         }
     }
 
-    async createFromCart(token: string, addressId: string, voucherId: string | null, paymentMethod: 'cod' | 'bank' | null) {
+    async createFromCart(token: string, addressId: string, voucherId: string | null, paymentMethod: 'cod' | 'bank' | null, note: string | null) {
         try {
             const response = await fetch(this.baseUrl + '/createFromCart', {
                 method: 'POST',
@@ -630,7 +630,8 @@ export class OrderOperation {
                     {
                         addressId: addressId,
                         voucherId: voucherId,
-                        paymentMethod: paymentMethod
+                        paymentMethod: paymentMethod,
+                        note: note
                     }
                 )
             });
@@ -654,7 +655,7 @@ export class OrderOperation {
         }
     }
 
-    async create(address: any, voucherId: string | null, paymentMethod: 'cod' | 'bank' | null, products: { productId: string, quantity: number, size: string }[]) {
+    async create(address: any, voucherId: string | null, paymentMethod: 'cod' | 'bank' | null, products: { productId: string, quantity: number, size: string }[], note: string | null) {
         try {
             const response = await fetch(this.baseUrl + '/create', {
                 method: 'POST',
@@ -666,7 +667,8 @@ export class OrderOperation {
                         address: address,
                         voucherId: voucherId,
                         paymentMethod: paymentMethod,
-                        items: products
+                        items: products,
+                        note: note
                     }
                 )
             });

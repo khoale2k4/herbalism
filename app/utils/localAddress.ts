@@ -5,7 +5,7 @@ export type Address = {
     address: string;
     country: string;
     apartment: string;
-    city: string;
+    // city: string;
     province: string;
     zipCode: string;
 };

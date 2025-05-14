@@ -348,7 +348,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
                                         <Plus size={16} className={quantity >= (selectedSizeStock?.stock || 0) ? "text-gray-300" : "text-gray-600"} />
                                     </button>
                                     <span className="ml-4 text-sm text-gray-500">
-                                        {t.product.productLeft}: {Number(selectedSizeStock?.stock || 0).toFixed(0)}
+                                        {Number(selectedSizeStock?.stock) === 0 ? t.product.outOfOrder : t.product.productLeft + ":" + Number(selectedSizeStock?.stock || 0).toFixed(0)}
                                     </span>
                                 </div>
                             </div>

@@ -435,7 +435,7 @@ const OrdersPage = () => {
                                         {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
                                     </span>
                                     <span className="text-lg font-semibold text-gray-900">
-                                        {formatPrice(order.totalPrice.toString())}
+                                    {formatPrice((Number(order.totalPrice) + Number(order.shippingFee)).toString())}
                                     </span>
                                     {expandedOrder === order.id ? (
                                         <ChevronDown className="h-5 w-5 text-gray-500" />

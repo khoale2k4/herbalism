@@ -492,6 +492,7 @@ export default {
             extraLarge: "Rất lớn"
         },
         productLeft: "Còn lại trong kho",
+        outOfOrder: "Hết hàng",
         addCart: "Thêm vào giỏ hàng",
         addToCartSuccess: "Đã thêm vào giỏ hàng thành công",
         freeShipping: "Miễn phí vận chuyển cho đơn hàng từ 1.000.000 VNĐ",
@@ -687,15 +688,19 @@ export default {
             countryLabel: "Quốc gia",
             countryPlaceholder: "Chọn quốc gia",
             firstNameLabel: "Tên",
+            firstNamePlaceholder: "Tên",
             lastNameLabel: "Họ",
+            lastNamePlaceholder: "Họ",
             addressPlaceholder: "Nhập địa chỉ",
-            apartmentLabel: "Căn hộ, tòa nhà (tùy chọn)",
+            apartmentLabel: "Căn hộ, tòa nhà",
             cityLabel: "Thành phố",
             cityPlaceholder: "Nhập thành phố",
             provinceLabel: "Tỉnh/Thành phố",
             provincePlaceholder: "Chọn tỉnh/thành phố",
             zipCodeLabel: "Mã bưu điện",
             zipCodePlaceholder: "Nhập mã bưu điện",
+            noteLabel: "Ghi chú",
+            notePlaceholder: "Ghi chú cho đơn hàng"
         },
 
         paymentStep: {

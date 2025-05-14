@@ -19,6 +19,7 @@ const CheckoutPage: React.FC = () => {
     const router = useRouter();
     const success = searchParams.get('success');
     const [step, setStep] = useState(1);
+    const [note, setNote] = useState('');
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -28,7 +29,7 @@ const CheckoutPage: React.FC = () => {
         address: '',
         apartment: '',
         province: '',
-        city: '',
+        // city: '',
         country: 'VN',
         zipCode: '',
         paymentMethod: 'cod',
@@ -53,7 +54,7 @@ const CheckoutPage: React.FC = () => {
         const parts = [
             addr.apartment,
             addr.address,
-            addr.city,
+            // addr.city,
             addr.province,
             addr.zipCode,
             addr.country,
@@ -88,7 +89,7 @@ const CheckoutPage: React.FC = () => {
                 addressId: selected.id,
                 address: selected.address,
                 apartment: selected.apartment || '',
-                city: selected.city,
+                // city: selected.city,
                 province: selected.province,
                 zipCode: selected.zipCode,
                 country: selected.country,
@@ -125,8 +126,15 @@ const CheckoutPage: React.FC = () => {
 
     const handleInputChange = (e: any) => {
         const { name, value } = e.target
-        console.log('formData', formData)
-        setFormData(prev => ({ ...prev, [name]: value }))
+        if (name === 'note') {
+            noteChange(value);
+        } else {
+            setFormData(prev => ({ ...prev, [name]: value }))
+        }
+    }
+
+    const noteChange = (value: string) => {
+        setNote(value);
     }
 
     const handleNextStep = () => {
@@ -143,7 +151,7 @@ const CheckoutPage: React.FC = () => {
         if (!token) {
             saveLocalAddress({
                 address: formData.address,
-                city: formData.city,
+                // city: formData.city,
                 country: formData.country,
                 firstName: formData.firstName,
                 lastName: formData.lastName,
@@ -154,7 +162,7 @@ const CheckoutPage: React.FC = () => {
         } else {
             const response = await customerOp.addAddress(token, {
                 address: formData.address,
-                city: formData.city,
+                // city: formData.city,
                 country: formData.country,
                 firstName: formData.firstName,
                 lastName: formData.lastName,
@@ -190,7 +198,7 @@ const CheckoutPage: React.FC = () => {
                     !formData.phone ||
                     !formData.country ||
                     !formData.address ||
-                    !formData.city ||
+                    // !formData.city ||
                     !formData.province ||
                     !formData.zipCode
                 );
@@ -248,7 +256,9 @@ const CheckoutPage: React.FC = () => {
         sessionStorage.setItem('addressId', formData.addressId);
         sessionStorage.setItem('address', JSON.stringify({
             address: formData.address,
-            city: formData.city,
+            email: formData.email,
+            phone: formData.phone,
+            // city: formData.city,
             country: formData.country,
             firstName: formData.firstName,
             lastName: formData.lastName,
@@ -257,6 +267,7 @@ const CheckoutPage: React.FC = () => {
             apartment: formData.apartment
         }));
         sessionStorage.setItem('paymentMethod', JSON.stringify(passValue));
+        sessionStorage.setItem('note', note);
         if (selectedVoucher) {
             sessionStorage.setItem('voucherId', selectedVoucher?.id);
         }
@@ -364,6 +375,7 @@ const CheckoutPage: React.FC = () => {
                         {step === 1 && (
                             <AddressStep
                                 formData={formData}
+                                note={note}
                                 savedAddresses={savedAddresses}
                                 newAddress={newAddress}
                                 isChecked={isChecked}

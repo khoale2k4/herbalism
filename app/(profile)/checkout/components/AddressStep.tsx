@@ -5,6 +5,7 @@ import React, { useEffect } from 'react';
 
 type AddressStepProps = {
     formData: CheckoutFormData;
+    note: string;
     savedAddresses: Address[];
     newAddress: boolean;
     isChecked: boolean;
@@ -19,6 +20,7 @@ const AddressStep: React.FC<AddressStepProps> = ({
     formData,
     savedAddresses,
     newAddress,
+    note,
     isChecked,
     handleInputChange,
     handleAddressChange,
@@ -39,7 +41,8 @@ const AddressStep: React.FC<AddressStepProps> = ({
 
             <div className="space-y-5">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1.5">Email</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">Email
+                        <span className="text-red-500 ml-1">*</span></label>
                     <input
                         type="email"
                         name="email"
@@ -50,21 +53,10 @@ const AddressStep: React.FC<AddressStepProps> = ({
                         required
                     />
                 </div>
-                <div className="flex items-center mb-4">
-                    <input
-                        type="checkbox"
-                        checked={isChecked}
-                        id="newsletter-checkbox"
-                        onChange={handleCheckboxChange}
-                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
-                    />
-                    <label htmlFor="newsletter-checkbox" className="ml-2 text-sm font-medium text-gray-900">
-                        {t.paymentPage.addressStep.newsletterCheckbox}
-                    </label>
-                </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1.5">{t.paymentPage.addressStep.phoneLabel}</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">{t.paymentPage.addressStep.phoneLabel}
+                        <span className="text-red-500 ml-1">*</span></label>
                     <input
                         type="tel"
                         name="phone"
@@ -108,13 +100,15 @@ const AddressStep: React.FC<AddressStepProps> = ({
 
                         {!newAddress && <div>
                             <div className="relative">
+                            <label className="block text-sm font-medium text-gray-700 mb-1.5">{t.paymentPage.addressStep.selectAddressPlaceholder}
+                            <span className="text-red-500 ml-1">*</span></label>
                                 <select
                                     name="address"
                                     value={
                                         savedAddresses.find(addr =>
                                             addr.address === formData.address &&
                                             addr.apartment === formData.apartment &&
-                                            addr.city === formData.city &&
+                                            // addr.city === formData.city &&
                                             addr.province === formData.province &&
                                             addr.zipCode === formData.zipCode &&
                                             addr.country === formData.country
@@ -139,44 +133,28 @@ const AddressStep: React.FC<AddressStepProps> = ({
                             </div>
                         </div>}
 
-                        {newAddress && (<><div className="grid grid-cols-2 gap-4">
-                            <div className="mb-4">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">{t.paymentPage.addressStep.countryLabel}</label>
-                                <select
-                                    name="country"
-                                    value={formData.country}
-                                    onChange={handleInputChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    required
-                                >
-                                    <option value="">{t.paymentPage.addressStep.countryPlaceholder}</option>
-                                    <option value="US">United States</option>
-                                    <option value="VN">Vietnam</option>
-                                    <option value="CA">Canada</option>
-                                    <option value="UK">United Kingdom</option>
-                                    <option value="JP">Japan</option>
-                                    <option value="KR">South Korea</option>
-                                    <option value="OTHER">Other countries</option>
-                                </select>
-                            </div>
-                        </div>
+                        {newAddress && (<>
 
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.paymentPage.addressStep.firstNameLabel}</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.paymentPage.addressStep.firstNameLabel}
+                                        <span className="text-red-500 ml-1">*</span></label>
                                     <input
                                         type="text"
                                         name="firstName"
+                                        placeholder={t.paymentPage.addressStep.firstNamePlaceholder}
                                         value={formData.firstName}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         onChange={handleInputChange}
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.paymentPage.addressStep.lastNameLabel}</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.paymentPage.addressStep.lastNameLabel}
+                                        <span className="text-red-500 ml-1">*</span></label>
                                     <input
                                         type="text"
                                         name="lastName"
+                                        placeholder={t.paymentPage.addressStep.lastNamePlaceholder}
                                         value={formData.lastName}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         onChange={handleInputChange}
@@ -185,7 +163,8 @@ const AddressStep: React.FC<AddressStepProps> = ({
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">{t.paymentPage.addressStep.addressLabel}</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">{t.paymentPage.addressStep.addressLabel}
+                                    <span className="text-red-500 ml-1">*</span></label>
                                 <input
                                     type="text"
                                     name="address"
@@ -208,7 +187,7 @@ const AddressStep: React.FC<AddressStepProps> = ({
                             </div>
 
                             <div className="grid grid-cols-3 gap-4">
-                                <div>
+                                {/* <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-1">{t.paymentPage.addressStep.cityLabel}</label>
                                     <input
                                         type="text"
@@ -218,9 +197,10 @@ const AddressStep: React.FC<AddressStepProps> = ({
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         onChange={handleInputChange}
                                     />
-                                </div>
+                                </div> */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.paymentPage.addressStep.provinceLabel}</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.paymentPage.addressStep.provinceLabel}
+                                        <span className="text-red-500 ml-1">*</span></label>
                                     <select
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         name="province"
@@ -236,7 +216,8 @@ const AddressStep: React.FC<AddressStepProps> = ({
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.paymentPage.addressStep.zipCodeLabel}</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.paymentPage.addressStep.zipCodeLabel}
+                                        <span className="text-red-500 ml-1">*</span></label>
                                     <input
                                         type="text"
                                         name="zipCode"
@@ -246,9 +227,40 @@ const AddressStep: React.FC<AddressStepProps> = ({
                                         onChange={handleInputChange}
                                     />
                                 </div>
+                                <div className="mb-4">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.paymentPage.addressStep.countryLabel}
+                                        <span className="text-red-500 ml-1">*</span></label>
+                                    <select
+                                        name="country"
+                                        value={formData.country}
+                                        onChange={handleInputChange}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        required
+                                    >
+                                        <option value="">{t.paymentPage.addressStep.countryPlaceholder}</option>
+                                        <option value="US">United States</option>
+                                        <option value="VN">Vietnam</option>
+                                        <option value="CA">Canada</option>
+                                        <option value="UK">United Kingdom</option>
+                                        <option value="JP">Japan</option>
+                                        <option value="KR">South Korea</option>
+                                        <option value="OTHER">Other countries</option>
+                                    </select>
+                                </div>
                             </div>
                         </>)}
                     </div>
+                </div>
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.paymentPage.addressStep.noteLabel}</label>
+                    <input
+                        type="text"
+                        name="note"
+                        value={note}
+                        placeholder={t.paymentPage.addressStep.notePlaceholder}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        onChange={handleInputChange}
+                    />
                 </div>
             </div>
         </div>
