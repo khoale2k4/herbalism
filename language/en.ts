@@ -521,7 +521,7 @@ export default {
             extraLarge: "Extra Large"
         },
         productLeft: "Stock Left",
-        outOfOrder: "Out of order",
+        outOfOrder: "Out of stock",
         addCart: "Add to cart",
         addToCartSuccess: "Added to cart successfully",
         freeShipping: "Free shipping on orders over 1.000.000 VNĐ",

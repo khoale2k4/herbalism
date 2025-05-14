@@ -16,6 +16,7 @@ import { formatPrice } from "@/app/utils/format-currency";
 import { BlogContent } from "../../blog/components/BlogContent";
 import { addProductToLocalCart } from "@/app/utils/localCart";
 import { useNotification } from "@/app/Providers/Notification";
+import { useCartStore } from "@/lib/stores/cartStore";
 
 interface Review {
     id: string;
@@ -54,6 +55,8 @@ export default function ProductDetail({ slug }: { slug: string }) {
     const [selectedImage, setSelectedImage] = useState(0);
     const [showReviewForm, setShowReviewForm] = useState(false);
     const [reviews, setReviews] = useState<Review[]>([]);
+    const addToCart = useCartStore((state) => state.addToCart);
+    const resetCartAnimation = useCartStore((state) => state.resetCartAnimation);
     const [newReview, setNewReview] = useState({
         name: "",
         rating: 5,
@@ -86,6 +89,12 @@ export default function ProductDetail({ slug }: { slug: string }) {
                     type: 'success',
                     message: t.product.addedToCartSuccess
                 });
+
+                addToCart(product);
+
+                setTimeout(() => {
+                    resetCartAnimation();
+                }, 500);
             } else {
                 const response = await cartOp.addToCart({
                     productId: product?.id ?? "",
@@ -98,6 +107,11 @@ export default function ProductDetail({ slug }: { slug: string }) {
                         type: 'success',
                         message: t.product.addedToCartSuccess
                     });
+                    addToCart(product);
+
+                    setTimeout(() => {
+                        resetCartAnimation();
+                    }, 500);
                 } else {
                     showNotification({
                         type: 'error',

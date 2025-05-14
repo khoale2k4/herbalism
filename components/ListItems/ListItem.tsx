@@ -1,12 +1,61 @@
-"use client";
-
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import NewProductComponent from "./Product";
 import ImageHoverComponent from "../Item/Item";
-import useOnScreen from "@/hooks/useOnScreen";
+import { ProductOperation } from "@/lib/main";
 
-const ListItems = () => {
-    const [ref, isVisible] = useOnScreen();
+type Item = {
+    title: string;
+    images: string[];
+    price: number;
+}
+
+const ListItems = ({ ids }: { ids: string[] }) => {
+    const [items, setItems] = useState<Item[]>([]);
+    const [loading, setLoading] = useState<boolean>(true); // Trạng thái loading
+    const productOp = new ProductOperation();
+
+    const fetchItem = useCallback(async () => {
+        setLoading(true); // Bắt đầu load
+        try {
+            const results = await Promise.all(
+                ids.map(async (itemId: string) => {
+                    const response = await productOp.getById(itemId);
+                    if (response.success) {
+                        const order = response.data;
+                        return {
+                            title: order.name,
+                            price: order.price,
+                            images: order.images.map((image: any) => image.url),
+                        };
+                    }
+                    return null;
+                })
+            );
+
+            // Lọc ra item hợp lệ
+            const validItems = results.filter((item): item is Item => item !== null);
+            setItems(validItems);
+        } catch (error) {
+            console.error("Lỗi khi fetch items:", error);
+        } finally {
+            setLoading(false); // Dữ liệu đã load xong
+        }
+    }, [ids]);
+
+    useEffect(() => {
+        fetchItem()
+    }, [ids]);
+
+    // Skeleton Loader
+    const renderSkeleton = (index: number) => {
+        return (
+            <div key={`ske-${index}`} className="min-w-[250px] p-4 bg-gray-200 animate-pulse rounded-lg">
+                <div className="h-40 bg-gray-300 rounded mb-4"></div>
+                <div className="h-4 bg-gray-300 rounded mb-2"></div>
+                <div className="h-4 bg-gray-300 rounded"></div>
+            </div>
+        );
+    };
 
     return (
         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-6 pb-4 px-4">
@@ -16,19 +65,18 @@ const ListItems = () => {
 
             <div className="w-full lg:w-2/3 overflow-x-auto scroll-smooth p-2">
                 <div className="flex space-x-4 min-w-max">
-                    <div className="min-w-[250px]">
-                        <ImageHoverComponent />
-                    </div>
-                    <div className="min-w-[250px]">
-                        <ImageHoverComponent />
-                    </div>
-                    <div className="min-w-[250px]">
-                        <ImageHoverComponent />
-                    </div>
+                    {loading
+                        ? Array(5).fill(0).map((_, index) => renderSkeleton(index)) // Hiển thị skeleton khi loading
+                        : items.map((item: Item) => {
+                            return (
+                                <div key={item.title} className="min-w-[250px]">
+                                    <ImageHoverComponent images={item.images} price={item.price} title={item.title} />
+                                </div>
+                            );
+                        })}
                 </div>
             </div>
         </div>
-
     );
 };
 

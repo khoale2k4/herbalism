@@ -7,7 +7,7 @@ import { useRef } from "react";
 import ListItems from "../ListItems/ListItem";
 import { useRouter } from "next/navigation";
 
-const WellnessCollections = () => {
+const WellnessCollections = ({ ids }: { ids: string[] }) => {
   const { t } = useLanguage();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [ref, isVisible] = useOnScreen();
@@ -81,13 +81,13 @@ const WellnessCollections = () => {
             <p className="text-gray-600 max-w-2xl mx-auto mt-4 text-sm sm:text-base">
               {t.collections.description}
             </p>
-            <button 
-            className="mt-6 bg-[#3e4f3d] hover:bg-[#747c61] text-white px-6 py-2 text-sm sm:text-base rounded-full transition duration-300"
-            onClick={() => {router.push('/blog')}}>
+            <button
+              className="mt-6 bg-[#3e4f3d] hover:bg-[#747c61] text-white px-6 py-2 text-sm sm:text-base rounded-full transition duration-300"
+              onClick={() => { router.push('/blog') }}>
               {t.collections.button}
             </button>
           </div>
-          <ListItems />
+          <ListItems ids={ids}/>
           {/* <div className="relative max-w-6xl mx-auto px-6">
             <h2 className="text-2xl font-semibold  text-gray-800 mb-6">{t.collections.subtitle}</h2>
 

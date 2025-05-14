@@ -43,7 +43,7 @@ const HomePage: FC<Props> = () => {
     const ibProps2: ImageBannerProps = {
         title: t.homeImageBanner1.title,
         description: t.homeImageBanner1.description1,
-        imageUrl: "/img/enki-lab2.png",
+        imageUrl: "/img/herbalism-08.jpg",
         button: null,
         description2: null,
         imagePos: "left",
@@ -60,7 +60,7 @@ const HomePage: FC<Props> = () => {
         },
         title: t.banner.welcome1,
         title2: null,
-        videoUrl: "/vid/herbalism-spagyric-vietnam.mp4"
+        videoUrl: "/vid/forest.mp4"
     }
     // HeroImageProps = {
     //     h1_content: t.banner.welcome1,
@@ -77,10 +77,14 @@ const HomePage: FC<Props> = () => {
     //     }
 
     // }
+        const ids = [
+            'c6217fa9-6e8c-42ca-8e98-732d0d19f992',
+            'lions-mane-spagyric-tincture',
+        ]
 
     return <div className="relative w-full">
         <VideoHeroSection {...videoHeroProps} />
-        <WellnessCollections />
+        <WellnessCollections ids={ids}/>
         {/* <ListItems /> */}
         <ImageBanner {...ibProps1} />
         {/* <VideoBanner {...vbProps} /> */}
