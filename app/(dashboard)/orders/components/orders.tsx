@@ -39,11 +39,12 @@ interface Order {
     id: string;
     customerId: string;
     addressId: string | null;
-    totalPrice: string;
+    totalPrice: number;
     trackingNumber: string | null;
     status: OrderStatus;
     createdAt: string;
     updatedAt: string;
+    shippingFee: number;
     customer: {
         id: string;
         name: string;
@@ -434,7 +435,7 @@ const OrdersPage = () => {
                                         {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
                                     </span>
                                     <span className="text-lg font-semibold text-gray-900">
-                                        {formatPrice(order.totalPrice)}
+                                        {formatPrice(order.totalPrice.toString())}
                                     </span>
                                     {expandedOrder === order.id ? (
                                         <ChevronDown className="h-5 w-5 text-gray-500" />
@@ -488,31 +489,16 @@ const OrdersPage = () => {
                                                 <h4 className="font-medium text-gray-900 mb-3">{t.orders.orderSummary}</h4>
                                                 <div className="bg-gray-50 p-4 rounded-md">
                                                     <div className="grid grid-cols-2 gap-y-2 text-sm">
-                                                        <div className="text-gray-500">Subtotal</div>
-                                                        <div className="text-right">{formatPrice(
-                                                            (order.orderDetails.reduce((sum, item) => {
-                                                                const price = Number(item.price_at_order) || 0;
-                                                                const quantity = Number(item.num) || 0;
-                                                                return sum + (price * quantity);
-                                                            }, 0)
-                                                            ).toString()
-                                                        )}
+                                                        <div className="text-gray-500">{t.orders.subtotal}</div>
+                                                        <div className="text-right">{formatPrice(order.totalPrice.toString())}
                                                         </div>
 
                                                         <div className="text-gray-500">{t.orders.shipping}</div>
-                                                        <div className="text-right">{formatPrice(
-                                                            (Number(order.totalPrice) -
-                                                                order.orderDetails.reduce((sum, item) => {
-                                                                    const price = Number(item.price_at_order) || 0;
-                                                                    const quantity = Number(item.num) || 0;
-                                                                    return sum + (price * quantity);
-                                                                }, 0)
-                                                            ).toString()
-                                                        )}</div>
+                                                        <div className="text-right">{formatPrice(order.shippingFee.toString())}</div>
 
-                                                        <div className="font-medium text-gray-900 mt-2">{t.orders.subtotal}</div>
+                                                        <div className="font-medium text-gray-900 mt-2">{t.orders.total}</div>
                                                         <div className="font-medium text-gray-900 text-right mt-2">
-                                                            {formatPrice(order.totalPrice)}
+                                                            {formatPrice((Number(order.totalPrice) + Number(order.shippingFee)).toString())}
                                                         </div>
                                                     </div>
 

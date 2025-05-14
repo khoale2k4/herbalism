@@ -354,6 +354,7 @@ export default {
         quantity: 'Số lượng:',
         orderSummary: 'Tóm tắt đơn hàng',
         subtotal: 'Tạm tính',
+        total: 'Tổng',
         shipping: 'Phí vận chuyển',
         customerInfo: 'Thông tin khách hàng',
         name: 'Tên:',

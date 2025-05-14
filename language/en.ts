@@ -386,6 +386,7 @@ export default {
         quantity: 'Qty:',
         orderSummary: 'Order Summary',
         subtotal: 'Subtotal',
+        total: 'Total',
         shipping: 'Shipping',
         customerInfo: 'Customer infomation',
         name: 'Name:',
