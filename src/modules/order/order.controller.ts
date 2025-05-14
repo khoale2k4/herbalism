@@ -73,10 +73,6 @@ export class OrderController {
     @Get('confirmDelivered/:id')
     async confirmDeliver(@Param('id') id: string, @Req() req, @Res() res) {
         try {
-            if (req.user === undefined || req.user.role === 'admin') {
-                this.response.initResponse(false, 'Người dùng không có quyền truy cập tài nguyên này', null);
-                return res.status(HttpStatus.FORBIDDEN).json(this.response);
-            }
             const order = await this.orderService.complete(id);
             if (!order) {
                 this.response.initResponse(false, "Nhận đơn không thành công", order);
@@ -95,10 +91,6 @@ export class OrderController {
     @Get('confirmShipped/:id')
     async confirmShipped(@Param('id') id: string, @Req() req, @Res() res) {
         try {
-            if (req.user === undefined || req.user.role === 'user') {
-                this.response.initResponse(false, 'Người dùng không có quyền truy cập tài nguyên này', null);
-                return res.status(HttpStatus.FORBIDDEN).json(this.response);
-            }
             const order = await this.orderService.ship(id);
             if (!order) {
                 this.response.initResponse(false, "Vận chuyển đơn hàng không thành công", order);
