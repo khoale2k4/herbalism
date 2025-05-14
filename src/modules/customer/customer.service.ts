@@ -61,7 +61,8 @@ export class CustomerService {
     async addAddress(customerId: string, dto: CreateAddressDto) {
         return await this.addressModel.create({
             customerId,
-            ...dto
+            ciry: dto.city,
+            ...dto,
         })
     }
 

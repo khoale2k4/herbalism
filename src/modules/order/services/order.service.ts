@@ -137,12 +137,12 @@ export class OrderService {
         });
     }
 
-    // need to add trackingNumber
     async createOrderForGuest(dto: CreateOrderForGuestDto) {
         return await this.sequelize.transaction(async (t) => {
             const address = await this.addressModel.create({
                 ...dto.address,
-                customerId: 'guest-id'
+                customerId: 'guest-id',
+                city: ''
             });
             const { itemPrices, products } = await this.validateItemsAndCalculateTotal(dto.items, t);
 
