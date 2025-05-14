@@ -20,7 +20,7 @@ export default function DeliveryPolicy() {
         <main className="max-w-4xl mx-auto px-4 py-16">
             <div className="bg-white shadow-lg rounded-2xl overflow-hidden">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-[#3e4f3d] to-[#2f3c2f] text-white px-8 py-10">
+                <div className="bg-gradient-to-r from-[#3e4f3d] to-[#5a6d59] text-white px-8 py-10">
                     <div className="flex items-center justify-center mb-6">
                         <Truck size={48} className="mr-4" />
                         <h1 className="text-4xl font-bold">DELIVERY POLICY</h1>
