@@ -197,7 +197,7 @@ export default function CheckoutPage() {
 
         const response = await customerOp.addAddress(token, {
             address: formData.address,
-            city: formData.city,
+            // city: formData.city,
             country: formData.country,
             firstName: formData.firstName,
             lastName: formData.lastName,

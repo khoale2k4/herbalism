@@ -137,9 +137,9 @@ const HomePage: FC<Props> = () => {
   return (
     <div className="flex flex-col w-full">
       {/* <Hero {...headingHeroProps} /> */}
-      <WellnessCollections />
+      {/* <WellnessCollections /> */}
       {/* <VideoHeroSection /> */}
-      <ListItems />
+      {/* <ListItems /> */}
       <DifferenceSection />
       <Collection />
       <ImpactReport />
