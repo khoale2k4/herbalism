@@ -231,14 +231,14 @@ export class OrderService {
     
         <div class="order-info">
           <h3>Thông tin đơn hàng</h3>
-          <p><strong>Mã đơn hàng:</strong> #${order?.get('trackingNumber')?? "Không có thông tin"}</p>
+          <p><strong>Mã đơn hàng:</strong> #${order?.get('trackingNumber') ?? "Không có thông tin"}</p>
           <p><strong>Ngày đặt:</strong> ${orderDate}</p>
-          <p><strong>Tên khách hàng:</strong> ${order?.get('firstName')?? "" + order?.get('lastName')?? ""}</p>
-          <p><strong>Số điện thoại:</strong> ${order?.get('phone')?? "Không có thông tin"}</p>
+          <p><strong>Tên khách hàng:</strong> ${order?.get('firstName') ?? "" + order?.get('lastName') ?? ""}</p>
+          <p><strong>Số điện thoại:</strong> ${order?.get('phone') ?? "Không có thông tin"}</p>
           <p><strong>Địa chỉ giao hàng:</strong> ${shippingAddress}</p>
-          <p><strong>Phương thức thanh toán:</strong> ${order?.get('paymentMethod')?? "Không có thông tin"}</p>
-          <p><strong>Tổng sản phẩm:</strong> ${order?.get('totalPrice')?? "Không có thông tin"}₫</p>
-          <p><strong>Tiền ship:</strong> ${order?.get('shippingFee')?? "Không có thông tin"}₫</p>
+          <p><strong>Phương thức thanh toán:</strong> ${order?.get('paymentMethod') ?? "Không có thông tin"}</p>
+          <p><strong>Tổng sản phẩm:</strong> ${order?.get('totalPrice') ?? "Không có thông tin"}₫</p>
+          <p><strong>Tiền ship:</strong> ${order?.get('shippingFee') ?? "Không có thông tin"}₫</p>
         </div>
     
         <div class="footer">
@@ -253,7 +253,7 @@ export class OrderService {
     async createOrderForGuest(dto: CreateOrderForGuestDto) {
         return await this.sequelize.transaction(async (t) => {
             const address = await this.addressModel.create({
-                ...dto.address, 
+                ...dto.address,
                 customerId: 'guest-id',
                 city: ''
             }, { transaction: t });
@@ -277,6 +277,7 @@ export class OrderService {
             const fee = this.feeService.calculateFee(subtotal);
 
             const trackingNumber = await this.getTrackingNumber();
+            // const orderCode = Date.now();
             const order = await this.orderModel.create({
                 customerId: 'guest-id',
                 status: 'pending',
@@ -287,7 +288,8 @@ export class OrderService {
                 phone: dto.address.phone,
                 email: dto.address.email,
                 trackingNumber: trackingNumber,
-                paymentMethod: dto.paymentMethod
+                paymentMethod: dto.paymentMethod,
+                // orderCode: dto.paymentMethod !== 'cod' ? orderCode.toString() : null
             }, { transaction: t });
             if (dto.address && dto.address.email) {
                 await this.mailService.sendMail(dto.address.email, "Order #" + trackingNumber, await this.getMailBody(order, true, t));
@@ -480,6 +482,42 @@ export class OrderService {
         const trackingNumber = `ORDER_${orderNumber}_${formattedDate}`;
 
         return trackingNumber;
+    }
+
+    async getPaidStatus(orderId: string) {
+        const order = await this.orderModel.findByPk(orderId);
+        if (!order) {
+            throw new Error('Order not found');
+        }
+        return order.paid;
+    }
+
+    async markAsPaid(orderId: string) {
+        const order = await this.orderModel.findByPk(orderId);
+        if (!order) {
+            throw new Error('Order not found');
+        }
+        order.paid = true;
+        await order.save();
+        return order;
+    }
+
+    async getByOrderCode(orderCode: string) {
+        return await this.orderModel.findOne({
+            where: {
+                orderCode
+            },
+        });
+    }
+
+    async assignOrderCode(orderId: string, orderCode: string) {
+        const order = await this.orderModel.findByPk(orderId);
+        if (!order) {
+            throw new Error('Order not found');
+        }
+        order.orderCode = orderCode;
+        await order.save();
+        return order;
     }
 
     async getById(id: string) {

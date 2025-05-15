@@ -149,6 +149,19 @@ export class OrderController {
         }
     }
 
+    @Get('isPaid/:orderId')
+    async getPaidStatus(@Param('orderId') orderId: string, @Res() res) {
+        try {
+            const order = await this.orderService.getPaidStatus(orderId);
+            this.response.initResponse(true, "Lấy trạng thái thanh toán thành công", order);
+            return res.status(HttpStatus.OK).json(this.response);
+        } catch (error) {
+            console.log(error);
+            this.response.initResponse(false, "Đã xảy ra lỗi. Vui lòng thử lại", null);
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(this.response);
+        }
+    }
+
     @Get('fee/:price')
     async getFee(@Param('price') price: number, @Res() res) {
         try {

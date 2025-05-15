@@ -52,6 +52,15 @@ export class Order extends Model {
     })
     paymentMethod: string;
 
+    @Column({type: DataType.TEXT})
+    orderCode: string;
+
+    @Column({
+        type: DataType.BOOLEAN,
+        defaultValue: false
+    })
+    paid: boolean;
+
     @BelongsTo(() => Customer)
     customer: Customer;
 

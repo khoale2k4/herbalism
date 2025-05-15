@@ -19,6 +19,7 @@ import { CommentModule } from './modules/comment/comment.module';
 import { VoucherModule } from './modules/voucher/voucher.module';
 import { VnpayModule } from './modules/vnpay/vnpay.module';
 import { MailModule } from './modules/mail/mail.module';
+import { PaymentModule } from './modules/payment/payment.module';
 
 @Module({
   imports: [
@@ -28,12 +29,12 @@ import { MailModule } from './modules/mail/mail.module';
     }),
     ConfigModule.forRoot({
       isGlobal: true,
-    }), CustomerModule, DatabaseModule, ResponseModule, AuthModule, ArticleModule, ProductModule, CartModule, OrderModule, CommentModule, VoucherModule, VnpayModule, MailModule],
+    }), CustomerModule, DatabaseModule, ResponseModule, AuthModule, ArticleModule, ProductModule, CartModule, OrderModule, CommentModule, VoucherModule, VnpayModule, MailModule, PaymentModule],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {
   constructor(configService: ConfigService) {
-    console.log('JWT_SECRET:', configService.get('JWT_SECRET'));
+    // console.log('JWT_SECRET:', configService.get('JWT_SECRET'));
   }
 }
