@@ -33,15 +33,35 @@ export class PaymentController {
 
     @Post('webhook')
     @HttpCode(200)
-    async handleWebhook(@Body() data: any, @Req() req) {
-        // Xác thực chữ ký tại đây
-        console.log(data)
-        const orderCode = data.orderCode;
-        const paid = data.status === 'PAID';
-        console.log(req.body);
+    async handleWebhook(@Body() body: any) {
+        console.log('Webhook payload:', body);
+    
+        const { code, success, data, signature } = body;
+    
+        // Xác thực chữ ký ở đây nếu cần
+        if (code === '00' && success && data?.orderCode) {
+            await this.orderService.markAsPaid(String(data.orderCode));
+        }
+    
+        return { message: 'ok' };
+    }    
 
-        if (paid) {
-            await this.orderService.markAsPaid(orderCode);
+    @Post('confirm-webhook')
+    async confirmWebhook(@Body() body: { webhookUrl: string }) {
+        try {
+            const result = await this.paymentService.confirmWebhook(body.webhookUrl);
+            return {
+                error: 0,
+                message: 'ok',
+                data: result,
+            };
+        } catch (error) {
+            console.error(error);
+            return {
+                error: -1,
+                message: error.message || 'Unknown error',
+                data: null,
+            };
         }
     }
 }

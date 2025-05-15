@@ -7,6 +7,7 @@ import PayOS from "@payos/node";
 import { CreatePaymentDto } from "./dtos/create-payment.dto";
 import { ConfigService } from "@nestjs/config";
 import { OrderService } from "../order/services/order.service";
+import { HttpService } from "@nestjs/axios";
 
 @Injectable()
 export class PaymentService {
@@ -18,6 +19,7 @@ export class PaymentService {
         // @InjectModel(Product) private readonly productModel: typeof Product
         private readonly orderService: OrderService,
         private readonly configService: ConfigService,
+        private readonly httpService: HttpService
     ) {
         const clientId = this.configService.get<string>('PAYOS_CLIENT_ID') ?? "";
         const apiKey = this.configService.get<string>('PAYOS_API_KEY') ?? "";
@@ -43,5 +45,19 @@ export class PaymentService {
             console.error('PayOS Error:', error.response?.data || error.message);
             throw error;
         }
+    }
+
+    async confirmWebhook(webhookUrl: string): Promise<any> {
+        const response = await this.httpService.axiosRef.post(
+            'https://api-merchant.payos.vn/confirm-webhook',
+            { webhookUrl },
+            {
+                headers: {
+                    "x-client-id": this.configService.get<string>('PAYOS_CLIENT_ID') ?? "",
+                    "x-api-key": this.configService.get<string>('PAYOS_API_KEY') ?? "",
+                },
+            },
+        );
+        return response.data;
     }
 }

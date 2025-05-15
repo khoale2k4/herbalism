@@ -9,6 +9,7 @@ import { PaymentService } from './payment.service';
 import { PaymentController } from './payment.controller';
 import { ConfigModule } from '@nestjs/config';
 import { OrderModule } from '../order/order.module';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
     imports: [
@@ -17,6 +18,7 @@ import { OrderModule } from '../order/order.module';
         ConfigModule,
         AuthModule,
         OrderModule,
+        HttpModule
     ],
     providers: [PaymentService, PaymentController],
     controllers: [PaymentController],
