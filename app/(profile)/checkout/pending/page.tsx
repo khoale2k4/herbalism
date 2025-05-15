@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useRouter } from "next/navigation";
-import { OrderOperation } from "@/lib/main";
+import { OrderOperation, PaymentOperation } from "@/lib/main";
 import { getTokenFromCookie } from "@/app/utils/token";
 import { XCircle } from "lucide-react";
 import { cleanCart, getLocalCart } from "@/app/utils/localCart";
@@ -22,6 +22,7 @@ export default function OrderProcessingPage() {
     const [isComplete, setIsComplete] = useState(false);
     const [orderNumber, setOrderNumber] = useState<string | null>(null);
     const orderOp = new OrderOperation();
+    const paymentOp = new PaymentOperation();
     const router = useRouter();
     const [paymentMethod, setPaymentMethod] = useState<'cod' | 'bank' | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -43,14 +44,22 @@ export default function OrderProcessingPage() {
                 if (response.success) {
                     addOrderToLocal(response.data.id);
                     cleanCart();
-                    return response.data.trackingNumber;
+                    return {
+                        orderId: response.data.id,
+                        trackingNumber: response.data.trackingNumber,
+                        amount: response.data.totalPrice + response.data.shippingFee,
+                    };
                 } else {
                     setError(t.orderProcessingTranslations.errorMessages.createFailed || 'Tạo đơn hàng thất bại. Vui lòng thử lại.');
                 }
             } else {
                 const response = await orderOp.createFromCart(token, addressId, voucherId, paymentMet, note);
                 if (response.success) {
-                    return response.data.trackingNumber;
+                    return {
+                        orderId: response.data.id,
+                        trackingNumber: response.data.trackingNumber,
+                        amount: response.data.totalPrice + response.data.shippingFee,
+                    };
                 } else {
                     setError(t.orderProcessingTranslations.errorMessages.createFailed || 'Tạo đơn hàng thất bại. Vui lòng thử lại.');
                 }
@@ -95,21 +104,21 @@ export default function OrderProcessingPage() {
                 try {
                     setProgress(10);
 
-                    let orderId;
+                    let order;
                     if (data.addressId) {
                         console.log('cart');
-                        orderId = await createOrder(data.addressId, voucherId, params.id, address, note);
+                        order = await createOrder(data.addressId, voucherId, params.id, address, note);
                     } else if (address) {
                         console.log('no cart');
-                        orderId = await createOrder('', voucherId, params.id, address, note);
+                        order = await createOrder('', voucherId, params.id, address, note);
                     }
 
-                    if (!orderId) {
+                    if (!order) {
                         // throw new Error('Failed to create order');
                         setError(t.orderProcessingTranslations.errorMessages.createFailed || 'Tạo đơn hàng thất bại. Vui lòng thử lại.');
                     }
 
-                    setOrderNumber(orderId);
+                    setOrderNumber(order?.trackingNumber);
                     setProgress(70);
                     setCurrentStep(1);
 
@@ -119,23 +128,55 @@ export default function OrderProcessingPage() {
                         setIsComplete(true);
                         return;
                     }
-                    const url = `/payment?orderId=${orderId}`;
-                    window.open(url, '_blank');
 
-                    const step2Timeout = setTimeout(() => {
-                        setProgress(80);
-                        setCurrentStep(1);
+                    const url = await paymentOp.creatLink({
+                        orderId: order?.orderId,
+                        amount: order?.amount,
+                        trackingNumber: order?.trackingNumber,
+                    });
+                    if (url.success) {
+                        window.open(url.data, '_blank');
+                    } else {
+                        setError(t.orderProcessingTranslations.errorMessages.createFailed || 'Tạo đơn hàng thất bại. Vui lòng thử lại.');
+                    }
+                    let pollingCount = 0;
+                    const maxPolling = 40; // khoảng 2 phút (40 * 3s)
+                    const pollInterval = setInterval(async () => {
+                        try {
+                            pollingCount++;
+                            const res = await orderOp.getPaidStatus(order!?.orderId);
+                            const status = res.data;
 
-                        const completeTimeout = setTimeout(() => {
-                            setProgress(100);
-                            setCurrentStep(2);
-                            setIsComplete(true);
-                        }, 5000);
+                            if (status) {
+                                clearInterval(pollInterval);
+                                setProgress(100);
+                                setCurrentStep(2);
+                                setIsComplete(true);
+                            } else if (pollingCount >= maxPolling) {
+                                clearInterval(pollInterval);
+                                setError(t.orderProcessingTranslations.errorMessages.timeout || 'Hệ thống không xác nhận được thanh toán. Vui lòng kiểm tra lại.');
+                            }
+                        } catch (err) {
+                            console.error('Polling failed:', err);
+                            clearInterval(pollInterval);
+                            setError(t.orderProcessingTranslations.errorMessages.timeout || 'Có lỗi xảy ra khi kiểm tra thanh toán.');
+                        }
+                    }, 3000);
 
-                        return () => clearTimeout(completeTimeout);
-                    }, 10000);
+                    // const step2Timeout = setTimeout(() => {
+                    //     setProgress(80);
+                    //     setCurrentStep(1);
 
-                    return () => clearTimeout(step2Timeout);
+                    //     const completeTimeout = setTimeout(() => {
+                    //         setProgress(100);
+                    //         setCurrentStep(2);
+                    //         setIsComplete(true);
+                    //     }, 5000);
+
+                    //     return () => clearTimeout(completeTimeout);
+                    // }, 10000);
+
+                    return () => clearTimeout(pollInterval);
                 } catch (error) {
                     console.error('Order creation failed:', error);
                     setProgress(0);

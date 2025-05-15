@@ -11,6 +11,12 @@ export interface CreateCommentDto{
     rate: number;
 }
 
+export interface CreatePaymentDto {
+    amount: number;
+    orderId: string;
+    trackingNumber: string;
+}
+
 export interface AddAddressDto {
     firstName: string;
     lastName: string;

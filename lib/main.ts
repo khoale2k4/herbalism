@@ -1,4 +1,4 @@
-import { AddAddressDto, AddToCartDto, CreateCommentDto } from "./interface";
+import { AddAddressDto, AddToCartDto, CreateCommentDto, CreatePaymentDto } from "./interface";
 
 export class AuthOperation {
     private baseUrl: string;
@@ -175,7 +175,7 @@ export class ArticleOperation {
         this.baseUrl = (process.env.NEXT_PUBLIC_API_HOST || "http://localhost:3000") + '/article';
     }
 
-    async keywordSearch(keyword: string ){
+    async keywordSearch(keyword: string) {
         try {
             const response = await fetch(this.baseUrl + '/search/' + keyword, {
                 method: 'GET',
@@ -267,7 +267,7 @@ export class ProductOperation {
         this.baseUrl = (process.env.NEXT_PUBLIC_API_HOST || "http://localhost:3000") + '/product';
     }
 
-    async keywordSearch(keyword: string ){
+    async keywordSearch(keyword: string) {
         try {
             const response = await fetch(this.baseUrl + '/search/' + keyword, {
                 method: 'GET',
@@ -504,6 +504,34 @@ export class OrderOperation {
         }
     }
 
+    async getPaidStatus(id: string) {
+        try {
+            const response = await fetch(this.baseUrl + '/isPaid/' + id, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Get fee failed with status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            return {
+                success: true,
+                message: result.message,
+                data: result.data
+            };
+        } catch (error: any) {
+            return {
+                success: false,
+                message: error?.message || 'Unknown error',
+                data: null
+            };
+        }
+    }
+
     async getById(id: string) {
         try {
             const response = await fetch(this.baseUrl + '/' + id, {
@@ -703,6 +731,43 @@ export class OrderOperation {
 
             if (!response.ok) {
                 throw new Error(`Get unpaid orders failed with status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            return {
+                success: true,
+                message: result.message,
+                data: result.data
+            };
+        } catch (error: any) {
+            return {
+                success: false,
+                message: error?.message || 'Unknown error',
+                data: null
+            };
+        }
+    }
+}
+
+export class PaymentOperation {
+    private baseUrl: string;
+
+    constructor() {
+        this.baseUrl = (process.env.NEXT_PUBLIC_API_HOST || "http://localhost:3000") + '/payment';
+    }
+
+    async creatLink(dto: CreatePaymentDto) {
+        try {
+            const response = await fetch(this.baseUrl + '/create-link', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(dto),
+            });
+
+            if (!response.ok) {
+                throw new Error(`Get fee failed with status: ${response.status}`);
             }
 
             const result = await response.json();
