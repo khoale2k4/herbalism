@@ -74,6 +74,7 @@ export class OrderService {
                 id
             }
         })
+        await this.markAsPaid(id);
         return order;
     }
 
