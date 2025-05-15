@@ -947,6 +947,7 @@ export default {
                     description: "reflects the soul's rebirth—a higher, more luminous state of being"
                 }
             ],
+            teach: "Spagyric medicine teaches us this truth:",
             teachings: [
                 "Nothing is wasted. Even ashes contain wisdom.",
                 "The dark serves the light. The separation is necessary for wholeness."

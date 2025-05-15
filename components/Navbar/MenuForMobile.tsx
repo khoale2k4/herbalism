@@ -128,9 +128,9 @@ export default function MenuSidebar({ openMenu, setOpenMenu, onCartClick }: Prop
                                 title={t.common.account || "Account"}
                                 defaultOpen={false}
                                 items={[
-                                    { label: t.common.orders, href: "/shop/herbs" },
-                                    { label: t.common.info, href: "/shop/teas" },
-                                    { label: t.common.setting, href: "/shop/supplements" },
+                                    { label: t.common.orders, href: "/orders" },
+                                    // { label: t.common.info, href: "/shop/teas" },
+                                    { label: t.common.setting, href: "/" },
                                 ]}
                             />
                         </nav>

@@ -420,22 +420,27 @@ const OrdersPage = () => {
                             className={`border rounded-lg overflow-hidden ${statusColors[order.status].border} transition-all duration-200`}
                         >
                             <div
-                                className={`p-4 cursor-pointer ${statusColors[order.status].bg} flex justify-between items-center`}
+                                className={`p-4 cursor-pointer ${statusColors[order.status].bg} flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0`}
                                 onClick={() => toggleOrderExpansion(order.id)}
                             >
-                                <div className="flex items-center space-x-4">
+                                {/* Left block: Icon + Info */}
+                                <div className="flex items-start sm:items-center gap-4 flex-1">
                                     <OrderStatusIcon status={order.status} />
                                     <div>
-                                        <h3 className="font-medium text-gray-900">{t.orders.orderTracking}{order.trackingNumber}</h3>
-                                        <p className="text-sm text-gray-500">{formatDate(order.createdAt)}</p>
+                                        <h3 className="font-medium text-gray-900 text-sm sm:text-base">
+                                            {t.orders.orderTracking}{order.trackingNumber}
+                                        </h3>
+                                        <p className="text-xs sm:text-sm text-gray-500">{formatDate(order.createdAt)}</p>
                                     </div>
                                 </div>
-                                <div className="flex items-center space-x-6">
+
+                                {/* Right block: Status + Price + Icon */}
+                                <div className="flex items-center gap-4 flex-wrap sm:flex-nowrap">
                                     <span className={`px-3 py-1 rounded-full text-xs font-medium ${statusColors[order.status].text} ${statusColors[order.status].bg}`}>
                                         {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
                                     </span>
-                                    <span className="text-lg font-semibold text-gray-900">
-                                    {formatPrice((Number(order.totalPrice) + Number(order.shippingFee)).toString())}
+                                    <span className="text-sm sm:text-lg font-semibold text-gray-900">
+                                        {formatPrice((Number(order.totalPrice) + Number(order.shippingFee)).toString())}
                                     </span>
                                     {expandedOrder === order.id ? (
                                         <ChevronDown className="h-5 w-5 text-gray-500" />
