@@ -33,14 +33,14 @@ export class PaymentController {
 
     @Post('webhook')
     @HttpCode(200)
-    async handleWebhook(@Body() data: any) {
+    async handleWebhook(@Body() data: any, @Req() req) {
         // Xác thực chữ ký tại đây
         const orderCode = data.orderCode;
         const paid = data.status === 'PAID';
+        console.log(req.body);
 
         if (paid) {
             await this.orderService.markAsPaid(orderCode);
         }
     }
-
 }
