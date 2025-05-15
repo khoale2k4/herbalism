@@ -41,6 +41,7 @@ interface Order {
     addressId: string | null;
     totalPrice: number;
     trackingNumber: string | null;
+    paid: boolean;
     status: OrderStatus;
     createdAt: string;
     updatedAt: string;
@@ -504,6 +505,10 @@ const OrdersPage = () => {
                                                         <div className="font-medium text-gray-900 mt-2">{t.orders.total}</div>
                                                         <div className="font-medium text-gray-900 text-right mt-2">
                                                             {formatPrice((Number(order.totalPrice) + Number(order.shippingFee)).toString())}
+                                                        </div>
+                                                        <div className="font-medium text-gray-900">{t.orders.paymentStatus}</div>
+                                                        <div className={`text-right font-medium ${order.paid ? 'text-green-600' : 'text-red-600'}`}>
+                                                            {order.paid ? t.orders.paid : t.orders.unpaid}
                                                         </div>
                                                     </div>
 

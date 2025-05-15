@@ -336,6 +336,9 @@ export default {
         title: 'Đơn hàng của tôi',
         description: 'Xem và quản lý các đơn hàng của bạn',
         orderHistory: 'Lịch sử đơn hàng',
+        paymentStatus: "Trạng thái thanh toán",
+        paid: "Đã thanh toán",
+        unpaid: "Chưa thanh toán",
         searchPlaceholder: "Tìm kiếm đơn hàng hoặc sản phẩm...",
         status: {
             all: "Tất cả trạng thái",
