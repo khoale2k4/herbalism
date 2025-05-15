@@ -493,8 +493,12 @@ export class OrderService {
         return order.paid;
     }
 
-    async markAsPaid(orderId: string) {
-        const order = await this.orderModel.findByPk(orderId);
+    async markAsPaid(orderCode: string) {
+        const order = await this.orderModel.findOne({
+            where: {
+                orderCode
+            }
+        });
         if (!order) {
             throw new Error('Order not found');
         }
