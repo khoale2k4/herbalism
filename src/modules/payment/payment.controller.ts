@@ -35,6 +35,7 @@ export class PaymentController {
     @HttpCode(200)
     async handleWebhook(@Body() data: any, @Req() req) {
         // Xác thực chữ ký tại đây
+        console.log(data)
         const orderCode = data.orderCode;
         const paid = data.status === 'PAID';
         console.log(req.body);
