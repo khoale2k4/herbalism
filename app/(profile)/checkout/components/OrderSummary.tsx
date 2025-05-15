@@ -71,13 +71,23 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
                     <span className="text-gray-600">{t.paymentPage.orderSummary.shippingLabel}</span>
                     <span>{formatCurrency(shippingFee)}</span>
                 </div>
-                <div className="flex justify-between">
-                    <span className="text-gray-600">{t.paymentPage.orderSummary.discountLabel}</span>
-                </div>
+                {selectedVoucher && (
+                    <>
+                        <div className="flex justify-between">
+                            <span className="text-gray-600">{t.paymentPage.orderSummary.discount}:</span>
+                            <span className="text-green-600 font-medium">
+                                {selectedVoucher.type === 'amount'
+                                    ? `-${formatCurrency(selectedVoucher.discount)}`
+                                    : `-${selectedVoucher.discount}% (-${formatCurrency(subtotal * selectedVoucher.discount)})`}
+                            </span>
+                        </div>
+                        <div className="flex justify-between text-sm text-gray-500">
+                            <span>{t.paymentPage.orderSummary.discountLabel}</span>
+                            <span>{selectedVoucher.id}</span>
+                        </div>
+                    </>
+                )}
 
-                <div className="flex justify-between">
-                    {selectedVoucher && <span><strong>{selectedVoucher.id}</strong> - {t.paymentPage.orderSummary.discount} {selectedVoucher.discount} {selectedVoucher.type === 'amount' ? "VNĐ" : "%"}</span>}
-                </div>
                 <div className="flex flex-col gap-2">
                     <div className="flex gap-2 items-center">
                         <input

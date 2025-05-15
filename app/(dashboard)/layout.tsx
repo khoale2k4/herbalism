@@ -20,9 +20,7 @@ const RootStructure = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Navbar />
-      <section className="flex h-full w-screen">
         {children}
-      </section>
       <Footer />
     </>
   );
