@@ -503,6 +503,7 @@ export class OrderService {
             throw new Error('Order not found');
         }
         order.paid = true;
+        order.status = 'processing';
         await order.save();
         return order;
     }
