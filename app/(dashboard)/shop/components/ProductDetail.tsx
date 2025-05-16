@@ -98,8 +98,8 @@ export default function ProductDetail({ slug }: { slug: string }) {
     const handleAddToCart = async (e: React.MouseEvent) => {
         try {
             const token = getTokenFromCookie();
+            setAdding(true);
             if (!token) {
-                setAdding(true);
                 addProductToLocalCart({
                     id: product?.id ?? "",
                     num: quantity,
