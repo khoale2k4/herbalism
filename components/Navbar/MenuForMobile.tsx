@@ -130,7 +130,7 @@ export default function MenuSidebar({ openMenu, setOpenMenu, onCartClick }: Prop
                                 items={[
                                     { label: t.common.orders, href: "/orders" },
                                     // { label: t.common.info, href: "/shop/teas" },
-                                    { label: t.common.setting, href: "/" },
+                                    // { label: t.common.setting, href: "/" },
                                 ]}
                             />
                         </nav>

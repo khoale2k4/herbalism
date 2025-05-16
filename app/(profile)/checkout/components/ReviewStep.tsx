@@ -97,10 +97,12 @@ const ReviewStep: React.FC<ReviewStepProps> = ({
                                     <span>PayPal ({formData.email})</span>
                                 </>
                             )}
-                            {formData.paymentMethod === 'momo' && (
+                            {formData.paymentMethod === 'bank' && (
                                 <>
-                                    <div className="w-10 h-6 bg-purple-200 rounded mr-3 flex items-center justify-center text-purple-800">M</div>
-                                    <span>MoMo ({formData.phone})</span>
+                                    <div className="w-10 h-6 bg-blue-200 rounded mr-3 flex items-center justify-center text-blue-800 font-semibold">
+                                        {t.paymentPage.reviewStep.infoLabels.bankTransferLabel}
+                                    </div>
+                                    <span>{t.paymentPage.reviewStep.infoLabels.bankTransfer}</span>
                                 </>
                             )}
                             {formData.paymentMethod === 'cod' && (

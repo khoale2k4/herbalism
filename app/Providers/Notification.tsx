@@ -117,7 +117,13 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
                     return (
                         <div
                             key={id}
-                            className={`relative flex w-[250px] max-w-full items-center shadow-lg rounded-lg border-l-4 ${borderColor} overflow-hidden transform transition-all duration-300 ease-in-out ${visible ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'}`}
+                            className={`relative flex w-[250px] max-w-full items-center shadow-lg rounded-lg border-l-4 ${borderColor} overflow-hidden transform transition duration-500 ease-out
+      ${visible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-4 scale-95'}
+                            ${duration > 0 ? 'animate-fade-in' : ''}`}
+                            style={{
+                                transitionDelay: visible ? '350ms' : '0ms',
+                            }}
+
                             role="alert"
                         >
                             <div className={`${bgColor} p-3 flex items-center justify-center text-white`}>
@@ -161,7 +167,6 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     }
   `}</style>
             </div>
-
         </NotificationContext.Provider>
     );
 }

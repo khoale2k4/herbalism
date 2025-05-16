@@ -136,6 +136,11 @@ input:checked.defaultCheckbox::before {
 	animation: ping-slow 0.8s ease-out;
 }
 
+.input-custom-placeholder::placeholder {
+	color: var(--placeholder-color);
+	opacity: 0.7;
+}
+
 
 /* SCROLLBAR */
 /* width */

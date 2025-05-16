@@ -67,13 +67,8 @@ const SearchBar = ({
                 <input
                     ref={inputRef}
                     type="text"
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                            handleSearch();
-                        }
-                    }}
                     placeholder={isInputFocused ? t.navbar.search : typingEffect}
-                    className="w-full p-3 pl-3 outline-none border-none focus:ring-0 placeholder-opacity-80"
+                    className="w-full p-3 pl-3 outline-none border-none focus:ring-0 placeholder-opacity-80 input-custom-placeholder"
                     style={{
                         backgroundColor,
                         color: textColor,
@@ -85,6 +80,7 @@ const SearchBar = ({
                     onFocus={() => setIsInputFocused(true)}
                     onBlur={() => setIsInputFocused(false)}
                 />
+
 
                 {query && (
                     <button

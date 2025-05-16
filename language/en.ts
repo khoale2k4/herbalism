@@ -673,6 +673,8 @@ export default {
                 country: "Country:",
                 paymentMethod: "Method:",
                 creditCard: "Credit Card: ",
+                bankTransferLabel: "BT",
+                bankTransfer: "Bank Transfer",
             },
             missingInfo: "No information provided",
         },

@@ -755,7 +755,9 @@ export default {
                 zipCode: "Zip code:",
                 country: "Quốc gia:",
                 paymentMethod: "Phương thức:",
-                creditCard: "Thẻ tín dụng: "
+                creditCard: "Thẻ tín dụng: ",
+                bankTransferLabel: "CK",
+                bankTransfer: "Chuyển khoản",
             },
             missingInfo: "Chưa có thông tin",
         },

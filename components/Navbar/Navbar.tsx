@@ -216,7 +216,7 @@ const Navbar = () => {
         !userMenuRef.current.contains(event.target as Node)
       ) {
         // Nếu click ra ngoài, đóng dropdown
-        if (activeMenu === "user") {
+        if (activeMenu === "user" || activeMenu === "cart") {
           setActiveMenu(null);
         }
       }
@@ -404,13 +404,13 @@ const Navbar = () => {
                       <span>{t.common.orders}</span>
                     </a>
 
-                    <a
+                    {/* <a
                       href="#"
                       className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 group"
                     >
                       <Settings size={18} className="text-gray-500 group-hover:text-[#6e7a34] dark:group-hover:text-green-500" />
                       <span>{t.common.setting}</span>
-                    </a>
+                    </a> */}
                   </div>
 
                   {user && <div className="border-t border-gray-100 dark:border-gray-800 py-1">
@@ -433,23 +433,60 @@ const Navbar = () => {
                   aria-label="Shopping cart"
                 >
                   <div className="relative">
-                    <ShoppingBag
-                      size={24}
-                      className={`relative z-10 text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-green-500 transition-colors
-    ${animateCart ? "scale-[1.2] animate-cart-pop" : ""}
-  `}
-                    />
-                    {animateCart && (
-                      <span className="absolute top-1 left-1 w-5 h-5 bg-[#6e7a34] rounded-full animate-ping-slow opacity-60"></span>
-                    )}
+  <ShoppingBag
+    size={24}
+    className={`relative z-10 text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-green-500 transition-colors
+      ${animateCart ? "scale-[1.2] animate-cart-pop shadow-[0_0_8px_2px_rgba(174,234,0,0.7)] dark:shadow-[0_0_8px_2px_rgba(110,122,52,0.8)]" : ""}
+    `}
+  />
 
+  {animateCart && (
+    <span className="absolute top-0 left-0 w-6 h-6 rounded-full bg-[#a4ff00] opacity-60 animate-ping-fast pointer-events-none"></span>
+  )}
 
-                    {cartItems.length > 0 && (
-                      <span className="absolute -top-2 -right-2 flex items-center justify-center min-w-[18px] h-[18px] text-xs font-medium text-white bg-[#6e7a34] rounded-full px-1">
-                        {cartItems.length > 9 ? '9+' : cartItems.length}
-                      </span>
-                    )}
-                  </div>
+  {cartItems.length > 0 && (
+    <span className="absolute -top-2 -right-2 flex items-center justify-center min-w-[18px] h-[18px] text-xs font-medium text-white bg-[#6e7a34] rounded-full px-1">
+      {cartItems.length > 9 ? '9+' : cartItems.length}
+    </span>
+  )}
+
+  <style jsx>{`
+    @keyframes cart-pop {
+      0% {
+        transform: scale(1);
+      }
+      30% {
+        transform: scale(1.4);
+      }
+      60% {
+        transform: scale(0.95);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes ping-fast {
+      0% {
+        transform: scale(1);
+        opacity: 0.6;
+      }
+      75%, 100% {
+        transform: scale(1.8);
+        opacity: 0;
+      }
+    }
+
+    .animate-cart-pop {
+      animation: cart-pop 0.5s ease-out forwards;
+    }
+
+    .animate-ping-fast {
+      animation: ping-fast 0.8s cubic-bezier(0, 0, 0.2, 1) forwards;
+    }
+  `}</style>
+</div>
+
                   {/* <span className="hidden sm:inline text-sm font-medium text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-green-500 transition-colors">{t.common.cart}</span> */}
                 </button>
                 <CartSidebar
@@ -462,8 +499,8 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-        </div>
-      </nav>
+        </div >
+      </nav >
       {/* <MarqueeText words={wordsList} speed={50} /> */}
     </>
   );
