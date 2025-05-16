@@ -105,7 +105,7 @@ export default function OurProcess() {
                     <p className="text-lg mb-8">{origins.description1}</p>
 
                     <div className="text-center mb-8">
-                        <p className="text-2xl font-serif italic text-amber-700">{origins.quote}</p>
+                        <p className="text-2xl italic text-amber-700">{origins.quote}</p>
                     </div>
 
                     <p className="text-lg">{origins.description2}</p>
@@ -155,13 +155,13 @@ export default function OurProcess() {
                 </div>
             </section>
             <section className="mb-16">
-                <h2 className="text-3xl font-serif font-bold mb-6 border-b border-amber-200 pb-2">
+                <h2 className="text-3xl font-bold mb-6 border-b border-amber-200 pb-2">
                     The Alchemical Science Behind Spagyric Extracts
                 </h2>
 
                 <div className="space-y-8">
                     <div className="bg-white p-6 rounded-lg shadow-md border border-amber-200">
-                        <h3 className="text-2xl font-serif font-semibold text-black mb-4">
+                        <h3 className="text-2xl font-semibold text-black mb-4">
                             The Complete Triad: Salt, Sulphur & Mercury
                         </h3>
                         <p className="mb-6 text-gray-700">
@@ -199,7 +199,7 @@ export default function OurProcess() {
                     </div>
 
                     <div className="bg-white p-6 rounded-lg shadow-md border border-amber-200">
-                        <h3 className="text-2xl font-serif font-semibold mb-4">
+                        <h3 className="text-2xl font-semibold mb-4">
                             Biochemical Transformations
                         </h3>
 
@@ -242,7 +242,7 @@ export default function OurProcess() {
                     </div>
 
                     <div className="bg-white p-6 rounded-lg shadow-md border border-amber-200">
-                        <h3 className="text-2xl font-serif font-semibold mb-4">
+                        <h3 className="text-2xl font-semibold mb-4">
                             Comparative Advantages of Spagyric Preparations
                         </h3>
 
