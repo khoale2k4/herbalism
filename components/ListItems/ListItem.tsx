@@ -7,6 +7,7 @@ type Item = {
     title: string;
     images: string[];
     price: number;
+    slug: string;
 }
 
 const ListItems = ({ ids }: { ids: string[] }) => {
@@ -26,6 +27,7 @@ const ListItems = ({ ids }: { ids: string[] }) => {
                             title: order.name,
                             price: order.price,
                             images: order.images.map((image: any) => image.url),
+                            slug: order.slug,
                         };
                     }
                     return null;
@@ -69,7 +71,9 @@ const ListItems = ({ ids }: { ids: string[] }) => {
                         ? Array(5).fill(0).map((_, index) => renderSkeleton(index)) // Hiển thị skeleton khi loading
                         : items.map((item: Item) => {
                             return (
-                                <div key={item.title} className="min-w-[250px]">
+                                <div key={item.title}
+                                    onClick={() => window.open(`/shop/${item.slug}`, "_self")}
+                                    className="min-w-[250px]">
                                     <ImageHoverComponent images={item.images} price={item.price} title={item.title} />
                                 </div>
                             );
