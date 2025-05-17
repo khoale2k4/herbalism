@@ -171,8 +171,8 @@ export default function OurProcess() {
                         </p>
 
                         <div className="grid md:grid-cols-2 gap-6">
-                            <div className="p-4 rounded-lg">
-                                <div className="flex items-center mb-3">
+                            <div className="flex flex-col items-center p-4 rounded-lg">
+                                <div className="mb-3">
                                     <Image
                                         src={'/img/calcination.png'}
                                         alt="Calcination"
@@ -181,10 +181,10 @@ export default function OurProcess() {
                                         className="mr-2"
                                     />
                                 </div>
-                                <p className="text-sm">Mineral matrix providing structure and grounding</p>
+                                <p className="text-sm">Calcination of the marc</p>
                             </div>
-                            <div className="p-4 rounded-lg">
-                                <div className="flex items-center mb-3">
+                            <div className="flex flex-col items-center p-4 rounded-lg">
+                                <div className="mb-3">
                                     <Image
                                         src={'/img/crystallized.png'}
                                         alt="Crystallized"
@@ -193,7 +193,7 @@ export default function OurProcess() {
                                         className="mr-2"
                                     />
                                 </div>
-                                <p className="text-sm">Essential oils and active compounds</p>
+                                <p className="text-sm">Crystallized plant salts</p>
                             </div>
                         </div>
                     </div>
