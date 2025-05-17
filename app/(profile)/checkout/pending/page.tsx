@@ -131,7 +131,7 @@ export default function OrderProcessingPage() {
 
                     const url = await paymentOp.creatLink({
                         orderId: order?.orderId,
-                        amount: 2000,//order?.amount,
+                        amount: order?.amount, // 2000
                         trackingNumber: order?.trackingNumber,
                     });
                     if (url.success) {
