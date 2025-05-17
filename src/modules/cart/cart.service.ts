@@ -63,7 +63,7 @@ export class CartService {
     async addToCart(userId: string, productId: string, size: string, num: number) {
         const cart = await this.getCartOfCustomer(userId);
         if (!cart) return null;
-        const product = (await this.productService.findProductById(productId))?.dataValues;
+        const product = (await this.productService.findProductById(productId));
         if (!product) {
             throw new Error('Product not found');
         }
