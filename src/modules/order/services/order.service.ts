@@ -251,29 +251,30 @@ export class OrderService {
         }
       </style>
     </head>
-    <body>
-      <div class="container">
-        <div class="header">
-        ${this.getMailHeader(mailType)}
-</div>
-
-    < div class="order-info" >
-        <h3>Thông tin đơn hàng </h3>
-            < p > <strong>Mã đơn hàng: </strong> #${order?.get('trackingNumber') ?? "Không có thông tin"}</p >
-                <p><strong>Ngày đặt: </strong> ${orderDate}</p >
-                    <p><strong>Tên khách hàng: </strong> ${order?.get('cusName') ?? ""}</p >
-                        <p><strong>Số điện thoại: </strong> ${order?.get('phone') ?? "Không có thông tin"}</p >
-                            <p><strong>Địa chỉ giao hàng: </strong> ${shippingAddress}</p >
-                                <p><strong>Phương thức thanh toán: </strong> ${order?.get('paymentMethod') ?? "Không có thông tin"}</p >
-                                    <p><strong>Tổng sản phẩm: </strong> ${order?.get('totalPrice') ?? "Không có thông tin"}₫</p >
-                                        <p><strong>Tiền ship: </strong> ${order?.get('shippingFee') ?? "Không có thông tin"}₫</p >
-                                            </div>
-
-                                            < div class="footer" >
-          © 2025 Herbalism.Mọi thắc mắc xin liên hệ hỗ trợ khách hàng.
-        </div>
+    <body style="font-family: Arial, sans-serif; background-color: #f9f9f9; color: #333; padding: 20px;">
+  <div class="container" style="max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.05); padding: 20px;">
+    
+    <div class="header" style="border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-bottom: 20px;">
+      ${await this.getMailHeader(mailType)}
     </div>
-    </body>
+
+    <div class="order-info" style="line-height: 1.6;">
+      <h3 style="color: #6e7a34;">Thông tin đơn hàng</h3>
+      <p><strong>Mã đơn hàng:</strong> #${order?.get('trackingNumber') ?? "Không có thông tin"}</p>
+      <p><strong>Ngày đặt:</strong> ${orderDate}</p>
+      <p><strong>Tên khách hàng:</strong> ${order?.get('cusName') ?? ""}</p>
+      <p><strong>Số điện thoại:</strong> ${order?.get('phone') ?? "Không có thông tin"}</p>
+      <p><strong>Địa chỉ giao hàng:</strong> ${shippingAddress}</p>
+      <p><strong>Phương thức thanh toán:</strong> ${order?.get('paymentMethod') ?? "Không có thông tin"}</p>
+      <p><strong>Tổng sản phẩm:</strong> ${order?.get('totalPrice') ?? "Không có thông tin"}₫</p>
+      <p><strong>Tiền ship:</strong> ${order?.get('shippingFee') ?? "Không có thông tin"}₫</p>
+    </div>
+
+    <div class="footer" style="border-top: 1px solid #ddd; padding-top: 15px; margin-top: 30px; text-align: center; font-size: 12px; color: #888;">
+      © 2025 Herbalism. Mọi thắc mắc xin liên hệ bộ phận hỗ trợ khách hàng.
+    </div>
+  </div>
+</body>
     </html>
         `;
     }
