@@ -183,6 +183,16 @@ export class OrderService {
         }
     }
 
+    async getPaymentMethods(met: string) {
+        if (met === 'cod') {
+            return "Thanh toán khi nhận hàng";
+        }
+        if (met === 'bank') {
+            return "Chuyển khoản";
+        }
+        return met;
+    }
+
     async getMailBody(order: Order, isGuest = false, mailType = MailType.ORDER_CREATION, transaction?: Transaction) {
         const orderDate = new Date(order.createdAt).toLocaleDateString("vi-VN");
         const address = await this.addressModel.findOne({
@@ -264,7 +274,7 @@ export class OrderService {
       <p><strong>Ngày đặt:</strong> ${orderDate}</p>
       <p><strong>Tên khách hàng:</strong> ${order?.get('cusName') ?? ""}</p>
       <p><strong>Số điện thoại:</strong> ${order?.get('phone') ?? "Không có thông tin"}</p>
-      <p><strong>Địa chỉ giao hàng:</strong> ${shippingAddress}</p>
+      <p><strong>Địa chỉ giao hàng:</strong> ${await this.getPaymentMethods(shippingAddress)}</p>
       <p><strong>Phương thức thanh toán:</strong> ${order?.get('paymentMethod') ?? "Không có thông tin"}</p>
       <p><strong>Tổng sản phẩm:</strong> ${order?.get('totalPrice') ? Number(order?.get('totalPrice')) : "Không có thông tin"}₫</p>
       <p><strong>Tiền ship:</strong> ${order?.get('shippingFee') ? Number(order?.get('shippingFee')) : "Không có thông tin"}₫</p>
