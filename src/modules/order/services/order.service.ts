@@ -266,8 +266,8 @@ export class OrderService {
       <p><strong>Số điện thoại:</strong> ${order?.get('phone') ?? "Không có thông tin"}</p>
       <p><strong>Địa chỉ giao hàng:</strong> ${shippingAddress}</p>
       <p><strong>Phương thức thanh toán:</strong> ${order?.get('paymentMethod') ?? "Không có thông tin"}</p>
-      <p><strong>Tổng sản phẩm:</strong> ${order?.get('totalPrice') ?? "Không có thông tin"}₫</p>
-      <p><strong>Tiền ship:</strong> ${order?.get('shippingFee') ?? "Không có thông tin"}₫</p>
+      <p><strong>Tổng sản phẩm:</strong> ${order?.get('totalPrice') ? Number(order?.get('totalPrice')) : "Không có thông tin"}₫</p>
+      <p><strong>Tiền ship:</strong> ${order?.get('shippingFee') ? Number(order?.get('shippingFee')) : "Không có thông tin"}₫</p>
     </div>
 
     <div class="footer" style="border-top: 1px solid #ddd; padding-top: 15px; margin-top: 30px; text-align: center; font-size: 12px; color: #888;">
