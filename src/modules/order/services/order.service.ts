@@ -21,6 +21,7 @@ import { Address } from 'src/shared/database/models/address.model';
 import { VoucherService } from 'src/modules/voucher/voucher.service';
 import { MailService } from 'src/modules/mail/mail.service';
 import { Transaction } from 'sequelize';
+import { MailType } from '../mailType';
 
 @Injectable()
 export class OrderService {
@@ -56,6 +57,7 @@ export class OrderService {
                 id
             }
         })
+        await this.mailService.sendMail(order.email, "Order #" + order.trackingNumber, await this.getMailBody(order, true, MailType.ORDER_CANCELLED));
         return order;
     }
 
@@ -74,6 +76,7 @@ export class OrderService {
                 id
             }
         })
+        await this.mailService.sendMail(order.email, "Order #" + order.trackingNumber, await this.getMailBody(order, true, MailType.ORDER_DELIVERED));
         await this.markAsPaid(id);
         return order;
     }
@@ -93,6 +96,7 @@ export class OrderService {
                 id
             }
         })
+        await this.mailService.sendMail(order.email, "Order #" + order.trackingNumber, await this.getMailBody(order, true, MailType.ORDER_SHIPPED));
         return order;
     }
 
@@ -155,7 +159,31 @@ export class OrderService {
         return parts.filter(Boolean).join(', ');
     }
 
-    async getMailBody(order: Order, isGuest = false, transaction?: Transaction) {
+    async getMailHeader(mailType: MailType) {
+        switch (mailType) {
+            case MailType.ORDER_CREATION:
+                return `<h2>Cảm ơn bạn đã đặt hàng!</h2>
+                    <p>Đơn hàng của bạn đã được tạo thành công.</p>`;
+
+            case MailType.ORDER_SHIPPED:
+                return `<h2>Đơn hàng của bạn đang được giao!</h2>
+                    <p>Chúng tôi đã bàn giao đơn hàng cho đơn vị vận chuyển.</p>`;
+
+            case MailType.ORDER_DELIVERED:
+                return `<h2>Đơn hàng đã được giao thành công!</h2>
+                    <p>Cảm ơn bạn đã mua sắm cùng chúng tôi. Chúc bạn hài lòng với sản phẩm.</p>`;
+
+            case MailType.ORDER_CANCELLED:
+                return `<h2>Đơn hàng đã bị huỷ</h2>
+                    <p>Rất tiếc, đơn hàng của bạn đã bị huỷ. Nếu đây là sự nhầm lẫn, vui lòng liên hệ hỗ trợ.</p>`;
+
+            default:
+                return `<h2>Thông báo đơn hàng</h2>
+                    <p>Có cập nhật mới về đơn hàng của bạn.</p>`;
+        }
+    }
+
+    async getMailBody(order: Order, isGuest = false, mailType = MailType.ORDER_CREATION, transaction?: Transaction) {
         const orderDate = new Date(order.createdAt).toLocaleDateString("vi-VN");
         const address = await this.addressModel.findOne({
             where: {
@@ -226,26 +254,25 @@ export class OrderService {
     <body>
       <div class="container">
         <div class="header">
-          <h2>Cảm ơn bạn đã đặt hàng!</h2>
-          <p>Đơn hàng của bạn đã được tạo thành công.</p>
+        ${this.getMailHeader(mailType)}
+</div>
+
+    < div class="order-info" >
+        <h3>Thông tin đơn hàng </h3>
+            < p > <strong>Mã đơn hàng: </strong> #${order?.get('trackingNumber') ?? "Không có thông tin"}</p >
+                <p><strong>Ngày đặt: </strong> ${orderDate}</p >
+                    <p><strong>Tên khách hàng: </strong> ${order?.get('cusName') ?? ""}</p >
+                        <p><strong>Số điện thoại: </strong> ${order?.get('phone') ?? "Không có thông tin"}</p >
+                            <p><strong>Địa chỉ giao hàng: </strong> ${shippingAddress}</p >
+                                <p><strong>Phương thức thanh toán: </strong> ${order?.get('paymentMethod') ?? "Không có thông tin"}</p >
+                                    <p><strong>Tổng sản phẩm: </strong> ${order?.get('totalPrice') ?? "Không có thông tin"}₫</p >
+                                        <p><strong>Tiền ship: </strong> ${order?.get('shippingFee') ?? "Không có thông tin"}₫</p >
+                                            </div>
+
+                                            < div class="footer" >
+          © 2025 Herbalism.Mọi thắc mắc xin liên hệ hỗ trợ khách hàng.
         </div>
-    
-        <div class="order-info">
-          <h3>Thông tin đơn hàng</h3>
-          <p><strong>Mã đơn hàng:</strong> #${order?.get('trackingNumber') ?? "Không có thông tin"}</p>
-          <p><strong>Ngày đặt:</strong> ${orderDate}</p>
-          <p><strong>Tên khách hàng:</strong> ${order?.get('cusName') ?? ""}</p>
-          <p><strong>Số điện thoại:</strong> ${order?.get('phone') ?? "Không có thông tin"}</p>
-          <p><strong>Địa chỉ giao hàng:</strong> ${shippingAddress}</p>
-          <p><strong>Phương thức thanh toán:</strong> ${order?.get('paymentMethod') ?? "Không có thông tin"}</p>
-          <p><strong>Tổng sản phẩm:</strong> ${order?.get('totalPrice') ?? "Không có thông tin"}₫</p>
-          <p><strong>Tiền ship:</strong> ${order?.get('shippingFee') ?? "Không có thông tin"}₫</p>
-        </div>
-    
-        <div class="footer">
-          © 2025 Herbalism. Mọi thắc mắc xin liên hệ hỗ trợ khách hàng.
-        </div>
-      </div>
+    </div>
     </body>
     </html>
         `;
@@ -294,7 +321,7 @@ export class OrderService {
                 // orderCode: dto.paymentMethod !== 'cod' ? orderCode.toString() : null
             }, { transaction: t });
             if (dto.address && dto.address.email) {
-                await this.mailService.sendMail(dto.address.email, "Order #" + trackingNumber, await this.getMailBody(order, true, t));
+                await this.mailService.sendMail(dto.address.email, "Order #" + trackingNumber, await this.getMailBody(order, true, MailType.ORDER_CREATION, t));
             }
 
             await Promise.all(dto.items.map(async (item) => {
@@ -348,7 +375,7 @@ export class OrderService {
             }
 
             if (sizeStock.stock < item.quantity) {
-                throw new Error(`Not enough stock for product ${item.productId} (size ${item.size})`);
+                throw new Error(`Not enough stock for product ${item.productId}(size ${item.size})`);
             }
 
             products.push(productPlain);
@@ -482,7 +509,7 @@ export class OrderService {
         const orderNumber = orders.toString().padStart(7, '0');
         const time = new Date();
         const formattedDate = time.toISOString().slice(0, 10).replace(/-/g, '');
-        const trackingNumber = `ORDER_${orderNumber}_${formattedDate}`;
+        const trackingNumber = `ORDER_${orderNumber}_${formattedDate} `;
 
         return trackingNumber;
     }
