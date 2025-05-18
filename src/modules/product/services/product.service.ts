@@ -313,6 +313,45 @@ export class ProductService {
         };
     }
 
+    async getNewProduct() {
+        const product = await this.productModel.findOne({
+            attributes: ['id', 'name', 'slug', 'rate', 'createdAt'],
+            include: [
+                {
+                    model: ProductImages,
+                    as: 'images',
+                    attributes: ['url'],
+                    order: [['createdAt', 'ASC']],
+                    required: false,
+                }, {
+                    model: SizeStock,
+                    as: 'size_stock',
+                    attributes: ['size', 'price', 'stock'],
+                    required: false
+                },
+            ],
+            order: [['createdAt', 'DESC']],
+            limit: 1,
+        });
+
+        const plainProduct = product?.get({ plain: true });
+
+        const prices = plainProduct.size_stock?.map((s) => s.price) || [];
+        const minPrice = prices.length > 0 ? Math.min(...prices) : 0;
+        const totalStock = (plainProduct.size_stock || []).reduce((acc, s) => acc + Number(s.stock), 0);
+
+        return {
+            id: plainProduct.id,
+            name: plainProduct.name,
+            rate: plainProduct.rate,
+            slug: plainProduct.slug,
+            totalStock: totalStock,
+            price: minPrice,
+            images: plainProduct.images,
+            createdAt: plainProduct.createdAt,
+        };
+    }
+
     async addToStock(dto: AddStockDto) {
         const product = await this.findProductById(dto.productId);
         if (!product) return null;

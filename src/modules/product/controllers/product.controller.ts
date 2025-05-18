@@ -206,6 +206,25 @@ export class ProductController {
         }
     }
 
+    @Get('newest')
+    async getNew(@Req() req, @Res() res) {
+        try {
+            const result = await this.productService.getNewProduct();
+
+            if (!result) {
+                this.response.initResponse(false, 'Không tìm thấy sản phẩm', null);
+                return res.status(HttpStatus.NOT_FOUND).json(this.response);
+            }
+
+            this.response.initResponse(true, 'Tìm sản phẩm mới nhất thành công', result);
+            return res.status(HttpStatus.OK).json(this.response);
+        } catch (error) {
+            console.log(error);
+            this.response.initResponse(false, 'Đã xảy ra lỗi khi thêm hàng vào kho', null);
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(this.response);
+        }
+    }
+
     @Get(':id')
     async getProductById(@Param('id') id: string, @Req() req, @Res() res) {
         try {
