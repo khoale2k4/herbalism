@@ -234,7 +234,7 @@ export class OrderService {
           <h3>Thông tin đơn hàng</h3>
           <p><strong>Mã đơn hàng:</strong> #${order?.get('trackingNumber') ?? "Không có thông tin"}</p>
           <p><strong>Ngày đặt:</strong> ${orderDate}</p>
-          <p><strong>Tên khách hàng:</strong> ${order?.get('firstName') ?? "" + order?.get('lastName') ?? ""}</p>
+          <p><strong>Tên khách hàng:</strong> ${order?.get('cusName') ?? ""}</p>
           <p><strong>Số điện thoại:</strong> ${order?.get('phone') ?? "Không có thông tin"}</p>
           <p><strong>Địa chỉ giao hàng:</strong> ${shippingAddress}</p>
           <p><strong>Phương thức thanh toán:</strong> ${order?.get('paymentMethod') ?? "Không có thông tin"}</p>
@@ -286,6 +286,7 @@ export class OrderService {
                 shippingFee: fee,
                 addressId: address.id,
                 note: dto.note,
+                cusName: dto.address.firstName,
                 phone: dto.address.phone,
                 email: dto.address.email,
                 trackingNumber: trackingNumber,
@@ -357,6 +358,7 @@ export class OrderService {
         return { itemPrices, products };
     }
 
+    // need to modify for mailing
     async createOrderFromCart(dto: CreateOrderFromCartDto) {
         const items = await this.cartService.getItemsInCart(dto.customerId);
         if (!items || items.length === 0) {
