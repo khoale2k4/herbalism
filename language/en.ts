@@ -608,8 +608,8 @@ export default {
 
             countryLabel: "Country",
             countryPlaceholder: "Select country",
-            firstNameLabel: "First Name",
-            firstNamePlaceholder: "First Name",
+            firstNameLabel: "Full Name",
+            firstNamePlaceholder: "Full Name",
             lastNameLabel: "Last Name",
             lastNamePlaceholder: "Last Name",
             addressPlaceholder: "Enter address",

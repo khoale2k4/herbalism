@@ -691,8 +691,8 @@ export default {
 
             countryLabel: "Quốc gia",
             countryPlaceholder: "Chọn quốc gia",
-            firstNameLabel: "Tên",
-            firstNamePlaceholder: "Tên",
+            firstNameLabel: "Họ và Tên",
+            firstNamePlaceholder: "Họ và Tên",
             lastNameLabel: "Họ",
             lastNamePlaceholder: "Họ",
             addressPlaceholder: "Nhập địa chỉ",
