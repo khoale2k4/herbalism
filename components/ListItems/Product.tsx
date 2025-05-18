@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useRouter } from "next/navigation";
 
-const NewProductComponent = () => {
+const NewProductComponent = ({ imageUrl, name }: { imageUrl: string, name: string }) => {
     const { t } = useLanguage();
     const router = useRouter();
 
@@ -13,7 +13,7 @@ const NewProductComponent = () => {
         <div className="flex-shrink-0 w-full">
             <div className="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white transition-transform duration-300 ease-in-out hover:scale-105">
                 <Image
-                    src="/img/tinture_2.png"
+                    src={imageUrl}
                     alt="New Product"
                     width={300}
                     height={150}
@@ -21,7 +21,7 @@ const NewProductComponent = () => {
                 />
 
                 <div className="p-4 text-left">
-                    <h3 className="text-xl font-semibold text-gray-800">{t.newProduct.title}</h3>
+                    <h3 className="text-xl font-semibold text-gray-800">{name}</h3>
                     <p className="mt-2 text-gray-600">
                         {t.newProduct.description}
                     </p>

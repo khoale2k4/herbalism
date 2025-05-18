@@ -12,6 +12,7 @@ type Item = {
 
 const ListItems = ({ ids }: { ids: string[] }) => {
     const [items, setItems] = useState<Item[]>([]);
+    const [newProduct, setNewProduct] = useState<Item | null>(null); // Sản phẩm mới
     const [loading, setLoading] = useState<boolean>(true); // Trạng thái loading
     const productOp = new ProductOperation();
 
@@ -33,6 +34,16 @@ const ListItems = ({ ids }: { ids: string[] }) => {
                     return null;
                 })
             );
+            const newProductResponse = await productOp.getNewest();
+            if (newProductResponse.success) {
+                const product = newProductResponse.data;
+                setNewProduct({
+                    title: product.name,
+                    price: product.price,
+                    images: product.images.map((image: any) => image.url),
+                    slug: product.slug,
+                });
+            }
 
             // Lọc ra item hợp lệ
             const validItems = results.filter((item): item is Item => item !== null);
@@ -62,14 +73,15 @@ const ListItems = ({ ids }: { ids: string[] }) => {
     return (
         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-6 pb-4 px-4">
             <div className="w-full lg:w-1/3">
-                <NewProductComponent />
+                {loading && newProduct !== undefined? renderSkeleton(-1) : <NewProductComponent imageUrl={newProduct?.images[0] ?? ""} name={newProduct?.title ?? ""}/>}
             </div>
 
             <div className="w-full lg:w-2/3 overflow-x-auto scroll-smooth p-2">
                 <div className="flex space-x-4 min-w-max">
                     {loading
-                        ? Array(5).fill(0).map((_, index) => renderSkeleton(index)) // Hiển thị skeleton khi loading
+                        ? Array(5).fill(0).map((_, index) => renderSkeleton(index))
                         : items.map((item: Item) => {
+                            if(newProduct?.slug === item.slug) return null; 
                             return (
                                 <div key={item.title}
                                     onClick={() => window.open(`/shop/${item.slug}`, "_self")}
