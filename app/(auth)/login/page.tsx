@@ -22,22 +22,27 @@ const Login = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
+        setNotify(null);
 
         try {
             const response = await authOp.login(email, password);
             if (response.success) {
-                await delay(duration);
-                setTokenInCookie(response.data.token); // Đảm bảo cookie có SameSite=None; Secure
-                localStorage.setItem('user', JSON.stringify(response.data.info));
-                console.log('Redirecting to / with token:', response.data.token);
-                router.push('/'); // Thay window.location.href
+                try {
+                    await delay(duration);
+                    setTokenInCookie(response.data.token);
+                    localStorage.setItem('user', JSON.stringify(response.data.info));
+                    router.push('/');
+                } catch (storageError) {
+                    console.error('Storage error:', storageError);
+                    setNotify("Có lỗi xảy ra khi lưu thông tin đăng nhập. Vui lòng thử lại.");
+                }
             } else {
                 console.log('Login failed:', response.message);
-                setNotify("Sai tài khoản hoặc mật khẩu");
+                setNotify(response.message || "Sai tài khoản hoặc mật khẩu");
             }
         } catch (error) {
-            console.error('Lỗi đăng nhập:', error);
-            setNotify("Đã xảy ra lỗi, vui lòng thử lại");
+            console.error('Login error:', error);
+            setNotify("Đã xảy ra lỗi, vui lòng thử lại sau");
         } finally {
             setIsLoading(false);
         }
@@ -48,9 +53,15 @@ const Login = () => {
     };
 
     useEffect(() => {
-        // Xóa comment removeTokenFromCookie nếu cần, nhưng tránh chạy mỗi khi authOp thay đổi
-        // console.log('useEffect ran, authOp:', authOp);
-    }, []); // Loại bỏ dependency [authOp] vì authOp không thay đổi
+        // Check if we're on a mobile device
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if (isMobile) {
+            // Additional mobile-specific setup if needed
+            console.log('Running on mobile device');
+        }
+    }, []);
+
+    return <div></div>
 
     return (
         <div className="max-w-screen mx-auto">
