@@ -154,7 +154,7 @@ const HomePage: FC<Props> = () => {
       {/* <RotatingText/> */}
       {/* <ServiceInfo items={services} /> */}
       <div className="w-screen">
-        <Image
+        <img
           src="/img/footer-image.png"
           alt="Footer Image"
           width={1920} 

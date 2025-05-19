@@ -565,7 +565,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
                 </div>
 
             </div>
-            <Image
+            <img
                 src="/img/footer-image.png"
                 alt="Footer Image"
                 width={1920}

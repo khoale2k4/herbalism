@@ -182,7 +182,7 @@ export default function SearchPage() {
                     </>
                 )}
             </div>
-            <Image
+            <img
                 src="/img/footer-image.png"
                 alt="Footer Image"
                 width={1920}
@@ -202,11 +202,10 @@ function ArticleCard({ article }: { article: Article }) {
             className="bg-white rounded-lg shadow overflow-hidden hover:shadow-md transition-shadow duration-300 flex flex-col h-full group"
         >
             <div className="relative h-48 overflow-hidden">
-                <Image
+                <img
                     src={article.imageUrl}
                     alt={article.title}
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                        className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
                 {article.categories && (
                     <span className="absolute top-3 left-3 bg-[#3e4f3d] text-white px-2 py-1 rounded-md text-xs font-medium">
@@ -250,11 +249,10 @@ function ProductCard({ product }: { product: Product }) {
             className="bg-white rounded-lg shadow overflow-hidden hover:shadow-md transition-shadow duration-300 flex flex-col h-full group"
         >
             <div className="relative h-48 overflow-hidden">
-                <Image
+                <img
                     src={mainImage}
                     alt={product.name}
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                        className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
             </div>
             <div className="p-4 flex flex-col flex-grow">

@@ -181,11 +181,10 @@ function ProductCard({ product }: { product: Product }) {
             className="bg-white rounded-lg shadow overflow-hidden hover:shadow-md transition-shadow duration-300 flex flex-col h-full group"
         >
             <div className="relative h-48 overflow-hidden">
-                <Image
+                <img
                     src={mainImage}
                     alt={product.name}
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                        className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
             </div>
             <div className="p-4 flex flex-col flex-grow">

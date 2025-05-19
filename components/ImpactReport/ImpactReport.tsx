@@ -16,7 +16,7 @@ const ImpactReport = () => {
             {isVisible && (
             <div className="flex flex-col lg:flex-row max-w-7xl mx-auto px-8 py-24">
                 <div className="flex-shrink-0">
-                    <Image
+                    <img
                         src="/img/impact-report.png"
                         alt="2024 Impact Report"
                         width={400}

@@ -69,14 +69,12 @@ export default function MenuSidebar({ openMenu, setOpenMenu, onCartClick }: Prop
                         <div className="flex justify-between items-center">
                             <Link href="/" onClick={() => setOpenMenu(false)}>
                                 <div className="relative w-[150px] h-[30px]">
-                                    <Image
+                                    <img
                                         src="/img/logo-with-word.png"
                                         alt="Logo"
-                                        fill
-                                        className="object-contain"
+                                                                                className="object-contain"
                                         sizes="150px"
-                                        priority
-                                    />
+                                                                            />
                                 </div>
                             </Link>
                             <button

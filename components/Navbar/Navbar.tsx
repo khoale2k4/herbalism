@@ -261,28 +261,24 @@ const Navbar = () => {
             {!searchBoxOpen && (
               <Link href="/">
                 <div className="md:hidden relative w-[150px] h-[30px]">
-                  <Image
+                  <img
                     src="/img/logo-with-word.png"
                     alt="Logo"
-                    fill
-                    className="object-contain"
+                                        className="object-contain"
                     sizes="80px"
-                    priority
-                  />
+                                      />
                 </div>
               </Link>
             )}
             <div className="hidden md:flex items-center space-x-8">
               <Link href="/">
                 <div className="relative w-[150px] h-[30px]">
-                  <Image
+                  <img
                     src="/img/logo-with-word.png"
                     alt="Logo"
-                    fill
-                    className="object-contain"
+                                        className="object-contain"
                     sizes="80px"
-                    priority
-                  />
+                                      />
                 </div>
               </Link>
 

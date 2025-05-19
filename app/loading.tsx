@@ -39,7 +39,7 @@ export default function CustomLoadingElement() {
           <div className="absolute inset-0 rounded-full animate-ping opacity-20 bg-blue-500 dark:bg-blue-400"
             style={{ animationDuration: '2s' }}></div>
           <div className="relative">
-            <Image
+            <img
               src="/img/logo-image.png"
               alt="Logo"
               width={80}

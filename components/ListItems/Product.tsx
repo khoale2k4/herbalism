@@ -12,7 +12,7 @@ const NewProductComponent = ({ imageUrl, name }: { imageUrl: string, name: strin
     return (
         <div className="flex-shrink-0 w-full">
             <div className="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white transition-transform duration-300 ease-in-out hover:scale-105">
-                <Image
+                <img
                     src={imageUrl}
                     alt="New Product"
                     width={300}

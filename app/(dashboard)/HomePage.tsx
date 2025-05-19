@@ -91,7 +91,7 @@ const HomePage: FC<Props> = () => {
         <DifferenceSection />
         <ImageBanner {...ibProps2} />
         <CustomerTestimonials />
-        <Image
+        <img
             src="/img/footer-image.png"
             alt="Footer Image"
             width={1920}

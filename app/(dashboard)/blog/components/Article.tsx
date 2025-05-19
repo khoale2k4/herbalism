@@ -123,7 +123,7 @@ export default function BlogPage({ blogId }: { blogId: string }) {
                                 <article className="h-full bg-gray-50 dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300">
                                     {post.titleImg && (
                                         <div className="relative h-48 overflow-hidden">
-                                            <Image
+                                            <img
                                                 src={post.titleImg}
                                                 alt={post.title}
                                                 width={600}
@@ -152,7 +152,7 @@ export default function BlogPage({ blogId }: { blogId: string }) {
                 </div>
                 <RelatedProducts products={suggestProducts} />
             </div>
-            <Image
+            <img
                 src="/img/footer-image.png"
                 alt="Footer Image"
                 width={1920}

@@ -46,7 +46,7 @@ export default function PaymentQR() {
                 </p>
 
                 <div className="flex justify-center mb-6">
-                    <Image
+                    <img
                         src="/img/qr-payment.png"
                         alt="QR Code"
                         width={200}

@@ -151,13 +151,11 @@ const Register = () => {
                 {/* Logo */}
                 <div className="flex justify-center mb-6">
                     <div className="relative w-32 h-16">
-                        <Image
+                        <img
                             src="/img/logo-image.png"
                             alt="Company Logo"
-                            fill
-                            className="object-contain"
-                            priority
-                        />
+                                                        className="object-contain"
+                                                    />
                     </div>
                 </div>
 

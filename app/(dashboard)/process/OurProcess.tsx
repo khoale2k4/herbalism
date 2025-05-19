@@ -79,13 +79,11 @@ export default function OurProcess() {
                 <div className="order-1 md:order-2">
                     <div className="relative w-full h-[500px] shadow-xl rounded-2xl overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent z-10" />
-                        <Image
+                        <img
                             src={paracelsus.imageUrl}
                             alt="Paracelsus"
-                            fill
-                            className="object-cover"
-                            priority
-                        />
+                                                        className="object-cover"
+                                                    />
                     </div>
                 </div>
             </section>
@@ -121,20 +119,20 @@ export default function OurProcess() {
                             { bgFrom: 'from-green-50', bgTo: 'to-green-100', iconBg: 'bg-green-200', iconColor: 'text-green-600' },
                             { bgFrom: 'from-blue-50', bgTo: 'to-blue-100', iconBg: 'bg-blue-200', iconColor: 'text-blue-600' }
                         ];
-                        const Icon = principle.icon === 'Sparkles' ? <Image
+                        const Icon = principle.icon === 'Sparkles' ? <img
                             src={'/img/salt@33.33x.png'}
                             alt="Salt"
                             width={48}
                             height={48}
                             className="object-cover"
                         /> :
-                            principle.icon === 'Flame' ? <Image
+                            principle.icon === 'Flame' ? <img
                                 src={'/img/sulphur@33.33x.png'}
                                 alt="Sulphur"
                                 width={32}
                                 height={32}
                                 className="object-cover"
-                            /> : <Image
+                            /> : <img
                                 src={'/img/mercury@33.33x.png'}
                                 alt="Mercury"
                                 width={32}
@@ -173,7 +171,7 @@ export default function OurProcess() {
                         <div className="grid md:grid-cols-2 gap-6">
                             <div className="flex flex-col items-center p-4 rounded-lg">
                                 <div className="mb-3">
-                                    <Image
+                                    <img
                                         src={'/img/calcination.png'}
                                         alt="Calcination"
                                         width={385}
@@ -185,7 +183,7 @@ export default function OurProcess() {
                             </div>
                             <div className="flex flex-col items-center p-4 rounded-lg">
                                 <div className="mb-3">
-                                    <Image
+                                    <img
                                         src={'/img/crystallized.png'}
                                         alt="Crystallized"
                                         width={490}

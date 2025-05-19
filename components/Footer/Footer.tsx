@@ -127,11 +127,10 @@ const Footer = () => {
                                 </a>
                             </div>
                             <div className="relative w-[120px] h-[40px] mt-2 pt-20">
-                                <Image
+                                <img
                                     src="/img/logo-with-word.png"
                                     alt="Harmonic Arts Logo"
-                                    fill
-                                    className="object-contain"
+                                                                        className="object-contain"
                                     sizes="120px"
                                 />
                             </div>

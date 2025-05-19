@@ -29,7 +29,7 @@ const Collection = () => {
                         <h2 className="text-4xl  text-gray-800 mb-6 text-center">{t.productCollections.title}</h2>
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-auto">
                             <div className="relative rounded-lg overflow-hidden shadow-lg lg:col-span-1 lg:row-span-2 transition-transform duration-300 hover:scale-105">
-                                <Image
+                                <img
                                     src={collections[0].image}
                                     alt={collections[0].title}
                                     width={600}
@@ -44,7 +44,7 @@ const Collection = () => {
                             <div className="grid grid-cols-2 gap-6 lg:col-span-2">
                                 {collections.slice(1).map((item, index) => (
                                     <div key={index} className="relative rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105">
-                                        <Image
+                                        <img
                                             src={item.image}
                                             alt={item.title}
                                             width={300}

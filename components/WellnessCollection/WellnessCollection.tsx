@@ -104,7 +104,7 @@ const WellnessCollections = ({ ids }: { ids: string[] }) => {
             >
               {collections.map((item, index) => (
                 <div key={index} className="w-64 flex-shrink-0 bg-white p-4 rounded-lg shadow-md">
-                  <Image src={item.image} alt={item.title} width={256} height={256} className="rounded-lg" />
+                  <img src={item.image} alt={item.title} width={256} height={256} className="rounded-lg" />
                   <div className="mt-4 flex items-center space-x-2">
                     <span className="text-xl">{item.icon}</span>
                     <h3 className="text-lg font-semibold">{item.title}</h3>

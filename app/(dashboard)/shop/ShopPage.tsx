@@ -81,7 +81,7 @@ const ShopPage: FC<Props> = () => {
         {/* <TopBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} setSortOption={setSortOption} viewMode={viewMode} showSidebar={showSidebar} sortOption={sortOption} sortOptions={sortOptions} toggleSidebar={toggleSidebar} setViewMode={setViewMode} /> */}
         <ProductsList filteredProducts={filteredProducts} setSearchQuery={setSearchQuery} showSidebar={showSidebar} viewMode={viewMode} />
       </div>
-      <Image
+      <img
         src="/img/footer-image.png"
         alt="Footer Image"
         width={1920}

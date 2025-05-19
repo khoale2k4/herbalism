@@ -18,9 +18,9 @@ export const blogPosts: Record<string, BlogPost> = {
         date: "29/03/2025",
         content: [
             "Next.js là một framework React phổ biến giúp xây dựng các ứng dụng web hiệu quả.",
-            <Image key="nextjs-img" src = "/images/nextjs.png" alt = "Next.js" width = { 500} height = { 300} className = "rounded-md my-6 mx-auto shadow-md" />,
+            <img key="nextjs-img" src = "/images/nextjs.png" alt = "Next.js" width = { 500} height = { 300} className = "rounded-md my-6 mx-auto shadow-md" />,
             "Trong bài viết này, chúng ta sẽ tìm hiểu về cách sử dụng Next.js để phát triển website.",
-            <Image key="react-img" src = "/images/react.png" alt = "React" width = { 500} height = { 300} className = "rounded-md my-6 mx-auto shadow-md" />,
+            <img key="react-img" src = "/images/react.png" alt = "React" width = { 500} height = { 300} className = "rounded-md my-6 mx-auto shadow-md" />,
             "Một trong những tính năng mạnh mẽ của Next.js là hỗ trợ Server-side Rendering (SSR).",
         ],
     },

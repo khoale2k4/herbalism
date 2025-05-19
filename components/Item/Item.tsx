@@ -14,7 +14,7 @@ const ImageHoverComponent = ({ title, images, price }: Props) => {
     return (
         <div className="relative w-[250px] sm:w-[280px] md:w-[300px] mx-auto overflow-hidden rounded-lg border shadow-lg group">
             <div className="relative">
-                {images && images.length >= 0 && <Image
+                {images && images.length >= 0 && <img
                     src={images[0]}
                     alt="First Image"
                     width={300}
@@ -23,7 +23,7 @@ const ImageHoverComponent = ({ title, images, price }: Props) => {
                 />}
 
                 {images && images.length >= 1 && <div className="absolute inset-0 bg-white transition-opacity duration-300 ease-in-out opacity-0 group-hover:opacity-100 flex items-center justify-center">
-                    <Image
+                    <img
                         src={images[1]}
                         alt="Second Image"
                         width={300}

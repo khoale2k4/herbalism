@@ -114,7 +114,7 @@ const BlogPage: FC = () => {
           />
         ))
       )}
-      <Image
+      <img
         src="/img/footer-image.png"
         alt="Footer Image"
         width={1920}
