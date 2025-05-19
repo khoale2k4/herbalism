@@ -3,11 +3,11 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { AuthOperation } from '@/lib/main';
 import { removeTokenFromCookie, setTokenInCookie } from '@/app/utils/token';
 import { delay } from '@/app/utils/delay';
 import { useLanguage } from '@/hooks/useLanguage';
+import { useRouter } from 'next/navigation';
 
 const Login = () => {
     const { t } = useLanguage();
