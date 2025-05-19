@@ -19,9 +19,9 @@ export const metadata: Metadata = {
 const RootStructure = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      {/* <Navbar /> */}
+      <Navbar />
         {children}
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 };
