@@ -193,7 +193,7 @@ const CheckoutPage: React.FC = () => {
             if (newAddress) {
                 return (
                     !formData.firstName ||
-                    !formData.lastName ||
+                    // !formData.lastName ||
                     !formData.email ||
                     !formData.phone ||
                     !formData.country ||

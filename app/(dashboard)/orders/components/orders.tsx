@@ -18,7 +18,7 @@ import { getOrders } from '@/app/utils/localOrder';
 import { useLanguage } from '@/hooks/useLanguage';
 
 // Types
-type OrderStatus = 'pending' | 'processing' | 'shipped' | 'completed' | 'cancelled';
+type OrderStatus = 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
 
 interface Address {
     id: string;
@@ -178,7 +178,7 @@ const OrdersPage = () => {
         'pending': { text: 'text-yellow-700', bg: 'bg-yellow-50', border: 'border-yellow-200' },
         'processing': { text: 'text-blue-700', bg: 'bg-blue-50', border: 'border-blue-200' },
         'shipped': { text: 'text-purple-700', bg: 'bg-purple-50', border: 'border-purple-200' },
-        'completed': { text: 'text-[#3e4f3d]', bg: 'bg-green-50', border: 'border-[#3e4f3d]' },
+        'delivered': { text: 'text-[#3e4f3d]', bg: 'bg-green-50', border: 'border-[#3e4f3d]' },
         'cancelled': { text: 'text-red-700', bg: 'bg-red-50', border: 'border-red-200' }
     };
 
@@ -196,7 +196,7 @@ const OrdersPage = () => {
 
     const OrderStatusIcon = ({ status }: { status: OrderStatus }) => {
         const iconMap = {
-            'completed': <CheckCircle2 className="h-5 w-5 text-[#3e4f3d]" />,
+            'delivered': <CheckCircle2 className="h-5 w-5 text-[#3e4f3d]" />,
             'shipped': <Truck className="h-5 w-5 text-blue-500" />,
             'cancelled': <XCircle className="h-5 w-5 text-red-500" />,
             'processing': <Clock className="h-5 w-5 text-blue-500" />,
@@ -277,7 +277,7 @@ const OrdersPage = () => {
             if (response.success) {
                 // Update the order status in the local state
                 setOrders(orders.map(order =>
-                    order.id === selectedOrder.id ? { ...order, status: 'completed' } : order
+                    order.id === selectedOrder.id ? { ...order, status: 'delivered' } : order
                 ));
             }
         } finally {
