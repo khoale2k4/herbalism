@@ -29,6 +29,9 @@ export default function RootLayout({
 
   return (
     <html lang="vi">
+      <head>
+        <meta name="color-scheme" content="light only" />
+      </head>
       <body className="min-h-screen flex flex-col">
         <ClientOnly>
           <NotificationProvider>
