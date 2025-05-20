@@ -20,6 +20,8 @@ const VideoHeroSection = ({ title, title2 = null, button = null, descriptions, v
                 autoPlay
                 loop
                 muted
+                playsInline 
+                webkit-playsinline 
             >
                 <source src={videoUrl} type="video/mp4" />
                 Your browser does not support the video tag.
