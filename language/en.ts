@@ -408,6 +408,7 @@ export default {
         notFound: "Sorry, we couldn't find that page.",
         notFoundDescription: "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
         backToHome: "Back",
+        noBlogFound: "Sorry, no blog found.",
 
         valuesDrivenBusiness: {
             title: "What Does it Take to Run a Values-Driven Business?",

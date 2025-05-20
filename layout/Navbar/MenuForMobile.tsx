@@ -3,7 +3,7 @@ import { X, ChevronDown, ChevronRight, User, ShoppingBag, LogOut } from "lucide-
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import SearchBar from "../SearchBar/SearchBar";
+import SearchBar from "../../components/SearchBar/SearchBar";
 import { removeTokenFromCookie } from "@/app/utils/token";
 
 type Props = {

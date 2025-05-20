@@ -16,6 +16,7 @@ const ShopPage: FC<Props> = () => {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [sortOption, setSortOption] = useState<string>("featured");
   const [searchQuery, setSearchQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const productOp = new ProductOperation()
   const { t } = useLanguage();
   const [products, setProducts] = useState<Product[]>([]);
@@ -64,9 +65,16 @@ const ShopPage: FC<Props> = () => {
   );
 
   const fetchProducts = async () => {
-    const response = await productOp.getAll();
-    if (response.success) {
-      setProducts(response.data);
+    setIsLoading(true);
+    try {
+      const response = await productOp.getAll();
+      if (response.success) {
+        setProducts(response.data);
+      }
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -79,7 +87,12 @@ const ShopPage: FC<Props> = () => {
       <ImageBanner {...ibProps1} />
       <div className="flex flex-col w-full bg-[#fdf8f7]">
         {/* <TopBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} setSortOption={setSortOption} viewMode={viewMode} showSidebar={showSidebar} sortOption={sortOption} sortOptions={sortOptions} toggleSidebar={toggleSidebar} setViewMode={setViewMode} /> */}
-        <ProductsList filteredProducts={filteredProducts} setSearchQuery={setSearchQuery} showSidebar={showSidebar} viewMode={viewMode} />
+        {isLoading ?
+          <div className="flex justify-center items-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#3e4f3d]"></div>
+          </div> :
+          <ProductsList filteredProducts={filteredProducts} setSearchQuery={setSearchQuery} showSidebar={showSidebar} viewMode={viewMode} />
+        }
       </div>
       <img
         src="/img/footer-image.png"

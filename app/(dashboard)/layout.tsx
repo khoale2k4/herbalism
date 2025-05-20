@@ -1,7 +1,7 @@
 import "@/app/globals.css";
-import Navbar from "@/components/Navbar/Navbar";
+import Navbar from "@/layout/Navbar/Navbar";
 import { Metadata } from "next";
-import Footer from "@/components/Footer/Footer";
+import Footer from "@/layout/Footer/Footer";
 
 export const metadata: Metadata = {
   title: 'Herbalism - Shop',

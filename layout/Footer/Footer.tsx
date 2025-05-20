@@ -126,12 +126,11 @@ const Footer = () => {
                                     <FaEnvelope />
                                 </a>
                             </div>
-                            <div className="relative w-[120px] h-[40px] mt-2 pt-20">
+                            <div className="flex items-center h-[32px] w-[120px] relative mt-10">
                                 <img
                                     src="/img/logo-with-word.png"
-                                    alt="Harmonic Arts Logo"
-                                                                        className="object-contain"
-                                    sizes="120px"
+                                    alt="Logo"
+                                    className="object-contain h-full"
                                 />
                             </div>
                         </div>

@@ -79,7 +79,14 @@ const SearchBar = ({
                     onChange={(e) => setQuery(e.target.value)}
                     onFocus={() => setIsInputFocused(true)}
                     onBlur={() => setIsInputFocused(false)}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            handleSearch();
+                        }
+                    }}
                 />
+
 
 
                 {query && (

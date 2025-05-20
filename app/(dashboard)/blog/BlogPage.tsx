@@ -7,7 +7,6 @@ import ArticleRowList from "./components/ArticleRowList";
 import Image from 'next/image';
 import { useLanguage } from "@/hooks/useLanguage";
 import { ArticleOperation } from "@/lib/main";
-import Loading from "./read/loading";
 
 type Title = {
   title: string;
@@ -18,6 +17,7 @@ const BlogPage: FC = () => {
   const { t } = useLanguage();
   const articleOp = new ArticleOperation();
   const [titles, setTitles] = useState<Title[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const headingHeroProps = {
     images: [
@@ -42,6 +42,7 @@ const BlogPage: FC = () => {
   };
 
   const fetchArticles = async (): Promise<Title[]> => {
+    setIsLoading(true);
     try {
       const response = await articleOp.getAll();
       if (!response || !response.success) console.error("API failed");
@@ -81,6 +82,8 @@ const BlogPage: FC = () => {
     } catch (err) {
       console.error("fetchArticles error:", err);
       return [];
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -103,8 +106,29 @@ const BlogPage: FC = () => {
     <div className="flex flex-col w-full">
       <HeroImage {...headingHeroProps} />
       <ProductFeatures {...blogProps_1} />
-      {titles.length === 0 ? (
-        <div className="text-center text-gray-500 py-10 bg-[#fdf8f7]"><Loading/></div>
+      {isLoading ? <div className="text-center text-gray-500 py-10 bg-[#fdf8f7]">
+        <div className="flex justify-center items-center py-20">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#3e4f3d]"></div>
+        </div>
+      </div> : titles.length === 0 ? (
+        <div className="text-center py-16">
+          <div className="mb-4">
+            <svg
+              className="mx-auto h-16 w-16 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="1.5"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+          </div>
+          <h3 className="text-xl font-medium text-gray-900 mb-1">{t.blog.noBlogFound}</h3>
+        </div>
       ) : (
         titles.map((title, index) => (
           <ArticleRowList

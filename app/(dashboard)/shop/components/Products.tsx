@@ -34,19 +34,28 @@ const ProductsList = ({ showSidebar, filteredProducts, setSearchQuery, viewMode 
         <h1 className="text-2xl font-bold text-gray-800 mb-6">{t.shop.shopOurProducts}</h1>
 
         {filteredProducts.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">{t.shop.noProductsFound}</p>
-            {/* <button
-              onClick={() => setSearchQuery("")}
-              className="mt-4 text-green-600 hover:text-green-800"
-            >
-              Clear filters
-            </button> */}
+          <div className="text-center py-16">
+            <div className="mb-4">
+              <svg
+                className="mx-auto h-16 w-16 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="1.5"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </div>
+            <h3 className="text-xl font-medium text-gray-900 mb-1">{t.shop.noProductsFound}</h3>
           </div>
         ) : (
           <div className={viewMode === "grid"
             ? "grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-            : "space-y-6"          
+            : "space-y-6"
           }>
             {filteredProducts.map(product => (
               <ProductCard

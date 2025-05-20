@@ -2,7 +2,7 @@ import { getTokenFromCookie } from "@/app/utils/token";
 import { CartOperation, OrderOperation, ProductOperation } from "@/lib/main";
 import { X, Plus, Minus, ShoppingBag, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
-import RelatedProducts from "../RelatedProducts";
+import RelatedProducts from "../../components/RelatedProducts";
 import { useEffect, useState } from "react";
 import { Product } from "@/types/product";
 import { useLanguage } from "@/hooks/useLanguage";

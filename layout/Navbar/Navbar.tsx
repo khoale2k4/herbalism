@@ -3,8 +3,8 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { UserCircle, ShoppingBag, Menu, Package, LogOut } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import SearchBar from "../SearchBar/SearchBar";
-import Dropdown from "../Dropdown/Dropdown";
+import SearchBar from "../../components/SearchBar/SearchBar";
+import Dropdown from "../../components/Dropdown/Dropdown";
 import CartSidebar, { ItemInCart } from "../Cart/cart";
 import { useLanguage } from "@/hooks/useLanguage";
 import Image from "next/image";
@@ -260,25 +260,24 @@ const Navbar = () => {
             </button>
             {!searchBoxOpen && (
               <Link href="/">
-                <div className="md:hidden relative w-[150px] h-[30px]">
+                <div className="md:hidden relative w-[150px] h-[15px]">
                   <img
                     src="/img/logo-with-word.png"
                     alt="Logo"
-                                        className="object-contain"
+                    className="object-contain"
                     sizes="80px"
-                                      />
+                  />
                 </div>
               </Link>
             )}
             <div className="hidden md:flex items-center space-x-8">
               <Link href="/">
-                <div className="relative w-[150px] h-[30px]">
+                <div className="flex items-center h-[32px] w-[120px] relative">
                   <img
                     src="/img/logo-with-word.png"
                     alt="Logo"
-                                        className="object-contain"
-                    sizes="80px"
-                                      />
+                    className="object-contain h-full"
+                  />
                 </div>
               </Link>
 

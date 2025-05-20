@@ -1,6 +1,6 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Product } from '@/types/product';
@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { ArticleOperation, ProductOperation } from '@/lib/main';
 import { formatPrice } from '@/app/utils/format-currency';
 import { useLanguage } from '@/hooks/useLanguage';
+import ProductCard from '../../shop/components/ProductCard';
 
 export default function SearchPage() {
     const searchParams = useSearchParams();
@@ -18,6 +19,7 @@ export default function SearchPage() {
     const [articles, setArticles] = useState<Article[]>([]);
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
+    const router = useRouter();
     const [activeTab, setActiveTab] = useState('all');
 
     const fetchResults = async () => {
@@ -42,6 +44,9 @@ export default function SearchPage() {
         }
     };
 
+    const productClick = (slug: string) => {
+        router.push(`/shop/${slug}`);
+    }
     useEffect(() => {
         fetchResults();
     }, [keyword]);
@@ -145,7 +150,7 @@ export default function SearchPage() {
                                         )}
                                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                                             {(activeTab === 'all' ? products.slice(0, 4) : products).map((product) => (
-                                                <ProductCard key={product.id} product={product} />
+                                                <ProductCard key={product.id} product={product} viewMode='grid' onClick={productClick} />
                                             ))}
                                         </div>
                                     </section>
@@ -205,7 +210,7 @@ function ArticleCard({ article }: { article: Article }) {
                 <img
                     src={article.imageUrl}
                     alt={article.title}
-                                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
                 {article.categories && (
                     <span className="absolute top-3 left-3 bg-[#3e4f3d] text-white px-2 py-1 rounded-md text-xs font-medium">
@@ -239,49 +244,49 @@ function ArticleCard({ article }: { article: Article }) {
     );
 }
 
-function ProductCard({ product }: { product: Product }) {
-    const { t } = useLanguage();
-    const mainImage = product.images && product.images.length > 0 ? product.images[0]?.url : '/img/placeholder.png';
+// function ProductCard({ product }: { product: Product }) {
+//     const { t } = useLanguage();
+//     const mainImage = product.images && product.images.length > 0 ? product.images[0]?.url : '/img/placeholder.png';
 
-    return (
-        <Link
-            href={`/shop/${product.slug}`}
-            className="bg-white rounded-lg shadow overflow-hidden hover:shadow-md transition-shadow duration-300 flex flex-col h-full group"
-        >
-            <div className="relative h-48 overflow-hidden">
-                <img
-                    src={mainImage}
-                    alt={product.name}
-                                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-            </div>
-            <div className="p-4 flex flex-col flex-grow">
-                <div className="flex items-center mb-2">
-                    <div className="flex items-center text-yellow-500">
-                        {[...Array(5)].map((_, i) => (
-                            <svg
-                                key={i}
-                                className={`w-4 h-4 ${i < Math.floor(product.rate) ? 'text-yellow-500' : 'text-gray-300'}`}
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                            >
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                        ))}
-                        <span className="ml-1 text-xs font-medium text-gray-600">
-                            ({product.rate.toFixed(1)})
-                        </span>
-                    </div>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2 line-clamp-2 group-hover:text-[#3e4f3d] transition-colors">
-                    {product.name}
-                </h3>
-                <div className="mt-auto pt-3 flex justify-between items-center">
-                    <span className="text-lg font-medium text-gray-900">
-                        {formatPrice(product.price)}
-                    </span>
-                </div>
-            </div>
-        </Link>
-    );
-}
+//     return (
+//         <Link
+//             href={`/shop/${product.slug}`}
+//             className="bg-white rounded-lg shadow overflow-hidden hover:shadow-md transition-shadow duration-300 flex flex-col h-full group"
+//         >
+//             <div className="relative h-48 overflow-hidden">
+//                 <img
+//                     src={mainImage}
+//                     alt={product.name}
+//                                         className="object-cover transition-transform duration-300 group-hover:scale-105"
+//                 />
+//             </div>
+//             <div className="p-4 flex flex-col flex-grow">
+//                 <div className="flex items-center mb-2">
+//                     <div className="flex items-center text-yellow-500">
+//                         {[...Array(5)].map((_, i) => (
+//                             <svg
+//                                 key={i}
+//                                 className={`w-4 h-4 ${i < Math.floor(product.rate) ? 'text-yellow-500' : 'text-gray-300'}`}
+//                                 fill="currentColor"
+//                                 viewBox="0 0 20 20"
+//                             >
+//                                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+//                             </svg>
+//                         ))}
+//                         <span className="ml-1 text-xs font-medium text-gray-600">
+//                             ({product.rate.toFixed(1)})
+//                         </span>
+//                     </div>
+//                 </div>
+//                 <h3 className="text-lg font-semibold text-gray-800 mb-2 line-clamp-2 group-hover:text-[#3e4f3d] transition-colors">
+//                     {product.name}
+//                 </h3>
+//                 <div className="mt-auto pt-3 flex justify-between items-center">
+//                     <span className="text-lg font-medium text-gray-900">
+//                         {formatPrice(product.price)}
+//                     </span>
+//                 </div>
+//             </div>
+//         </Link>
+//     );
+// }

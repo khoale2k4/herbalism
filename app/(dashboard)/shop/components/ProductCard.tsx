@@ -27,7 +27,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, viewMode, onClick })
                 </div>
                 <div className="flex-grow">
                     <h3 className="font-medium text-gray-800 line-clamp-1">{product.name}</h3>
-                    <p className="text-sm text-gray-500">{product.type.name}</p>
+                    {/* <p className="text-sm text-gray-500">{product.type.name}</p> */}
                     <div className="flex items-center mt-1">
                         <FiStar className="text-yellow-400 mr-1" />
                         <span className="text-sm text-gray-600">{product.rate}</span>
@@ -56,7 +56,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, viewMode, onClick })
             </div>
             <div className="p-4">
                 <h3 className="font-medium text-gray-800 mb-1 line-clamp-1">{product.name}</h3>
-                <p className="text-sm text-gray-500 mb-1">{product.type.name}</p>
+                {/* <p className="text-sm text-gray-500 mb-1">{product.type.name}</p> */}
                 <div className="text-base font-semibold text-[#3e4f3d] mb-2 whitespace-nowrap">
                     {formatPrice(product.price)}
                 </div>

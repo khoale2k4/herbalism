@@ -376,6 +376,7 @@ export default {
         title: "Blog Herbalism",
         description: "Công thức, mẹo vặt, ý tưởng và chia sẻ sức khỏe với cộng đồng. Ghé thăm blog của chúng tôi để xem đội ngũ Herbalism đang làm gì.",
         readMore: "Xem thêm",
+        noBlogFound: "Không tìm thấy bài viết nào",
 
         notFound: "Không tìm thấy bài viết này",
         notFoundDescription: "Xin lỗi, bài viết bạn đang tìm kiếm không tồn tại hoặc đã bị xóa. Vui lòng kiểm tra lại đường dẫn hoặc quay lại trang chủ.",
