@@ -8,15 +8,15 @@ interface BlogContentProps {
 
 const BlogContent = ({ children }: BlogContentProps) => {
   return (
-    <div className="prose prose-lg max-w-none dark:prose-invert 
+    <div className="prose prose-lg max-w-none  
                   prose-headings: prose-headings:font-normal
                   prose-p:leading-relaxed prose-p:text-justify
                   prose-img:rounded-xl prose-img:shadow-lg
                   prose-blockquote:border-l-4 prose-blockquote:border-primary
-                  prose-blockquote:bg-gray-50 prose-blockquote:dark:bg-gray-800
+                  prose-blockquote:bg-gray-50 prose-blockquote:
                   prose-ul:list-disc prose-ol:list-decimal
                   prose-a:text-blue-600 hover:prose-a:text-blue-800
-                  prose-pre:bg-gray-100 prose-pre:dark:bg-gray-800
+                  prose-pre:bg-gray-100 prose-pre:
                   prose-code:before:content-none prose-code:after:content-none">
       {children}
     </div>
@@ -69,7 +69,7 @@ const processContent = (content: ReactNode[]) => {
           );
         case 'blockquote':
           return (
-            <blockquote key={index} className="my-8 p-6 italic border-l-4 border-primary bg-gray-50 dark:bg-gray-800">
+            <blockquote key={index} className="my-8 p-6 italic border-l-4 border-primary bg-gray-50 ">
               {item.props.children}
             </blockquote>
           );

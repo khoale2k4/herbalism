@@ -13,7 +13,7 @@ const NewProductComponent = ({ imageUrl, name }: { imageUrl: string, name: strin
         <div className="flex-shrink-0 w-full">
             <div className="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white transition-transform duration-300 ease-in-out hover:scale-105">
                 <img
-                    src={imageUrl}
+                    src={imageUrl === "" ? "/img/placeholder.png" : imageUrl}
                     alt="New Product"
                     width={300}
                     height={150}

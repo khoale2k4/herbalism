@@ -326,7 +326,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
 
                         <BlogContent>
                             <div
-                                className="prose max-w-none dark:prose-invert"
+                                className="prose max-w-none "
                                 dangerouslySetInnerHTML={{ __html: product.content }}
                             />
                         </BlogContent>
@@ -455,7 +455,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
                                         {/* <p className="leading-relaxed whitespace-pre-line">{tab.content}</p> */}
                                         <BlogContent>
                                             <div
-                                                className="prose max-w-none dark:prose-invert"
+                                                className="prose max-w-none "
                                                 dangerouslySetInnerHTML={{ __html: tab.content }}
                                             />
                                         </BlogContent>

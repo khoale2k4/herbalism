@@ -178,31 +178,31 @@ const Navbar = () => {
 
   // Render functions
   const renderUserMenu = () => (
-    <div className={`absolute right-0 bg-white dark:bg-gray-900 shadow-lg w-48 mt-2 py-2 z-40 rounded-lg transform transition-all duration-200 origin-top-right border border-gray-100 dark:border-gray-800 ${activeMenu === "user" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}`}>
+    <div className={`absolute right-0 bg-white  shadow-lg w-48 mt-2 py-2 z-40 rounded-lg transform transition-all duration-200 origin-top-right border border-gray-100  ${activeMenu === "user" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}`}>
       {user ? (
-        <div onClick={() => router.push('/info')} className="px-4 py-2 border-b border-gray-100 dark:border-gray-800 cursor-pointer">
-          <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{user?.name}</p>
+        <div onClick={() => router.push('/info')} className="px-4 py-2 border-b border-gray-100  cursor-pointer">
+          <p className="text-sm font-medium text-gray-900 ">{user?.name}</p>
           <p className="text-xs text-gray-500">{user?.mail}</p>
         </div>
       ) : (
-        <div className="py-1 border-b border-gray-100 dark:border-gray-800">
-          <Link href="/login" className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 group">
-            <UserCircle size={18} className="text-gray-500 group-hover:text-[#6e7a34] dark:group-hover:text-green-500" />
+        <div className="py-1 border-b border-gray-100 ">
+          <Link href="/login" className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700  hover:bg-gray-50  group">
+            <UserCircle size={18} className="text-gray-500 group-hover:text-[#6e7a34] " />
             <span>{t.common.guest}</span>
           </Link>
         </div>
       )}
 
       <div className="py-1">
-        <Link href="/orders" className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 group">
-          <Package size={18} className="text-gray-500 group-hover:text-[#6e7a34] dark:group-hover:text-green-500" />
+        <Link href="/orders" className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700  hover:bg-gray-50  group">
+          <Package size={18} className="text-gray-500 group-hover:text-[#6e7a34] " />
           <span>{t.common.orders}</span>
         </Link>
       </div>
 
       {user && (
-        <div className="border-t border-gray-100 dark:border-gray-800 py-1">
-          <Link href="/login" onClick={() => removeTokenFromCookie()} className="flex items-center gap-3 px-4 py-2 text-sm text-red-600 dark:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 group">
+        <div className="border-t border-gray-100  py-1">
+          <Link href="/login" onClick={() => removeTokenFromCookie()} className="flex items-center gap-3 px-4 py-2 text-sm text-red-600  hover:bg-red-50  group">
             <LogOut size={18} className="text-red-500" />
             <span>{t.common.logout}</span>
           </Link>
@@ -260,7 +260,7 @@ const Navbar = () => {
             </button>
             {!searchBoxOpen && (
               <Link href="/">
-                <div className="md:hidden relative w-[150px] h-[15px]">
+                <div className="md:hidden relative w-[150px]">
                   <img
                     src="/img/logo-with-word.png"
                     alt="Logo"
@@ -308,27 +308,27 @@ const Navbar = () => {
             <div className="flex items-center space-x-4">
               <div className="hidden md:flex">
                 <button
-                  className="group p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 focus:outline-none"
+                  className="group p-2 rounded-full hover:bg-gray-100  transition-all duration-300 focus:outline-none"
                   onClick={() => setActiveMenu(activeMenu === "user" ? null : "user")}
                   aria-expanded={activeMenu === "user"}
                   aria-label="User menu"
                 >
-                  <UserCircle size={24} className="text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-[#6e7a34] transition-colors" />
+                  <UserCircle size={24} className="text-[#c7b299]  group-hover:text-[#6e7a34]  transition-colors" />
                 </button>
                 {renderUserMenu()}
               </div>
 
               <div className="relative">
                 <button
-                  className="group p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 focus:outline-none"
+                  className="group p-2 rounded-full hover:bg-gray-100  transition-all duration-300 focus:outline-none"
                   onClick={() => setActiveMenu(activeMenu === "cart" ? null : "cart")}
                   aria-label="Shopping cart"
                 >
                   <div className="relative">
                     <ShoppingBag
                       size={24}
-                      className={`relative z-10 text-[#c7b299] dark:text-gray-300 group-hover:text-[#6e7a34] dark:group-hover:text-green-500 transition-colors
-                        ${animateCart ? "scale-[1.2] animate-cart-pop shadow-[0_0_8px_2px_rgba(174,234,0,0.7)] dark:shadow-[0_0_8px_2px_rgba(110,122,52,0.8)]" : ""}
+                      className={`relative z-10 text-[#c7b299]  group-hover:text-[#6e7a34]  transition-colors
+                        ${animateCart ? "scale-[1.2] animate-cart-pop shadow-[0_0_8px_2px_rgba(174,234,0,0.7)] " : ""}
                       `}
                     />
                     {animateCart && (

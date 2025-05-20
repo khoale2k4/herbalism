@@ -143,11 +143,11 @@ export default function MenuSidebar({ openMenu, setOpenMenu, onCartClick }: Prop
                                 <ShoppingBag size={18} className="text-emerald-600" />
                                 <span className="text-emerald-600">{t.common.cart || "Cart"}</span>
                             </button>
-                            <div className="dark:border-gray-800 py-1">
+                            <div className=" py-1">
                                 <a
                                     href="/login"
                                     onClick={() => removeTokenFromCookie()}
-                                    className="flex items-center gap-3 px-4 py-2 text-sm text-red-600 dark:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 group"
+                                    className="flex items-center gap-3 px-4 py-2 text-sm text-red-600  hover:bg-red-50  group"
                                 >
                                     <LogOut size={18} className="text-red-500" />
                                     <span>{t.common.logout}</span>

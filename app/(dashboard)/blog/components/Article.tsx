@@ -67,7 +67,7 @@ export default function BlogPage({ blogId }: { blogId: string }) {
                         </ol>
                     </nav>
                     <header className="mb-12">
-                        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+                        <h1 className="text-4xl font-bold text-gray-900  mb-6 leading-tight">
                             {blog.title}
                         </h1>
 
@@ -83,7 +83,7 @@ export default function BlogPage({ blogId }: { blogId: string }) {
                             </div>
                         )}
 
-                        <div className="flex items-center text-gray-600 dark:text-gray-400 space-x-6">
+                        <div className="flex items-center text-gray-600  space-x-6">
                             <span className="flex items-center">
                                 <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -103,7 +103,7 @@ export default function BlogPage({ blogId }: { blogId: string }) {
 
                     <BlogContent>
                         <div
-                            className="prose max-w-none dark:prose-invert"
+                            className="prose max-w-none "
                             dangerouslySetInnerHTML={{ __html: blog.content }}
                         />
                     </BlogContent>
@@ -112,7 +112,7 @@ export default function BlogPage({ blogId }: { blogId: string }) {
 
                     {/* Bài viết liên quan */}
                     {/* <section className="mt-16">
-                <h2 className="text-2xl font-semibold mb-8 text-gray-900 dark:text-white">
+                <h2 className="text-2xl font-semibold mb-8 text-gray-900 ">
                     Bài viết liên quan
                 </h2>
                 <div className="grid gap-8 sm:grid-cols-2">
@@ -120,7 +120,7 @@ export default function BlogPage({ blogId }: { blogId: string }) {
                         .filter(([id]) => id !== (blogId as string))
                         .map(([id, post]) => (
                             <Link href={`/blog/${id}`} key={id} className="group">
-                                <article className="h-full bg-gray-50 dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300">
+                                <article className="h-full bg-gray-50  rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300">
                                     {post.titleImg && (
                                         <div className="relative h-48 overflow-hidden">
                                             <img
@@ -133,10 +133,10 @@ export default function BlogPage({ blogId }: { blogId: string }) {
                                         </div>
                                     )}
                                     <div className="p-6">
-                                        <h3 className="text-xl font-medium text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                        <h3 className="text-xl font-medium text-gray-900  mb-3 group-hover:text-blue-600  transition-colors">
                                             {post.title}
                                         </h3>
-                                        <p className="text-sm text-gray-600 dark:text-gray-400">{post.date}</p>
+                                        <p className="text-sm text-gray-600 ">{post.date}</p>
                                     </div>
                                 </article>
                             </Link>
