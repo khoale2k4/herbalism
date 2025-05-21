@@ -198,6 +198,18 @@ input:checked.defaultCheckbox::before {
 	}
 }
 
+@media (prefers-color-scheme: dark) {
+
+	/* Override mọi thứ để giữ light mode */
+	body {
+		background-color: #fff !important;
+		color: #000 !important;
+	}
+
+	/* Hoặc reset toàn bộ theme về light */
+}
+
+
 /* HTML: <div class="ribbon">Your text content</div> */
 /* HTML: <div class="ribbon">Your text content</div> */
 .ribbon {
