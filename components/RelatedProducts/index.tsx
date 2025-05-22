@@ -44,7 +44,7 @@ export default function RelatedProducts({
                 behavior: "smooth",
             });
         }
-    }; 
+    };
     const productClick = (slug: string) => {
         router.push(`/shop/${slug}`);
     }
@@ -142,19 +142,15 @@ export default function RelatedProducts({
 
     return (
         <div className={classes.container}>
-            <div
-                ref={slideRef}
-                className={classes.productGrid}
-                style={
-                    variant === "product"
-                        ? { scrollbarWidth: "none", msOverflowStyle: "none" }
-                        : undefined
-                }
-            >
+            <div className={"grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+
+            }>
                 {filteredProducts.map((product) => (
                     <ProductCard key={product.id} product={product} viewMode='grid' onClick={productClick} />
                 ))}
             </div>
+
+            {/* </div> */}
 
             {variant === "product" && maxSlides > 0 && (
                 <div className="flex justify-center mt-4">
