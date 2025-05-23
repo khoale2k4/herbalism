@@ -305,6 +305,7 @@ export class ProductService {
             rate: plainProduct.rate,
             type: plainProduct.type,
             form: plainProduct.form,
+            content: plainProduct.content,
             comments: plainProduct.comments,
             tabs: plainProduct.tabs,
             slug: plainProduct.slug,
