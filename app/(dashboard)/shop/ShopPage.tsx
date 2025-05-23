@@ -24,7 +24,7 @@ const ShopPage: FC<Props> = () => {
   const ibProps1: ImageBannerProps = {
     title: t.homeVideoBanner1.title,
     description: t.homeVideoBanner1.description1,
-    imageUrl: "/img/herbalism-02.jpg",
+    imageUrl: "https://res.cloudinary.com/dpg8enfk4/image/upload/v1747979973/herbalism-02_k9t6va.jpg",
     button: t.homeVideoBanner1.button,
     description2: t.homeVideoBanner1.description2,
     imagePos: "right",

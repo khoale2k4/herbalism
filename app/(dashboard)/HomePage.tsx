@@ -31,7 +31,7 @@ const HomePage: FC<Props> = () => {
     const ibProps1: ImageBannerProps = {
         title: t.homeVideoBanner1.title,
         description: t.homeVideoBanner1.description1,
-        imageUrl: "/img/herbalism-02.jpg",
+        imageUrl: "https://res.cloudinary.com/dpg8enfk4/image/upload/v1747979996/herbalism-08_wstgqa.jpg",
         button: t.homeVideoBanner1.button,
         description2: t.homeVideoBanner1.description2,
         imagePos: "right",
@@ -43,7 +43,7 @@ const HomePage: FC<Props> = () => {
     const ibProps2: ImageBannerProps = {
         title: t.homeImageBanner1.title,
         description: t.homeImageBanner1.description1,
-        imageUrl: "/img/herbalism-08.jpg",
+        imageUrl: "https://res.cloudinary.com/dpg8enfk4/image/upload/v1747979973/herbalism-02_k9t6va.jpg",
         button: null,
         description2: null,
         imagePos: "left",
@@ -60,7 +60,7 @@ const HomePage: FC<Props> = () => {
         },
         title: t.banner.welcome1,
         title2: null,
-        videoUrl: "/vid/forest.mp4"
+        videoUrl: "https://res.cloudinary.com/dpg8enfk4/video/upload/v1747980208/forest_mtir1d.mp4"
     }
     // HeroImageProps = {
     //     h1_content: t.banner.welcome1,
