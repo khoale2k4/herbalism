@@ -58,6 +58,7 @@ export class ProductService {
         });
 
         data.tabs.map(async (tab) => {
+            console.log(tab.name, tab.description);
             await this.tabModel.create({
                 productId: product.id,
                 name: tab.name,
@@ -114,7 +115,7 @@ export class ProductService {
                     },
                     {
                         model: ProductTabs,
-                        attributes: ['id', 'name', 'description'],
+                        attributes: ['id', 'name', 'description', 'createdAt'],
                         as: 'tabs',
                         required: false
                     },
@@ -166,7 +167,6 @@ export class ProductService {
         };
     }
 
-    
     async searchProductsByKeyword(keyword: string) {
         if (!keyword || keyword.trim() === '') return [];
 
@@ -268,7 +268,7 @@ export class ProductService {
                     },
                     {
                         model: ProductTabs,
-                        attributes: ['id', 'name', 'description'],
+                        attributes: ['id', 'name', 'description', 'createdAt'],
                         as: 'tabs',
                         required: false
                     },
