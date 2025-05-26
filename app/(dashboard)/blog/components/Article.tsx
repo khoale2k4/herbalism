@@ -102,10 +102,7 @@ export default function BlogPage({ blogId }: { blogId: string }) {
                     </header>
 
                     <BlogContent>
-                        <div
-                            className="prose max-w-none "
-                            dangerouslySetInnerHTML={{ __html: blog.content }}
-                        />
+                        {processContent(blog.content)}
                     </BlogContent>
 
 
