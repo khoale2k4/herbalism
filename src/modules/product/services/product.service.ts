@@ -114,7 +114,7 @@ export class ProductService {
                     },
                     {
                         model: ProductTabs,
-                        attributes: ['name', 'description'],
+                        attributes: ['id', 'name', 'description'],
                         as: 'tabs',
                         required: false
                     },
@@ -267,7 +267,7 @@ export class ProductService {
                     },
                     {
                         model: ProductTabs,
-                        attributes: ['name', 'description'],
+                        attributes: ['id', 'name', 'description'],
                         as: 'tabs',
                         required: false
                     },
