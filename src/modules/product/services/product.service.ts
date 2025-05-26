@@ -64,6 +64,7 @@ export class ProductService {
                 name: tab.name,
                 description: tab.description
             });
+            await new Promise(resolve => setTimeout(resolve, 1000));
         })
 
         data.images.map(async (image) => {
@@ -465,13 +466,14 @@ export class ProductService {
             this.sizeStockModel.destroy({ where: { productId: id } }),
         ]);
 
-        const tabCreates = (data.tabs || []).map(async (tab) =>
+        const tabCreates = (data.tabs || []).map(async (tab) => {
             await this.tabModel.create({
                 productId: id,
                 name: tab.name,
                 description: tab.description,
-            })
-        );
+            });
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        });
 
         const stockCreates = (data.size_stock || []).map(async (item) =>
             await this.sizeStockModel.create({
