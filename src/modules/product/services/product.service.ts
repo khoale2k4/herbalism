@@ -166,6 +166,7 @@ export class ProductService {
         };
     }
 
+    
     async searchProductsByKeyword(keyword: string) {
         if (!keyword || keyword.trim() === '') return [];
 
