@@ -57,15 +57,17 @@ export class ProductService {
             needId: need.id
         });
 
-        data.tabs.map(async (tab) => {
-            console.log(tab.name, tab.description);
+        for (const tab of data.tabs || []) {
             await this.tabModel.create({
                 productId: product.id,
                 name: tab.name,
-                description: tab.description
+                description: tab.description,
             });
+
+            // Chờ 1 giây trước khi tạo tab tiếp theo
             await new Promise(resolve => setTimeout(resolve, 1000));
-        })
+        }
+
 
         data.images.map(async (image) => {
             await this.imageModel.create({
@@ -466,15 +468,6 @@ export class ProductService {
             this.sizeStockModel.destroy({ where: { productId: id } }),
         ]);
 
-        const tabCreates = (data.tabs || []).map(async (tab) => {
-            await this.tabModel.create({
-                productId: id,
-                name: tab.name,
-                description: tab.description,
-            });
-            await new Promise(resolve => setTimeout(resolve, 1000));
-        });
-
         const stockCreates = (data.size_stock || []).map(async (item) =>
             await this.sizeStockModel.create({
                 productId: id,
@@ -488,7 +481,17 @@ export class ProductService {
             await this.imageModel.create({ productId: id, url })
         );
 
-        await Promise.all([...imageCreates, ...tabCreates, ...stockCreates]);
+        await Promise.all([...imageCreates, ...stockCreates]);
+
+        for (const tab of data.tabs || []) {
+            await this.tabModel.create({
+                productId: id,
+                name: tab.name,
+                description: tab.description,
+            });
+
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
 
         return await this.productModel.findByPk(id, {
             include: [this.imageModel, this.tabModel, this.sizeStockModel],
