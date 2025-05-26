@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
+import parse from 'html-react-parser';
 import { Star, Heart, ShoppingCart, Truck, Shield, RotateCcw, ChevronDown, ChevronUp, Minus, Plus, Leaf } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { CartOperation, CommentOperation, ProductOperation } from "@/lib/main";
@@ -13,7 +14,7 @@ import { getTokenFromCookie } from "@/app/utils/token";
 import RelatedProducts from "@/components/RelatedProducts";
 import { useCurrency } from "@/hooks/useCurrency";
 import { formatPrice } from "@/app/utils/format-currency";
-import { BlogContent } from "../../blog/components/BlogContent";
+import { BlogContent, processContent } from "../../blog/components/BlogContent";
 import { addProductToLocalCart } from "@/app/utils/localCart";
 import { useNotification } from "@/app/Providers/Notification";
 import { useCartStore } from "@/lib/stores/cartStore";
@@ -454,10 +455,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
                                         className={`p-4 text-gray-700 border-t bg-gray-50 transition-max-height`}>
                                         {/* <p className="leading-relaxed whitespace-pre-line">{tab.content}</p> */}
                                         <BlogContent>
-                                            <div
-                                                className="prose max-w-none "
-                                                dangerouslySetInnerHTML={{ __html: tab.content }}
-                                            />
+                                            {processContent(tab.content)}
                                         </BlogContent>
                                     </div>
                                 </div>
