@@ -30,6 +30,7 @@ export default function RootLayout({
   return (
     <html lang="vi">
       <head>
+        <meta name="google-site-verification" content="VggwpksY9UJtGjs8naBkRmWhXHRCzWgY_GxITYg79BY" />
         <meta name="color-scheme" content="light only" />
       </head>
       <body className="min-h-screen flex flex-col">
