@@ -120,7 +120,9 @@ export class ProductService {
                         model: ProductTabs,
                         attributes: ['id', 'name', 'description', 'createdAt'],
                         as: 'tabs',
-                        required: false
+                        required: false,
+                        separate: true,
+                        order: [['createdAt', 'ASC']]
                     },
                     {
                         model: SizeStock,
@@ -273,7 +275,9 @@ export class ProductService {
                         model: ProductTabs,
                         attributes: ['id', 'name', 'description', 'createdAt'],
                         as: 'tabs',
-                        required: false
+                        required: false,
+                        separate: true,
+                        order: [['createdAt', 'ASC']]
                     },
                     {
                         model: SizeStock,
