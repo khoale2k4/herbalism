@@ -45,12 +45,23 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, viewMode, onClick })
             className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow hover:cursor-pointer"
             onClick={() => onClick(product.slug.toString())}
         >
-            <div className="aspect-square bg-gray-100">
-                {product.images && product.images.length ? <img
-                    src={product.images[0].url}
-                    alt={product.name}
-                    className="object-cover rounded-md transition-transform duration-300 hover:scale-105"
-                /> : <div className="h-full w-full flex items-center justify-center text-gray-400">
+            <div className="bg-gray-100 relative group">
+                {product.images && product.images.length >= 1 ? (
+                    <>
+                        <img
+                            src={product.images[0].url}
+                            alt={product.name}
+                            className={`object-cover w-full h-full duration-300 ${product.images.length >= 2 ? 'transition-opacity ease-in-out' : 'ransition-transform hover:scale-105'}`}
+                        />
+                        {product.images.length >= 2 && (
+                            <img
+                                src={product.images[1].url}
+                                alt={`${product.name} - hover`}
+                                className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out"
+                            />
+                        )}
+                    </>
+                ) : <div className="h-full w-full flex items-center justify-center text-gray-400">
                     <Leaf className="h-40 w-40" />
                 </div>}
             </div>
