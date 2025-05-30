@@ -98,6 +98,7 @@ export class ProductService {
                         model: ProductImages,
                         as: 'images',
                         attributes: ['url'],
+                        order: [['createdAt', 'ASC']],
                         required: false
                     },
                     {
