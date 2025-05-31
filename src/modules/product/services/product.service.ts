@@ -99,7 +99,8 @@ export class ProductService {
                         as: 'images',
                         attributes: ['url', 'createdAt'],
                         order: [['createdAt', 'ASC']],
-                        required: false
+                        required: false,
+                        separate: true,
                     },
                     {
                         model: ProductTypes,
@@ -416,6 +417,7 @@ export class ProductService {
                     attributes: ['url', 'createdAt'],
                     order: [['createdAt', 'ASC']],
                     required: false,
+                    separate: true,
                 }
             ],
         }
