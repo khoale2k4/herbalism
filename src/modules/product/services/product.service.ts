@@ -583,9 +583,10 @@ export class ProductService {
                 {
                     model: ProductImages,
                     as: 'images',
-                    attributes: ['url'],
+                    attributes: ['url', 'createdAt'],
                     order: [['createdAt', 'ASC']],
                     required: false,
+                    separate: true,
                 }, {
                     model: SizeStock,
                     as: 'size_stock',
