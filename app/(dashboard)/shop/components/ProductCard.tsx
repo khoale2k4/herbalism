@@ -45,35 +45,38 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, viewMode, onClick })
             className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow hover:cursor-pointer"
             onClick={() => onClick(product.slug.toString())}
         >
-            <div className="bg-gray-100 relative group">
-                {product.images && product.images.length >= 1 ? (
-                    <>
-                        <img
-                            src={product.images[0].url}
-                            alt={product.name}
-                            className={`object-cover w-full h-full duration-300 ${product.images.length >= 2 ? 'transition-opacity ease-in-out' : 'ransition-transform hover:scale-105'}`}
-                        />
-                        {product.images.length >= 2 && (
+            <div className="bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow hover:cursor-pointer">
+                <div className="relative group bg-gray-100 aspect-[4/5] overflow-hidden rounded-t-lg">
+                    {product.images && product.images.length >= 1 ? (
+                        <>
                             <img
-                                src={product.images[1].url}
-                                alt={`${product.name} - hover`}
-                                className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out"
+                                src={product.images[0].url}
+                                alt={product.name}
+                                className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
                             />
-                        )}
-                    </>
-                ) : <div className="h-full w-full flex items-center justify-center text-gray-400">
-                    <Leaf className="h-40 w-40" />
-                </div>}
-            </div>
-            <div className="p-4">
-                <h3 className="font-medium text-gray-800 mb-1 line-clamp-1">{product.name}</h3>
-                {/* <p className="text-sm text-gray-500 mb-1">{product.type.name}</p> */}
-                <div className="text-base font-semibold text-[#3e4f3d] mb-2 whitespace-nowrap">
-                    {formatPrice(product.price)}
+                            {product.images.length >= 2 && (
+                                <img
+                                    src={product.images[1].url}
+                                    alt={`${product.name} - hover`}
+                                    className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                />
+                            )}
+                        </>
+                    ) : (
+                        <div className="w-full h-full flex items-center justify-center text-gray-400">
+                            <Leaf className="h-20 w-20" />
+                        </div>
+                    )}
                 </div>
-                <div className="flex items-center text-sm text-gray-600">
-                    <FiStar className="text-yellow-400 mr-1" />
-                    {product.rate}
+                <div className="p-4">
+                    <h3 className="font-medium text-gray-800 mb-1 line-clamp-1">{product.name}</h3>
+                    <div className="text-base font-semibold text-[#3e4f3d] mb-2 whitespace-nowrap">
+                        {formatPrice(product.price)}
+                    </div>
+                    <div className="flex items-center text-sm text-gray-600">
+                        <FiStar className="text-yellow-400 mr-1" />
+                        {product.rate}
+                    </div>
                 </div>
             </div>
         </div>

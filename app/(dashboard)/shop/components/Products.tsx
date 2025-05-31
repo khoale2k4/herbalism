@@ -23,13 +23,6 @@ const ProductsList = ({ showSidebar, filteredProducts, setSearchQuery, viewMode 
 
   return (<div className="container mx-auto py-6 px-4">
     <div className="flex flex-col md:flex-row gap-6">
-      {/* {showSidebar && (
-        <div className="w-full md:w-72 flex-shrink-0">
-          <Sidebar />
-        </div>
-      )} */}
-
-      {/* Product Listing */}
       <div className="flex-grow">
         <h1 className="text-2xl font-bold text-gray-800 mb-6">{t.shop.shopOurProducts}</h1>
 
@@ -54,7 +47,7 @@ const ProductsList = ({ showSidebar, filteredProducts, setSearchQuery, viewMode 
           </div>
         ) : (
           <div className={viewMode === "grid"
-            ? "grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+            ? "grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12"
             : "space-y-6"
           }>
             {filteredProducts.map(product => (
