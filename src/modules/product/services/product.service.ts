@@ -68,13 +68,13 @@ export class ProductService {
             await new Promise(resolve => setTimeout(resolve, 1000));
         }
 
-
-        data.images.map(async (image) => {
+        for (const image of data.images || []) {
             await this.imageModel.create({
                 productId: product.id,
                 url: image
             });
-        })
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
 
         data.size_stock.map(async (sizeStock) => {
             await this.sizeStockModel.create({
@@ -482,11 +482,7 @@ export class ProductService {
             })
         );
 
-        const imageCreates = (data.images || []).map(async (url) =>
-            await this.imageModel.create({ productId: id, url })
-        );
-
-        await Promise.all([...imageCreates, ...stockCreates]);
+        await Promise.all([...stockCreates]);
 
         for (const tab of data.tabs || []) {
             await this.tabModel.create({
@@ -495,6 +491,14 @@ export class ProductService {
                 description: tab.description,
             });
 
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+
+        for (const image of data.images || []) {
+            await this.imageModel.create({
+                productId: product.id,
+                url: image
+            });
             await new Promise(resolve => setTimeout(resolve, 1000));
         }
 
