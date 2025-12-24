@@ -64,6 +64,8 @@ export class OrderService {
     async complete(id: string) {
         const order = await this.getById(id);
 
+        console.log(order);
+
         if (!order) {
             throw Error("Order not found");
         }
@@ -77,7 +79,7 @@ export class OrderService {
             }
         })
         await this.mailService.sendMail(order.email, "Order #" + order.trackingNumber, await this.getMailBody(order, true, MailType.ORDER_DELIVERED));
-        await this.markAsPaid(id);
+        await this.markAsPaid(order.orderCode);
         return order;
     }
 
